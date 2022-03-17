@@ -13,35 +13,35 @@
             <div class="row">
               <div class="col-lg-6">
                 <div class="row mb-3">
-                  <label class="col-lg-3 col-form-label">Tgl. Pencacahan</label>
+                  <label class="col-lg-5 col-form-label">Tanggal Pencacahan <span class="text-danger">*</span></label>
                   <div class="col-lg-4">
                     <input id="tanggal_pencacahan" type="date" name="tanggal_pencacahan" class="form-control form-control-sm">
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label class="col-lg-3 col-form-label">Nama Pencacah</label>
-                  <div class="col-lg-8">
+                  <label class="col-lg-5 col-form-label">Nama Pencacah <span class="text-danger">*</span></label>
+                  <div class="col-lg-6">
                     <div class="input-group input-group-sm">
                       <input id="nama_pencacah" type="text" name="nama_pencacah" class="form-control form-control-sm" style="width:12em">
-                      <span class="input-group-text">Kode</span>
-                      <input id="kode_pencacah" type="number" name="kode_pencacah" class="form-control form-control-sm">
+                      <!-- <span class="input-group-text">Kode</span>
+                      <input id="kode_pencacah" type="number" name="kode_pencacah" class="form-control form-control-sm"> -->
                     </div>
                   </div>
                 </div>
 
                 <div class="row mb-3">
-                  <label class="col-lg-3 col-form-label">Tgl. Pemeriksaan</label>
+                  <label class="col-lg-5 col-form-label">Tanggal Pemeriksaan <span class="text-danger">*</span></label>
                   <div class="col-lg-4">
                     <input id="tanggal_pemeriksaan" type="date" name="tanggal_pemeriksaan" class="form-control form-control-sm">
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label class="col-lg-3 col-form-label">Nama Pemeriksa</label>
-                  <div class="col-lg-8">
+                  <label class="col-lg-5 col-form-label">Nama Pemeriksa <span class="text-danger">*</span></label>
+                  <div class="col-lg-6">
                     <div class="input-group input-group-sm">
                       <input id="nama_pemeriksa" type="text" name="nama_pemeriksa" class="form-control form-control-sm" style="width:12em">
-                      <span class="input-group-text">Kode</span>
-                      <input id="kode_pemeriksa" type="number" name="kode_pemeriksa" class="form-control form-control-sm">
+                      <!-- <span class="input-group-text">Kode</span>
+                      <input id="kode_pemeriksa" type="number" name="kode_pemeriksa" class="form-control form-control-sm"> -->
                     </div>
                   </div>
                 </div>
@@ -60,12 +60,12 @@
                   </div>
                 </div>
 
-                <div id="bagian_no_ruta" class="row mb-3">
-                  <label class="col-lg-4 col-form-label">No. Urut Rumah Tangga</label>
+                <!-- <div id="bagian_no_ruta" class="row mb-3">
+                  <label class="col-lg-4 col-form-label">No. KK</label>
                   <div class="col-lg-3">
                     <input id="bagian_no_ruta_value" type="number" name="bagian_no_ruta" class="form-control form-control-sm">
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
 

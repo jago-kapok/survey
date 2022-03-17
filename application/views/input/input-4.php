@@ -101,14 +101,14 @@
             </div>
 
             <div class="row mb-3">
-              <label class="col-sm-7 col-form-label">NIK Anggota Rumah Tangga</label>
+              <label class="col-sm-7 col-form-label">NIK Anggota Keluarga <span class="text-danger">*</span></label>
               <div class="col-sm-4">
                 <input id="nik_anggota" type="number" name="nik_anggota" class="form-control form-control-sm">
               </div>
             </div>
 
             <div class="row mb-3">
-              <label class="col-sm-5 col-form-label">Nama Anggota Rumah Tangga</label>
+              <label class="col-sm-5 col-form-label">Nama Anggota Keluarga <span class="text-danger">*</span></label>
               <div class="col-sm-6">
                 <input id="nama_anggota" type="text" name="nama_anggota" class="form-control form-control-sm">
               </div>
@@ -127,7 +127,7 @@
             </div> -->
 
             <div class="row mb-3">
-              <label class="col-sm-7 col-form-label">Hubungan dengan Kepala Keluarga</label>
+              <label class="col-sm-7 col-form-label">Hubungan dengan Kepala Keluarga <span class="text-danger">*</span></label>
               <div class="col-sm-4">
                 <select id="hubungan_keluarga_id" name="hubungan_keluarga_id" class="form-select form-select-sm">
                   <option disabled selected>--- Pilihan ---</option>
@@ -139,7 +139,7 @@
             </div>
 
             <div class="row mb-3">
-              <label class="col-sm-7 col-form-label">Jenis Kelamin</label>
+              <label class="col-sm-7 col-form-label">Jenis Kelamin <span class="text-danger">*</span></label>
               <div class="col-sm-4">
                 <select id="jenis_kelamin" name="jenis_kelamin" class="form-select form-select-sm">
                   <option disabled selected>--- Pilihan ---</option>
@@ -150,7 +150,7 @@
             </div>
 
             <div class="row mb-3">
-              <label class="col-sm-7 col-form-label">Tanggal Lahir</label>
+              <label class="col-sm-7 col-form-label">Tanggal Lahir <span class="text-danger">*</span></label>
               <div class="col-sm-4">
                 <input id="tanggal_lahir" type="date" name="tanggal_lahir" class="form-control form-control-sm">
               </div>
@@ -167,7 +167,7 @@
             </div>
 
             <div class="row mb-3">
-              <label class="col-sm-7 col-form-label">Status Perkawinan</label>
+              <label class="col-sm-7 col-form-label">Status Perkawinan <span class="text-danger">*</span></label>
               <div class="col-sm-4">
                 <select id="status_perkawinan_id" name="status_perkawinan_id" class="form-select form-select-sm">
                   <option disabled selected>--- Pilihan ---</option>
@@ -190,7 +190,7 @@
             </div>
 
             <div class="row mb-3">
-              <label class="col-sm-7 col-form-label">Status Keberadaan Anggota Keluarga</label>
+              <label class="col-sm-7 col-form-label">Status Keberadaan Anggota Keluarga <span class="text-danger">*</span></label>
               <div class="col-sm-4">
                 <select id="status_anggota_ruta_id" name="status_anggota_ruta_id" class="form-select form-select-sm">
                   <option disabled selected>--- Pilihan ---</option>
@@ -241,7 +241,7 @@
             </div>
 
             <div class="row mb-3">
-              <label class="col-sm-7 col-form-label">Partisipasi Sekolah</label>
+              <label class="col-sm-7 col-form-label">Partisipasi Sekolah <span class="text-danger">*</span></label>
               <div class="col-sm-4">
                 <select id="partisipasi_sekolah_id" name="partisipasi_sekolah_id" class="form-select form-select-sm">
                   <option disabled selected>--- Pilihan ---</option>
@@ -293,7 +293,7 @@
             </div>
 
             <div class="row mb-3">
-              <label class="col-sm-7 col-form-label">Bekerja / Membantu Bekerja Selama Seminggu yang Lalu</label>
+              <label class="col-sm-7 col-form-label">Bekerja / Membantu Bekerja Selama Seminggu yang Lalu <span class="text-danger">*</span></label>
               <div class="col-sm-4">
                 <select id="status_bekerja" name="status_bekerja" class="form-select form-select-sm">
                   <option disabled selected>--- Pilihan ---</option>
@@ -427,47 +427,43 @@
     event.preventDefault();
     var data = new FormData($("#form_data")[0]);
 
-    if($("#nik_anggota").val() == "" || $("#nama_anggota").val() == "") {
-      $.notify("NIK dan Nama tidak boleh kosong !", "error");
-    } else {
-      $.ajax({
-        type: "POST",
-        url: "<?= base_url() ?>input/input4_create",
-        data: data,
-        dataType: "json",
-        cache       : false,
-  			contentType	: false,
-  			processData	: false,
-      })
-      .done(function (data) {
-        console.log(data);
+    $.ajax({
+      type: "POST",
+      url: "<?= base_url() ?>input/input4_create",
+      data: data,
+      dataType: "json",
+      cache       : false,
+			contentType	: false,
+			processData	: false,
+    })
+    .done(function (data) {
+      console.log(data);
 
-        if(data.success == true) {
-          Swal.fire({
-            icon: 'success',
-            title: 'Data berhasil ditambahkan !',
-            showConfirmButton: false,
-            timer: 1000
-          })
-
-          setInterval(() => {
-            window.location = "<?= base_url() ?>input/quest/4/" + data.main_id;
-          }, 1500);
-        } else {
-          $.each(data.errors, function(index, value) {
-            $.notify(value, "error");
-          })
-        }
-      })
-      .fail(function () {
+      if(data.success == true) {
         Swal.fire({
-          icon: 'warning',
-          title: 'Koneksi Bermasalah !',
-          text: 'Tidak dapat terhubung dengan server.',
-          showConfirmButton: true
+          icon: 'success',
+          title: 'Data berhasil ditambahkan !',
+          showConfirmButton: false,
+          timer: 1000
         })
-      });
-    }
+
+        setInterval(() => {
+          window.location = "<?= base_url() ?>input/quest/4/" + data.main_id;
+        }, 1200);
+      } else {
+        $.each(data.errors, function(index, value) {
+          $.notify(value, "error");
+        })
+      }
+    })
+    .fail(function () {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Koneksi Bermasalah !',
+        text: 'Tidak dapat terhubung dengan server.',
+        showConfirmButton: true
+      })
+    });
   });
 
   function hapusAnggotaKeluarga(id) {
@@ -490,7 +486,7 @@
             icon: 'success',
             title: 'Data berhasil dihapus !',
             showConfirmButton: false,
-            timer: 2000
+            timer: 1200
           })
           setInterval(() => {
             window.location = "<?= base_url() ?>input/quest/4/" + main_id;

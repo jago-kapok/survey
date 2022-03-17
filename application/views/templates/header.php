@@ -31,7 +31,6 @@
     body { font-family: 'Inter', sans-serif; background-color: #eff3f8; font-size: 85%; }
     .card { padding: 1rem; border-radius: 12px; box-shadow: 0 3px 5px rgba(0,0,0,.02),0 0 2px rgba(0,0,0,.05),0 1px 4px rgba(0,0,0,.08)!important; }
     .nav-fill .nav-item, .nav-fill>.nav-link { border-radius: 12px; width:10.3rem; }
-    .side-b { color: dodgerblue; }
     .btn { font-size: 0.9rem; font-weight: bold }
     .btn.btn-success { background-color: #22c55e; border: 1px solid #22C55E }
     .modal { z-index: 1050 !important }
@@ -66,7 +65,7 @@
             <a href="<?= base_url() ?>" class="nav-link active" aria-current="page">Beranda</a>
           </li>
           <li class="nav-item ms-4">
-            <a href="<?= base_url() ?>input/quest/1/start" class="nav-link active" aria-current="page">Pengisian Survey</a>
+            <a href="<?= base_url() ?>input/quest/1/a2ErZWkvZXcvZTcyei9YUyt5b0RrZz09" class="nav-link active" aria-current="page">Pengisian Survey</a>
           </li>
         </ul>
         <form class="d-flex">

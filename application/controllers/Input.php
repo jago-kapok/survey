@@ -8,13 +8,14 @@ class Input extends CI_Controller
     {
         parent::__construct();
         $this->load->helper(array('form', 'url'));
+        $this->load->library('key');
 		authentication();
     }
 
     public function quest()
     {
         $id = $this->uri->segment(3);
-        $main_id = $this->uri->segment(4);
+        $main_id = $this->key->crypts($this->uri->segment(4), 'd');
 
         $data['title'] = 'Survey Pemutakhiran DTKS - Kab. Bojonegoro';
 
@@ -67,7 +68,7 @@ class Input extends CI_Controller
         ->join("lapangan_usaha lu", "mkse.lapangan_usaha_id = lu.id")
         ->get('main_keterangan_sosial_ekonomi mkse')->result_array();
 
-        $data["main_id"] = $this->uri->segment(4);
+        $data["main_id"] = $this->key->crypts($main_id, 'e');
 
         if($main_id != "") {
             $this->load->view('templates/header', $data);
@@ -99,8 +100,37 @@ class Input extends CI_Controller
             'no_kk_krt'         => $this->input->post('no_kk_krt'),
             'jumlah_art'        => $this->input->post('jumlah_art'),
             'jumlah_keluarga'   => $this->input->post('jumlah_keluarga'),
+            'relasi_no_kk'      => $this->input->post('relasi_no_kk'),
             'created_by'        => 1,
         );
+
+        if(empty($this->input->post('kecamatan_id'))) {
+            $errors['kecamatan_id'] = 'Silakan pilih kecamatan';
+        }
+
+        if(empty($this->input->post('desa_id'))) {
+            $errors['desa_id'] = 'Silakan pilih desa / kelurahan';
+        }
+
+        if(strlen($this->input->post('rw')) < 3) {
+            $errors['rw'] = 'RW harus berisi 3 digit angka';
+        }
+
+        if(strlen($this->input->post('rt')) < 3) {
+            $errors['rt'] = 'RT harus berisi 3 digit angka';
+        }
+
+        if(strlen($this->input->post('no_kk_krt')) < 16) {
+            $errors['no_kk_krt'] = 'No. KK harus berisi 16 digit angka';
+        }
+
+        if(empty($this->input->post('nama_krt'))) {
+            $errors['nama_krt'] = 'Nama Kepala Keluarga harus diisi';
+        }
+
+        if(!empty($this->input->post('relasi_no_kk')) && strlen($this->input->post('relasi_no_kk')) < 16) {
+            $errors['relasi_no_kk'] = 'Relasi KK harus berisi 16 digit angka';
+        }
         
         if (!empty($errors)) {
             $data['success'] = false;
@@ -111,7 +141,7 @@ class Input extends CI_Controller
 
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $main_id;
+            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');;
         }
         
         echo json_encode($data);
@@ -123,6 +153,7 @@ class Input extends CI_Controller
         $data = [];
 
         $main_id = $this->input->post('main_id');
+        $main_id = $this->key->crypts($main_id, 'd');
 
         $data = array(
             'main_id'               => $main_id,
@@ -136,16 +167,24 @@ class Input extends CI_Controller
             'bagian_no_ruta'        => $this->input->post('bagian_no_ruta'),
         );
 
-        if(empty($_POST['main_id'])) {
+        if(empty($main_id)) {
             $errors['main_id'] = 'Server sibuk ! Mohon refresh browser anda terlebih dahulu !';
         }
 
-        if(empty($_POST['tanggal_pencacahan'])) {
+        if(empty($this->input->post('tanggal_pencacahan'))) {
             $errors['tanggal_pencacahan'] = 'Tanggal Pencacahan tidak boleh kosong';
         }
 
-        if(empty($_POST['nama_pencacah']) || empty($_POST['kode_pencacah'])) {
-            $errors['nama_kode'] = 'Nama dan kode Pencacah tidak boleh kosong';
+        if(empty($this->input->post('nama_pencacah'))) {
+            $errors['nama_pencacah'] = 'Nama Pencacah tidak boleh kosong';
+        }
+
+        if(empty($this->input->post('tanggal_pemeriksaan'))) {
+            $errors['tanggal_pemeriksaan'] = 'Tanggal Pemeriksaan tidak boleh kosong';
+        }
+
+        if(empty($this->input->post('nama_pemeriksa'))) {
+            $errors['nama_pemeriksa'] = 'Nama Pemeriksa tidak boleh kosong';
         }
         
         if (!empty($errors)) {
@@ -156,7 +195,7 @@ class Input extends CI_Controller
 
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $main_id;
+            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');;
         }
         
         echo json_encode($data);
@@ -168,6 +207,7 @@ class Input extends CI_Controller
         $data = [];
 
         $main_id = $this->input->post('main_id');
+        $main_id = $this->key->crypts($main_id, 'd');
 
         $data = array(
             'main_id'                   => $main_id,
@@ -191,12 +231,8 @@ class Input extends CI_Controller
             'tpa_12'                    => $this->input->post('tpa_value'),
         );
         
-        if(empty($_POST['main_id'])) {
+        if(empty($main_id)) {
             $errors['main_id'] = 'Server sibuk ! Mohon refresh browser anda terlebih dahulu !';
-        }
-
-        if(empty($_POST['status_bangunan_value'])) {
-            $errors['status_bangunan_value'] = 'Status bangunan tidak boleh kosong';
         }
 
         if (!empty($errors)) {
@@ -207,7 +243,7 @@ class Input extends CI_Controller
 
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $main_id;
+            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');;
         }
         
         echo json_encode($data);
@@ -219,6 +255,7 @@ class Input extends CI_Controller
         $data = [];
 
         $main_id = $this->input->post('main_id');
+        $main_id = $this->key->crypts($main_id, 'd');
 
         $data = array(
             'main_id'                   => $main_id,
@@ -251,8 +288,20 @@ class Input extends CI_Controller
             $errors["nik_terdaftar"] = "Maaf, NIK sudah terdaftar";
         }
 
-        if(empty($_POST['main_id'])) {
+        if(empty($main_id)) {
             $errors['main_id'] = 'Server sibuk ! Mohon refresh browser anda terlebih dahulu !';
+        }
+
+        if(strlen($this->input->post('nik_anggota')) < 16) {
+            $errors['nik_anggota'] = 'NIK harus berisi 16 digit angka';
+        }
+
+        if(empty($this->input->post('nama_anggota'))) {
+            $errors['nama_anggota'] = 'Nama anggota keluarga tidak boleh kosong';
+        }
+
+        if(empty($this->input->post('hubungan_keluarga_id')) || empty($this->input->post('jenis_kelamin')) || empty($this->input->post('tanggal_lahir')) || empty($this->input->post('status_perkawinan_id')) || empty($this->input->post('partisipasi_sekolah_id')) || empty($this->input->post('status_bekerja')) || empty($this->input->post('status_anggota_ruta_id'))) {
+            $errors['empty_message'] = 'Kolom input dengan tanda * tidak boleh kosong';
         }
         
         if (!empty($errors)) {
@@ -263,7 +312,7 @@ class Input extends CI_Controller
 
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $main_id;
+            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');;
         }
         
         echo json_encode($data);
@@ -275,6 +324,7 @@ class Input extends CI_Controller
         $data = [];
 
         $main_id = $this->input->post('main_id');
+        $main_id = $this->key->crypts($main_id, 'd');
 
         $data = array(
             'main_id'           => $main_id,
@@ -301,11 +351,14 @@ class Input extends CI_Controller
             'sapi'              => $this->input->post('sapi'),
             'kerbau'            => $this->input->post('kerbau'),
             'kuda'              => $this->input->post('kuda'),
-            'babi'              => $this->input->post('babi'),
             'kambing'           => $this->input->post('kambing'),
+            'unggas'            => $this->input->post('unggas'),
+            'kelinci'           => $this->input->post('kelinci'),
+            'perikanan'          => $this->input->post('perikanan'),
 
             'memiliki_usaha'    => $this->input->post('memiliki_usaha'),
             'estimasi_pengeluaran' => $this->input->post('estimasi_pengeluaran'),
+            'estimasi_pengeluaran_non_pangan' => $this->input->post('estimasi_pengeluaran_non_pangan'),
         );
 
         if(empty($_POST['main_id'])) {
@@ -347,7 +400,7 @@ class Input extends CI_Controller
 
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $main_id;
+            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');;
         }
         
         echo json_encode($data);
@@ -359,16 +412,7 @@ class Input extends CI_Controller
         $data = [];
 
         $main_id = $this->input->post('main_id');
-
-        $files1 = $_FILES["files1"]["name"];
-        $files2 = $_FILES["files2"]["name"];
-        $files3 = $_FILES["files3"]["name"];
-        $files4 = $_FILES["files4"]["name"];
-
-        $ext1 = pathinfo($files1, PATHINFO_EXTENSION);
-        $ext2 = pathinfo($files2, PATHINFO_EXTENSION);
-        $ext3 = pathinfo($files3, PATHINFO_EXTENSION);
-        $ext4 = pathinfo($files4, PATHINFO_EXTENSION);
+        $main_id = $this->key->crypts($main_id, 'd');
 
         $location = FCPATH."/files/".$main_id;
 
@@ -377,40 +421,40 @@ class Input extends CI_Controller
         }
 
         if(!$_FILES['files1']['error'] > 0) { 
-            $tes1 = $this->upload_file($location, "files1");
+            $foto1 = $this->upload_file($location, "files1");
         } else {
-            $tes1 = "";
+            $foto1 = "";
         }
 
         if(!$_FILES['files2']['error'] > 0) { 
-            $tes2 = $this->upload_file($location, "files2");
+            $foto2 = $this->upload_file($location, "files2");
         } else {
-            $tes2 = "";
+            $foto2 = "";
         }
 
         if(!$_FILES['files3']['error'] > 0) { 
-            $tes3 = $this->upload_file($location, "files3");
+            $foto3 = $this->upload_file($location, "files3");
         } else {
-            $tes3 = "";
+            $foto3 = "";
         }
 
         if(!$_FILES['files4']['error'] > 0) { 
-            $tes4 = $this->upload_file($location, "files4");
+            $foto4 = $this->upload_file($location, "files4");
         } else {
-            $tes4 = "";
+            $foto4 = "";
         }
 
         $data = array(
             'main_id'   => $main_id,
             'latitude'  => $this->input->post('latitude'),
             'longitude' => $this->input->post('longitude'),
-            'foto1'     => $tes1,
-            'foto2'     => $tes2,
-            'foto3'     => $tes3,
-            'foto4'     => $tes4,
+            'foto1'     => $foto1,
+            'foto2'     => $foto2,
+            'foto3'     => $foto3,
+            'foto4'     => $foto4,
         );
 
-        if(empty($_POST['main_id'])) {
+        if(empty($this->input->post('main_id'))) {
             $errors['main_id'] = 'Server sibuk ! Mohon refresh browser anda terlebih dahulu !';
         }
         
@@ -422,7 +466,7 @@ class Input extends CI_Controller
 
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $main_id;
+            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');;
         }
         
         echo json_encode($data);
@@ -434,9 +478,7 @@ class Input extends CI_Controller
         $config['allowed_types']        = 'jpg|jpeg|png';
         $config['file_name']            = date("ymdhis").rand();
         // $config['overwrite']         = true;
-        $config['max_size']             = 2048; // 1MB
-        // $config['max_width']         = 1080;
-        // $config['max_height']        = 1080;
+        $config['max_size']             = 2048; // 2MB
 
         $this->load->library('upload', $config);
 
@@ -447,13 +489,12 @@ class Input extends CI_Controller
 
     public function delete_input4()
     {
-        $id         = $this->input->post('id');
-        $main_id    = $this->input->post('main_id');
+        $id      = $this->input->post('id');
+        $main_id = $this->input->post('main_id');
+        $main_id = $this->key->crypts($main_id, 'd');
 
         $this->db->delete("main_keterangan_sosial_ekonomi", ["id" => $id]);
-
-        $data['code'] = 200;
-        $data['main_id'] = $main_id;
+        $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');;
         
         echo json_encode($data);
     }

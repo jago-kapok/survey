@@ -25,7 +25,7 @@
                 </div>
 
                 <div id="status_lahan" class="row mb-3">
-                  <label class="col-sm-5 col-form-label side-b">1b ) Status Lahan Tempat Tinggal yang Ditempati</label>
+                  <label class="col-sm-5 col-form-label text-primary">1b ) Status Lahan Tempat Tinggal yang Ditempati</label>
                   <div class="col-sm-2">
                     <select id="status_lahan_value" name="status_lahan_value" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>
@@ -71,7 +71,7 @@
                 </div>
 
                 <div id="kondisi_dinding" class="row mb-3">
-                  <label class="col-sm-5 col-form-label side-b">4b ) Kondisi Dinding</label>
+                  <label class="col-sm-5 col-form-label text-primary">4b ) Kondisi Dinding</label>
                   <div class="col-sm-3">
                     <select id="kondisi_dinding_value" name="kondisi_dinding_value" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>
@@ -95,7 +95,7 @@
                 </div>
 
                 <div id="kondisi_atap" class="row mb-3">
-                  <label class="col-sm-5 col-form-label side-b">5b ) Kondisi Atap</label>
+                  <label class="col-sm-5 col-form-label text-primary">5b ) Kondisi Atap</label>
                   <div class="col-sm-3">
                     <select id="kondisi_atap_value" name="kondisi_atap_value" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>
@@ -153,7 +153,7 @@
                 </div>
 
                 <div id="daya_listrik" class="row mb-3">
-                  <label class="col-sm-5 col-form-label side-b">9b ) Daya Terpasang</label>
+                  <label class="col-sm-5 col-form-label text-primary">9b ) Daya Terpasang</label>
                   <div class="col-sm-3">
                     <select id="daya_listrik_value" name="daya_listrik_value" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>
@@ -165,7 +165,7 @@
                 </div>
 
                 <div id="id_pelanggan" class="row mb-3">
-                  <label class="col-sm-5 col-form-label side-b">9c ) ID Pelanggan</label>
+                  <label class="col-sm-5 col-form-label text-primary">9c ) ID Pelanggan</label>
                   <div class="col-sm-3">
                     <input id="id_pelanggan_value" type="number" name="id_pelanggan_value" class="form-control form-control-sm">
                   </div>
@@ -196,7 +196,7 @@
                 </div>
 
                 <div id="jenis_toilet" class="row mb-3">
-                  <label class="col-sm-5 col-form-label side-b">11b ) Jenis Kloset</label>
+                  <label class="col-sm-5 col-form-label text-primary">11b ) Jenis Kloset</label>
                   <div class="col-sm-3">
                     <select id="jenis_toilet_value" name="jenis_toilet_value" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>

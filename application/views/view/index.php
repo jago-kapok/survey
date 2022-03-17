@@ -44,26 +44,20 @@
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Nama SLS</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: RT. <?php echo $tahap_satu->rt ?> / RW. <?php echo $tahap_satu->rw ?> <?php echo $tahap_satu->dusun ?></label>
+                    <label class="col-form-label">: <?php echo $tahap_satu->dusun ?> RT. <?php echo $tahap_satu->rt ?> / RW. <?php echo $tahap_satu->rw ?></label>
                   </div>
                 </div>
               </div>
 
               <div class="col-lg-6">
                 <div class="row mb-0">
-                  <label class="col-lg-5 col-form-label">Alamat <span class="form-text">( Jalan / Gang / No. Rumah )</span></label>
+                  <label class="col-lg-5 col-form-label">Alamat <span class="form-text">( Jalan / Gang / Blok / No. Rumah )</span></label>
                   <div class="col-lg-6">
                     <label class="col-form-label">: <?php echo $tahap_satu->alamat ?></label>
                   </div>
                 </div>
                 <div class="row mb-0">
-                  <label class="col-lg-5 col-form-label">No. Urut Rumah Tangga <span class="form-text">(DTKS2021.MDK Kol. 1)</span></label>
-                  <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_satu->no_urut_ruta ?></label>
-                  </div>
-                </div>
-                <div class="row mb-0">
-                  <label class="col-lg-5 col-form-label">Nama Kepala Rumah Tangga</label>
+                  <label class="col-lg-5 col-form-label">Nama Kepala Keluarga</label>
                   <div class="col-lg-6">
                     <label class="col-form-label">: <?php echo $tahap_satu->nama_krt ?></label>
                   </div>
@@ -75,9 +69,15 @@
                   </div>
                 </div>
                 <div class="row mb-0">
-                  <label class="col-lg-5 col-form-label">Jumlah Anggota Rumah Tangga</label>
+                  <label class="col-lg-5 col-form-label">Jumlah Anggota Keluarga</label>
                   <div class="col-lg-6">
                     <label class="col-form-label">: <?php echo $tahap_satu->jumlah_art ?></label>
+                  </div>
+                </div>
+                <div class="row mb-0">
+                  <label class="col-lg-5 col-form-label">Relasi dengan Nomor KK</label>
+                  <div class="col-lg-6">
+                    <label class="col-form-label">: <?php echo $tahap_satu->relasi_no_kk ?></label>
                   </div>
                 </div>
               </div>
@@ -96,7 +96,7 @@
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Nama Pencacah</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_dua->nama_pencacah ?> / <?php echo $tahap_dua->kode_pencacah ?></label>
+                    <label class="col-form-label">: <?php echo $tahap_dua->nama_pencacah ?></label>
                   </div>
                 </div>
                 <div class="row mb-0">
@@ -108,7 +108,7 @@
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Nama Pemeriksa</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_dua->nama_pemeriksa ?> / <?php echo $tahap_dua->kode_pemeriksa ?></label>
+                    <label class="col-form-label">: <?php echo $tahap_dua->nama_pemeriksa ?></label>
                   </div>
                 </div>
               </div>
@@ -118,12 +118,6 @@
                   <label class="col-lg-5 col-form-label">Hasil Pencacahan Rumah Tangga</label>
                   <div class="col-lg-6">
                     <label class="col-form-label">: <?php echo $tahap_dua->desc ?></label>
-                  </div>
-                </div>
-                <div class="row mb-0">
-                  <label class="col-lg-5 col-form-label">Bagian dari Dokumen No.</label>
-                  <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_dua->bagian_no_ruta ?></label>
                   </div>
                 </div>
               </div>
@@ -343,7 +337,7 @@
                   </div>
                 </div>
                 <div class="row mb-0">
-                  <label class="col-lg-5 col-form-label">Telepon Rumah ( PSTN )</label>
+                  <label class="col-lg-5 col-form-label">Telepon Rumah / <i>Handphone</i></label>
                   <div class="col-lg-6">
                     <label class="col-form-label">: <?php echo $tahap_lima->telepon ?></label>
                   </div>
@@ -419,9 +413,9 @@
                   </div>
                 </div>
                 <div class="row mb-0">
-                  <label class="col-lg-5 col-form-label">Tabung Gas 5,5 kg</label>
+                  <label class="col-lg-5 col-form-label">Rumah di Tempat Lain</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->tabung_gas_5kg ?></label>
+                    <label class="col-form-label">: <?php echo $tahap_lima->rumah_lain ?></label>
                   </div>
                 </div>
               </div>
@@ -449,19 +443,31 @@
                     <label class="col-form-label">: <?php echo $tahap_lima->kuda ?> ekor</label>
                   </div>
                 </div>
-              </div>
-
-              <div class="col-lg-6">
-                <div class="row mb-0">
-                  <label class="col-lg-5 col-form-label">Babi</label>
-                  <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->babi ?> ekor</label>
-                  </div>
-                </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Kambing / Domba</label>
                   <div class="col-lg-6">
                     <label class="col-form-label">: <?php echo $tahap_lima->kambing ?> ekor</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="row mb-0">
+                  <label class="col-lg-5 col-form-label">Unggas</label>
+                  <div class="col-lg-6">
+                    <label class="col-form-label">: <?php echo $tahap_lima->unggas ?> ekor</label>
+                  </div>
+                </div>
+                <div class="row mb-0">
+                  <label class="col-lg-5 col-form-label">Kelinci</label>
+                  <div class="col-lg-6">
+                    <label class="col-form-label">: <?php echo $tahap_lima->kelinci ?> ekor</label>
+                  </div>
+                </div>
+                <div class="row mb-0">
+                  <label class="col-lg-5 col-form-label">Perikanan (bibit)</label>
+                  <div class="col-lg-6">
+                    <label class="col-form-label">: <?php echo $tahap_lima->perikanan ?> ekor</label>
                   </div>
                 </div>
               </div>
@@ -514,7 +520,7 @@
                             <?php echo $data['registrasi_usaha'] ?>
                           </td>
                           <td width="200">
-                            Rp <?php echo $data['omset_perbulan'] ?>
+                            Rp <?php echo number_format($data['omset_perbulan']) ?>
                           </td>
                         </tr>
                       <?php } ?>
@@ -528,15 +534,23 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="row mb-0">
-                    <label class="col-lg-5 col-form-label">Untuk pulsa dan paket data telepon genggam (handphone) setiap bulan (selama 3 bulan terakhir)</label>
+                    <label class="col-lg-5 col-form-label">Estimasi pengeluaran keluarga setiap bulan (untuk Pangan)</label>
                     <div class="col-lg-6">
                       <label class="col-form-label">: Rp <?php echo $tahap_lima->estimasi_pengeluaran ?></label>
                     </div>
                   </div>
                 </div>
+                <div class="col-lg-6">
+                  <div class="row mb-0">
+                    <label class="col-lg-5 col-form-label">Estimasi pengeluaran keluarga setiap bulan (untuk Non-Pangan)</label>
+                    <div class="col-lg-6">
+                      <label class="col-form-label">: Rp <?php echo $tahap_lima->estimasi_pengeluaran_non_pangan ?></label>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <label class="mt-2"><b><i>6. Apakah keluarga ini pernah / sedang mendapatkan bantuan sosial atau hibbah pemerintah selama setahun terakhir</i></b></label>
+              <label class="mt-2"><b><i>6. Apakah keluarga ini pernah / sedang mendapatkan bantuan dari pemerintah selama setahun terakhir</i></b></label>
               
               <div class="row mt-2">
                 <div class="col-lg-6">

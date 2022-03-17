@@ -21,6 +21,20 @@
   <script>
     $(".form-control").attr("autocomplete", "off");
 
+    /* ============================ */
+    /* Number Only              
+    /* ============================ */
+    $('.number').keypress(function(event){
+      var charCode = event.keyCode
+      if (charCode > 31 && (charCode != 46 &&(charCode < 48 || charCode > 57)))
+        return false;
+      return true;
+    });
+
+    $.notify.defaults({
+      autoHideDelay: 5000
+    });
+
     $("#bagian_no_ruta").hide();
     $("#status_lahan").hide();
     $("#kondisi_dinding").hide();
@@ -29,14 +43,13 @@
     $("#id_pelanggan").hide();
     $("#jenis_toilet").hide();
     $("#lahan_luas").attr("disabled", true);
-    $("#detail_usaha").hide();
+    // $("#detail_usaha").hide();
 
     $("#hasil_pencacahan").change(function() {
       if(this.value == 6) {
         $("#bagian_no_ruta").show();
         $("#no_urut_ruta").focus();
       } else {
-        $("#bagian_no_ruta").val("");
         $("#bagian_no_ruta").hide();
       }
     });
@@ -46,8 +59,8 @@
         $("#status_lahan").show();
         $("#status_lahan_value").focus();
       } else {
-        $("#status_lahan").val("");
         $("#status_lahan").hide();
+        $("#status_lahan_value").val("");
       }
     });
 
@@ -57,7 +70,7 @@
         $("#kondisi_dinding_value").focus();
       } else {
         $("#kondisi_dinding").hide();
-        $("#kondisi_dinding").val("");
+        $("#kondisi_dinding_value").val("");
       }
     });
 
@@ -67,7 +80,7 @@
         $("#kondisi_atap_valuei").focus();
       } else {
         $("#kondisi_atap").hide();
-        $("#kondisi_atap").val("");
+        $("#kondisi_atap_value").val("");
       }
     });
 
@@ -78,9 +91,9 @@
         $("#daya_listrik_value").focus();
       } else {
         $("#daya_listrik").hide();
-        $("#daya_listrik").val("");
+        $("#daya_listrik_value").val("");
         $("#id_pelanggan").hide();
-        $("#id_pelanggan").val("");
+        $("#id_pelanggan_value").val("");
       }
     });
 
@@ -90,7 +103,7 @@
         $("#jenis_toilet_value").focus();
       } else {
         $("#jenis_toilet").hide();
-        $("#jenis_toilet").val("");
+        $("#jenis_toilet_value").val("");
       }
     });
 
@@ -100,7 +113,7 @@
         $("#lahan_luas").focus();
       } else {
         $("#lahan_luas").attr("disabled", true);
-        $("#lahan_luas").val("");
+        $("#lahan_luas_value").val("");
       }
     });
 
@@ -110,7 +123,7 @@
         $("#detail_usaha").find('input').empty();
       } else {
         $("#detail_usaha").hide();
-        $("#detail_usaha").val("");
+        $("#detail_usaha_value").val("");
       }
     });
   </script>

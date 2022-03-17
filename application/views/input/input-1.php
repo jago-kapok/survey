@@ -6,7 +6,7 @@
           <div class="card mb-2" style="padding: 8px 15px">
             <h6 class="mb-0"><strong>I. PENGENALAN TEMPAT</strong></h6>
           </div>
-                
+      
           <div class="card">
             <form id="form_data">
             <div class="row">
@@ -53,16 +53,16 @@
                 <div class="row mb-3">
                   <label class="col-md-5 col-form-label">Nama SLS</label>
                   <div class="col-md-6">
-                    <div class="input-group input-group-sm">
-                      <span class="input-group-text">RT</span>
-                      <input id="rt" type="text" name="rt" maxlength="3" class="form-control form-control-sm">
-                      <span class="input-group-text">RW</span>
-                      <input id="rw" type="text" name="rw" maxlength="3" class="form-control form-control-sm">
-                    </div>
-
-                    <div class="input-group input-group-sm mt-3">
+                    <div class="input-group input-group-sm mb-3">
                       <span class="input-group-text">Dusun</span>
                       <input id="dusun" type="text" name="dusun" class="form-control form-control-sm">
+                    </div>
+
+                    <div class="input-group input-group-sm">
+                      <span class="input-group-text">RW</span>
+                      <input id="rw" type="text" name="rw" maxlength="3" class="form-control form-control-sm number">
+                      <span class="input-group-text">RT</span>
+                      <input id="rt" type="text" name="rt" maxlength="3" class="form-control form-control-sm number">
                     </div>
                   </div>
                 </div>
@@ -74,21 +74,12 @@
                   <div class="col-md-6">
                     <input id="alamat" type="text" name="alamat" class="form-control form-control-sm">
                     <div class="form-text">
-                      Isi dengan gang / jalan / blok atau biarkan kosong
+                      Isi dengan gang / jalan / blok / nomor rumah
                     </div>
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label class="col-md-5 col-form-label">No. Urut Rumah Tangga</label>
-                  <div class="col-md-6">
-                    <input id="no_urut_ruta" type="number" name="no_urut_ruta" class="form-control form-control-sm">
-                    <div class="form-text">
-                      No. Urut Rumah Tangga (DTKS2021.MDK Kol. 1)
-                    </div>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label class="col-md-5 col-form-label">Nama Kepala Rumah Tangga <span class="text-danger">*</span></label>
+                  <label class="col-md-5 col-form-label">Nama Kepala Keluarga <span class="text-danger">*</span></label>
                   <div class="col-md-6">
                     <input id="nama_krt" type="text" name="nama_krt" class="form-control form-control-sm">
                   </div>
@@ -97,103 +88,28 @@
                   <label class="col-md-5 col-form-label"></label>
                   <div class="col-md-6">
                     <div class="input-group input-group-sm">
-                      <span class="input-group-text">No. KK</span>
-                      <input id="no_kk_krt" type="text" name="no_kk_krt" maxlength="16" class="form-control form-control-sm">
+                      <span class="input-group-text">No. KK&nbsp;<span class="text-danger">*</span></span>
+                      <input id="no_kk_krt" type="text" name="no_kk_krt" maxlength="16" class="form-control form-control-sm number">
                     </div>
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label class="col-md-5 col-form-label">Jumlah Anggota Rumah Tangga <span class="text-danger">*</span></label>
-                  <div class="col-md-6">
+                  <label class="col-md-5 col-form-label">Jumlah Anggota Keluarga</label>
+                  <div class="col-md-3">
                     <input id="jumlah_art" type="number" name="jumlah_art" class="form-control form-control-sm">
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label class="col-md-5 col-form-label">Jumlah Keluarga <span class="text-danger">*</span></label>
+                  <label class="col-md-5 col-form-label">Serumah dengan No. KK</label>
                   <div class="col-md-6">
-                    <input id="jumlah_keluarga" type="number" name="jumlah_keluarga" class="form-control form-control-sm" value="1" readonly>
+                    <input id="relasi_no_kk" type="text" name="relasi_no_kk" maxlength="16" class="form-control form-control-sm number">
+                    <div class="form-text">
+                      Jika dalam satu rumah terdapat lebih dari satu KK
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-
-            <!-- <div class="row">
-              <label class="mb-2"><strong>Nomor KK setiap keluarga di dalam rumah tangga</strong></label>
-              <div class="col-md-4">
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">KK01</label>
-                  <div class="col-sm-10">
-                    <input id="kk01" type="text" name="no_kk[]" maxlength="16" class="form-control form-control-sm">
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">KK02</label>
-                  <div class="col-sm-10">
-                    <input id="kk02" type="text" name="no_kk[]" maxlength="16" class="form-control form-control-sm" disabled>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">KK03</label>
-                  <div class="col-sm-10">
-                    <input id="kk03" type="text" name="no_kk[]" maxlength="16" class="form-control form-control-sm" disabled>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">KK04</label>
-                  <div class="col-sm-10">
-                    <input id="kk04" type="text" name="no_kk[]" maxlength="16" class="form-control form-control-sm" disabled>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">KK05</label>
-                  <div class="col-sm-10">
-                    <input id="kk05" type="text" name="no_kk[]" maxlength="16" class="form-control form-control-sm" disabled>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">KK06</label>
-                  <div class="col-sm-10">
-                    <input id="kk06" type="text" name="no_kk[]" maxlength="16" class="form-control form-control-sm" disabled>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">KK07</label>
-                  <div class="col-sm-10">
-                    <input id="kk07" type="text" name="no_kk[]" maxlength="16" class="form-control form-control-sm" disabled>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">KK08</label>
-                  <div class="col-sm-10">
-                    <input id="kk08" type="text" name="no_kk[]" maxlength="16" class="form-control form-control-sm" disabled>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">KK09</label>
-                  <div class="col-sm-10">
-                    <input id="kk09" type="text" name="no_kk[]" maxlength="16" class="form-control form-control-sm" disabled>
-                  </div>
-                </div>
-              </div>
-            </div> -->
 
             <div class="row mt-2">
               <div class="modal-footer">
@@ -241,9 +157,9 @@
     })
     .done(function (data) {
       console.log(data);
-      $("#simpanData").attr("disabled", true);
 
       if(data.success == true) {
+        $("#simpanData").attr("disabled", true);
         $.notify("Data berhasil disimpan !", "success");
 
         setInterval(() => {
