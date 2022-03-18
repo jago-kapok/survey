@@ -4,8 +4,8 @@
       <div class="tab-content" id="v-pills-tabContent">
         <div class="tab-pane fade show active" id="v-pills-kuesioner-1" role="tabpanel" aria-labelledby="v-pills-home-tab">
           <?php if($button_lanjut != "") { ?>
-            <a href="<?= base_url() ?>input/quest/<?php echo $button_lanjut ?>/<?php echo $main_id ?>" class="btn btn-success">
-              Lanjutkan Survey
+            <a href="<?= base_url() ?>input/quest/<?php echo $button_lanjut ?>/<?php echo $main_id ?>" class="btn btn-success mb-3">
+              Lanjutkan Survey&nbsp;&nbsp;<i class="bi-forward"></i>
             </a>
           <?php } ?>
           <div class="card mb-2" style="padding: 8px 15px">
@@ -130,55 +130,73 @@
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Status Penguasaan Bangunan Tempat Tinggal yang Ditempati</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_tiga->status_bangunan ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_tiga->status_bangunan) ? $tahap_tiga->status_bangunan : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Status Lahan Tempat Tinggal yang Ditempati</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_tiga->status_lahan ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_tiga->status_lahan)) ? $tahap_tiga->status_lahan : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Luas Lantai</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo round($tahap_tiga->luas_lantai_2, 2) ?> m²</label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_tiga->luas_lantai_2)) ? round($tahap_tiga->luas_lantai_2, 2).' m²' : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Jenis Lantai Terluas</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_tiga->jenis_lantai ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_tiga->jenis_lantai)) ? $tahap_tiga->jenis_lantai : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Jenis Dinding Terluas</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_tiga->jenis_dinding ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_tiga->jenis_dinding)) ? $tahap_tiga->jenis_dinding : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Kondisi Dinding Terluas</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_tiga->kondisi_dinding ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_tiga->kondisi_dinding)) ? $tahap_tiga->kondisi_dinding : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Jenis Atap Terluas</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_tiga->jenis_atap ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_tiga->jenis_atap)) ? $tahap_tiga->jenis_atap : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Kondisi Atap Terluas</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_tiga->kondisi_atap ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_tiga->kondisi_atap)) ? $tahap_tiga->kondisi_atap : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Jumlah Kamar Tidur</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_tiga->jumlah_kamar_6 ?> kamar</label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_tiga->jumlah_kamar_6)) ? $tahap_tiga->jumlah_kamar_6.' kamar' : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -187,49 +205,65 @@
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Sumber Air Minum</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_tiga->sumber_airminum ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_tiga->sumber_airminum)) ? $tahap_tiga->sumber_airminum : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Cara Memperoleh Air Minum</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_tiga->cara_memperoleh_airminum ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_tiga->cara_memperoleh_airminum)) ? $tahap_tiga->cara_memperoleh_airminum : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Sumber Listrik</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_tiga->sumber_listrik ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_tiga->sumber_listrik)) ? $tahap_tiga->sumber_listrik : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Daya Listrik</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_tiga->daya_listrik ?> ( ID : <?php echo $tahap_tiga->id_pelanggan_9c ?> )</label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_tiga->daya_listrik)) ? $tahap_tiga->daya_listrik.' / ID : '.$tahap_tiga->id_pelanggan_9c : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Bahan Bakar / Energi Utama untuk Memasak</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_tiga->energi_untuk_memasak ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_tiga->energi_untuk_memasak)) ? $tahap_tiga->energi_untuk_memasak : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Kepemilikan dan Penggunaan Fasilitas Tempat Buang Air Besar</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_tiga->status_toilet ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_tiga->status_toilet)) ? $tahap_tiga->status_toilet : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Jenis Kloset</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_tiga->jenis_toilet ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_tiga->jenis_toilet)) ? $tahap_tiga->jenis_toilet : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Tempat Pembuangan Akhir Tinja</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_tiga->tpa ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_tiga->tpa)) ? $tahap_tiga->tpa : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -303,43 +337,57 @@
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Tabung Gas 3 kg</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->tabung_gas_3kg ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->tabung_gas_3kg) ? $tahap_lima->tabung_gas_3kg : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Tabung Gas 5,5 kg</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->tabung_gas_5kg ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->tabung_gas_5kg) ? $tahap_lima->tabung_gas_5kg : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Tabung Gas 12 kg</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->tabung_gas_12kg ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->tabung_gas_12kg) ? $tahap_lima->tabung_gas_12kg : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Lemari Es / Kulkas</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->kulkas ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->kulkas) ? $tahap_lima->kulkas : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">AC ( <i>Air Conditioner</i> )</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->ac ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->ac) ? $tahap_lima->ac : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Pemanas Air ( <i>Water Heater</i> )</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->pemanas_air ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->pemanas_air) ? $tahap_lima->pemanas_air : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Telepon Rumah / <i>Handphone</i></label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->telepon ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->telepon) ? $tahap_lima->telepon : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -348,49 +396,65 @@
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Televisi Layar Datar (min. 30 inch)</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->televisi_flat ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->televisi_flat) ? $tahap_lima->televisi_flat : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Emas / Perhiasan (>= 10 gr Emas)</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->perhiasan_10gr ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->perhiasan_10gr) ? $tahap_lima->perhiasan_10gr : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Rekening Tabungan di Bank (Aktif)</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->rekening_bank ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->rekening_bank) ? $tahap_lima->rekening_bank : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Komputer / Laptop</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->komputer_laptop ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->komputer_laptop) ? $tahap_lima->komputer_laptop : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Sepeda Motor</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->sepeda_motor ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->sepeda_motor) ? $tahap_lima->sepeda_motor : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Mobil</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->mobil ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->mobil) ? $tahap_lima->mobil : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Perahu</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->perahu ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->perahu) ? $tahap_lima->perahu : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Perahu Motor</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->perahu_motor ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->perahu_motor) ? $tahap_lima->perahu_motor : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -403,9 +467,10 @@
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Lahan / Luas Lahan (m²)</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->lahan ?>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->lahan) ? $tahap_lima->lahan : '<span class="text-danger">Tidak Terisi</span>') ?>
                       <?php
-                        if($tahap_lima->lahan == 'Ya') {
+                        if(isset($tahap_lima->lahan) == 'Ya') {
                           echo '/ '.round($tahap_lima->lahan_luas, 2).' m²';
                         }
                       ?>
@@ -415,7 +480,9 @@
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Rumah di Tempat Lain</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->rumah_lain ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->rumah_lain) ? $tahap_lima->rumah_lain : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -428,25 +495,33 @@
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Sapi</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->sapi ?> ekor</label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->sapi) ? $tahap_lima->sapi.' ekor' : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Kerbau</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->kerbau ?> ekor</label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->kerbau) ? $tahap_lima->kerbau.' ekor' : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Kuda</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->kuda ?> ekor</label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->kuda) ? $tahap_lima->kuda.' ekor' : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Kambing / Domba</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->kambing ?> ekor</label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->kambing) ? $tahap_lima->kambing.' ekor' : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -455,19 +530,25 @@
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Unggas</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->unggas ?> ekor</label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->unggas) ? $tahap_lima->unggas.' ekor' : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Kelinci</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->kelinci ?> ekor</label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->kelinci) ? $tahap_lima->kelinci.' ekor' : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Perikanan (bibit)</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_lima->perikanan ?> ekor</label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_lima->perikanan) ? $tahap_lima->perikanan.' ekor' : '<span class="text-danger">Tidak Terisi</span>') ?>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -480,13 +561,15 @@
                   <div class="row mb-0">
                     <label class="col-lg-5 col-form-label">Apakah ada ART yang memiliki usaha sendiri / bersama ?</label>
                     <div class="col-lg-6">
-                      <label class="col-form-label">: <?php echo $tahap_lima->memiliki_usaha ?></label>
+                      <label class="col-form-label">:
+                        <?php echo (isset($tahap_lima->memiliki_usaha) ? $tahap_lima->memiliki_usaha : '<span class="text-danger">Tidak Terisi</span>') ?>
+                      </label>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <?php if($tahap_lima->memiliki_usaha == 'Ya') { ?>
+              <?php if(isset($tahap_lima->memiliki_usaha) == 'Ya') { ?>
                 <div class="row m-0 table-responsive">
                   <table class="table table-bordered table-striped" width="100%">
                     <thead class="bg-light">
@@ -536,7 +619,9 @@
                   <div class="row mb-0">
                     <label class="col-lg-5 col-form-label">Estimasi pengeluaran keluarga setiap bulan (untuk Pangan)</label>
                     <div class="col-lg-6">
-                      <label class="col-form-label">: Rp <?php echo $tahap_lima->estimasi_pengeluaran ?></label>
+                      <label class="col-form-label">:
+                        <?php echo (isset($tahap_lima->estimasi_pengeluaran) ? 'Rp '.$tahap_lima->estimasi_pengeluaran : '<span class="text-danger">Tidak Terisi</span>') ?>
+                      </label>
                     </div>
                   </div>
                 </div>
@@ -544,13 +629,15 @@
                   <div class="row mb-0">
                     <label class="col-lg-5 col-form-label">Estimasi pengeluaran keluarga setiap bulan (untuk Non-Pangan)</label>
                     <div class="col-lg-6">
-                      <label class="col-form-label">: Rp <?php echo $tahap_lima->estimasi_pengeluaran_non_pangan ?></label>
+                      <label class="col-form-label">:
+                        <?php echo (isset($tahap_lima->estimasi_pengeluaran_non_pangan) ? 'Rp '.$tahap_lima->estimasi_pengeluaran_non_pangan : '<span class="text-danger">Tidak Terisi</span>') ?>
+                      </label>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <label class="mt-2"><b><i>6. Apakah keluarga ini pernah / sedang mendapatkan bantuan dari pemerintah selama setahun terakhir</i></b></label>
+              <label class="mt-2"><b><i>6. Apakah keluarga ini pernah / sedang mendapatkan bantuan dari pemerintah selama setahun terakhir :</i></b></label>
               
               <div class="row mt-2">
                 <div class="col-lg-6">
@@ -572,9 +659,11 @@
                     <label class="col-lg-5 col-form-label">Koordinat Lokasi</label>
                     <div class="col-lg-6">
                       <label class="col-form-label">
-                        : <a href="https://google.com/maps/place/<?php echo $tahap_enam->latitude ?>,<?php echo $tahap_enam->longitude ?> "target="_blank" class="link-success">
-                          <i class="bi-geo-alt"></i>&nbsp;<?php echo $tahap_enam->latitude ?>, <?php echo $tahap_enam->longitude ?>
-                        </a>
+                        <?php if(isset($tahap_enam->latitude) && isset($tahap_enam->longitude)) { ?>
+                          : <a href="https://google.com/maps/place/<?php echo $tahap_enam->latitude ?>,<?php echo $tahap_enam->longitude ?> "target="_blank" class="link-success">
+                            <i class="bi-geo-alt"></i>&nbsp;<?php echo $tahap_enam->latitude ?>, <?php echo $tahap_enam->longitude ?>
+                          </a>
+                        <?php } ?>
                       </label>
                     </div>
                   </div>
@@ -582,57 +671,65 @@
               </div>
 
               <div class="row mt-3">
-                <div class="col-lg-3 mt-2">
-                  <div class="row m-0">
-                    <div class="card text-center">
-                    <div class="card-body">
-                      <img src="<?= base_url() ?>files/<?php echo $main_id ?>/<?php echo $tahap_enam->foto1 ?>" width="200" />
-                    </div>
-                    <div class="card-footer text-muted">
-                      <a href="<?= base_url() ?>files/<?php echo $main_id ?>/<?php echo $tahap_enam->foto1 ?>" target="_blank">LIHAT FOTO RUMAH</a>
-                    </div>
+                <?php if(isset($tahap_enam->foto1)) { ?>
+                  <div class="col-lg-3 mt-2">
+                    <div class="row m-0">
+                      <div class="card text-center">
+                      <div class="card-body">
+                        <img src="<?= base_url() ?>files/<?php echo $main_id_foto ?>/<?php echo $tahap_enam->foto1 ?>" width="200" />
+                      </div>
+                      <div class="card-footer text-muted">
+                        <a href="<?= base_url() ?>files/<?php echo $main_id_foto ?>/<?php echo $tahap_enam->foto1 ?>" target="_blank">LIHAT FOTO RUMAH</a>
+                      </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                <?php } ?>
 
-                <div class="col-lg-3 mt-2">
-                  <div class="row m-0">
-                    <div class="card text-center">
-                    <div class="card-body">
-                      <img src="<?= base_url() ?>files/<?php echo $main_id ?>/<?php echo $tahap_enam->foto2 ?>" width="200" />
-                    </div>
-                    <div class="card-footer text-muted">
-                      <a href="<?= base_url() ?>files/<?php echo $main_id ?>/<?php echo $tahap_enam->foto2 ?>" target="_blank">LIHAT FOTO RUMAH</a>
-                    </div>
+                <?php if(isset($tahap_enam->foto2)) { ?>
+                  <div class="col-lg-3 mt-2">
+                    <div class="row m-0">
+                      <div class="card text-center">
+                      <div class="card-body">
+                        <img src="<?= base_url() ?>files/<?php echo $main_id_foto ?>/<?php echo $tahap_enam->foto2 ?>" width="200" />
+                      </div>
+                      <div class="card-footer text-muted">
+                        <a href="<?= base_url() ?>files/<?php echo $main_id_foto ?>/<?php echo $tahap_enam->foto2 ?>" target="_blank">LIHAT FOTO RUMAH</a>
+                      </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                <?php } ?>
 
-                <div class="col-lg-3 mt-2">
-                  <div class="row m-0">
-                    <div class="card text-center">
-                    <div class="card-body">
-                      <img src="<?= base_url() ?>files/<?php echo $main_id ?>/<?php echo $tahap_enam->foto3 ?>" width="200" />
-                    </div>
-                    <div class="card-footer text-muted">
-                      <a href="<?= base_url() ?>files/<?php echo $main_id ?>/<?php echo $tahap_enam->foto3 ?>" target="_blank">LIHAT FOTO RUMAH</a>
-                    </div>
+                <?php if(isset($tahap_enam->foto3)) { ?>
+                  <div class="col-lg-3 mt-2">
+                    <div class="row m-0">
+                      <div class="card text-center">
+                      <div class="card-body">
+                        <img src="<?= base_url() ?>files/<?php echo $main_id_foto ?>/<?php echo $tahap_enam->foto3 ?>" width="200" />
+                      </div>
+                      <div class="card-footer text-muted">
+                        <a href="<?= base_url() ?>files/<?php echo $main_id_foto ?>/<?php echo $tahap_enam->foto3 ?>" target="_blank">LIHAT FOTO RUMAH</a>
+                      </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                <?php } ?>
 
-                <div class="col-lg-3 mt-2">
-                  <div class="row m-0">
-                    <div class="card text-center">
-                    <div class="card-body">
-                      <img src="<?= base_url() ?>files/<?php echo $main_id ?>/<?php echo $tahap_enam->foto4 ?>" width="200" />
-                    </div>
-                    <div class="card-footer text-muted">
-                      <a href="<?= base_url() ?>files/<?php echo $main_id ?>/<?php echo $tahap_enam->foto4 ?>" target="_blank">LIHAT FOTO RUMAH</a>
-                    </div>
+                <?php if(isset($tahap_enam->foto4)) { ?>
+                  <div class="col-lg-3 mt-2">
+                    <div class="row m-0">
+                      <div class="card text-center">
+                      <div class="card-body">
+                        <img src="<?= base_url() ?>files/<?php echo $main_id_foto ?>/<?php echo $tahap_enam->foto4 ?>" width="200" />
+                      </div>
+                      <div class="card-footer text-muted">
+                        <a href="<?= base_url() ?>files/<?php echo $main_id_foto ?>/<?php echo $tahap_enam->foto4 ?>" target="_blank">LIHAT FOTO RUMAH</a>
+                      </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                <?php } ?>
               </div>
             </div>
           </div>

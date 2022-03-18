@@ -138,8 +138,6 @@ class Admin extends CI_Controller
                                 ->where('main_id', $main_id)
         						->get('main_foto_lokasi')->row();
 
-        $data["main_id"] = $main_id;
-
 		$tahap1 = $this->db->where('main_id', $main_id)->get('main_pengenalan_tempat')->result_array();
 		$tahap2 = $this->db->where('main_id', $main_id)->get('main_keterangan_petugas_dan_responden')->result_array();
 		$tahap3 = $this->db->where('main_id', $main_id)->get('main_keterangan_perumahan')->result_array();
@@ -153,6 +151,7 @@ class Admin extends CI_Controller
 			$data['button_lanjut'] = 2;
 		} else if(count($tahap3) < 1) {
 			$data['button_lanjut'] = 3;
+			$data['tahap_tiga'] = '';
 		} else if(count($tahap4) < 1) {
 			$data['button_lanjut'] = 1;
 		} else if(count($tahap5) < 1) {
@@ -163,8 +162,11 @@ class Admin extends CI_Controller
 			$data['button_lanjut'] = "";
 		}
 
-        $this->load->view('templates/header', $data);
-        $this->load->view('view/index', $data);
-        $this->load->view('templates/footer');
+		$data["main_id"] = $this->key->crypts($main_id, 'e');
+		$data["main_id_foto"] = $main_id;
+
+    $this->load->view('templates/header', $data);
+    $this->load->view('view/index', $data);
+    $this->load->view('templates/footer');
 	}
 }
