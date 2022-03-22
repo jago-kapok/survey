@@ -114,7 +114,6 @@
        // encode: true,
     })
     .done(function (data) {
-      console.log(data);
       $("#simpanData").attr("disabled", true);
 
       if(data.success == true) {

@@ -126,6 +126,46 @@
         $("#detail_usaha_value").val("");
       }
     });
+
+    // Penggantian Password
+    $("#form_change_password").submit(function (event) {
+      event.preventDefault();
+      var data = new FormData($("#form_change_password")[0]);
+
+      $.ajax({
+        type: "POST",
+        url: "<?= base_url() ?>admin/changePassword",
+        data: data,
+        dataType: "json",
+        cache       : false,
+        contentType : false,
+        processData : false,
+      })
+      .done(function (data) {
+        $("#ubahPassword").modal('hide');
+
+        if(data.success == true) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Password Berhasil Diubah !',
+            showConfirmButton: false,
+            timer: 1200
+          });
+        } else {
+          $.each(data.errors, function(index, value) {
+            $.notify(value, "error");
+          })
+        }
+      })
+      .fail(function () {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Koneksi Bermasalah !',
+          text: 'Tidak dapat terhubung dengan server.',
+          showConfirmButton: true
+        })
+      });
+    });
   </script>
 </body>
 </html>

@@ -482,28 +482,24 @@
               <label class="mb-2"><strong>5. Estimasi pengeluaran rumah tangga :</strong></label>
               <div class="col-md-6">
                 <div class="row mb-3">
-                  <label class="col-md-7 col-form-label">Estimasi pengeluaran keluarga setiap bulan (untuk Pangan)</label>
+                  <label class="col-md-7 col-form-label">Makanan (Bahan Makanan / Minuman, Makanan Jadi, Rokok, dll.)</label>
                   <div class="col-md-3">
-                    <select id="estimasi_pengeluaran" name="estimasi_pengeluaran" class="form-select form-select-sm">
-                      <option disabled selected>--- Pilihan ---</option>
-                      <?php foreach($estimasi_pengeluaran as $data) { ?>
-                        <option value="<?php echo $data["id"] ?>"><?php echo $data["desc"] ?></option>
-                      <?php } ?>
-                    </select>
+                    <div class="input-group input-group-sm">
+                      <span class="input-group-text">Rp</span>
+                      <input type="number" name="estimasi_pengeluaran" class="form-control form-control-sm">
+                    </div>
                   </div>
                 </div>
               </div>
 
               <div class="col-md-6">
                 <div class="row mb-3">
-                  <label class="col-md-7 col-form-label">Estimasi pengeluaran keluarga setiap bulan (untuk Non-Pangan)</label>
+                  <label class="col-md-7 col-form-label">Non Makanan (Listrik, Air, BBM, Pulsa, Pemeliharaan, Pakaian, Pendidikan, Kesehatan, dll.)</label>
                   <div class="col-md-3">
-                    <select id="estimasi_pengeluaran_non_pangan" name="estimasi_pengeluaran_non_pangan" class="form-select form-select-sm">
-                      <option disabled selected>--- Pilihan ---</option>
-                      <?php foreach($estimasi_pengeluaran as $data) { ?>
-                        <option value="<?php echo $data["id"] ?>"><?php echo $data["desc"] ?></option>
-                      <?php } ?>
-                    </select>
+                    <div class="input-group input-group-sm">
+                      <span class="input-group-text">Rp</span>
+                      <input type="number" name="estimasi_pengeluaran_non_makanan" class="form-control form-control-sm">
+                    </div>
                   </div>
                 </div>
               </div>
@@ -571,7 +567,6 @@
       // encode: true,
     })
     .done(function (data) {
-      console.log(data);
       $("#simpanData").attr("disabled", true);
       
       if(data.success == true) {

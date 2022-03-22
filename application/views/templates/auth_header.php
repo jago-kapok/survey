@@ -5,6 +5,9 @@
   <title>Survey Pemutakhiran DTKS - Kab. Bojonegoro</title>
   <!-- Mobile Specific Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <link rel="icon" type="image/x-icon" href="<?= base_url('assets/') ?>dist/img/logo.png">
+
   <!-- Font-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

@@ -5,7 +5,7 @@
 			<div class="d-flex justify-content-between mb-1">
 				<div>
 					<h6 class="text-black-50 mb-2"><strong>Survey Hari Ini</strong></h6>
-					<h4 class=""><strong><?php echo $survey_hari_ini ?></strong> KK</h4>
+					<h3 class=""><strong><?php echo $survey_hari_ini ?></strong> <span style="font-size: 1rem">KK</span></h3>
 				</div>
 
 				<div class="btn card-icon" style="background-color: #d0e1fd">
@@ -21,7 +21,7 @@
 			<div class="d-flex justify-content-between mb-1">
 				<div>
 					<h6 class="text-black-50 mb-2"><strong>Total Survey Masuk</strong></h6>
-					<h4 class=""><strong><?php echo $total_survey ?></strong> KK</h4>
+					<h3 class=""><strong><?php echo $total_survey ?></strong> <span style="font-size: 1rem">KK</span></h3>
 				</div>
 
 				<div class="btn card-icon" style="background-color: #80f1af">
@@ -36,8 +36,8 @@
 		<div class="card p-4">
 			<div class="d-flex justify-content-between mb-1">
 				<div>
-					<h6 class="text-black-50 mb-2"><strong>Total Kecamatan</strong></h6>
-					<h4 class=""><strong>28</strong></h4>
+					<h6 class="text-black-50 mb-2"><strong>Kecamatan</strong></h6>
+					<h3 class=""><strong>28</strong></h3>
 				</div>
 
 				<div class="btn card-icon" style="background-color: #ead6fd">
@@ -52,15 +52,15 @@
 		<div class="card p-4">
 			<div class="d-flex justify-content-between mb-1">
 				<div>
-					<h6 class="text-black-50 mb-2"><strong>Total Desa</strong></h6>
-					<h4 class=""><strong>419</strong></h4>
+					<h6 class="text-black-50 mb-2"><strong>Desa / Kelurahan</strong></h6>
+					<h3 class=""><strong>430</strong></h3>
 				</div>
 
 				<div class="btn card-icon" style="background-color: #feddc7">
 					<i class="bi-geo-alt text-danger"></i>
 				</div>
 			</div>
-			<span class="text-muted">Jumlah desa di 28 kecamatan</span>
+			<span class="text-muted">Jumlah desa dan kelurahan di 28 kecamatan</span>
 		</div>
 	</div>
 </div>

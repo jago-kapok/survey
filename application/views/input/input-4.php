@@ -437,8 +437,6 @@
 			processData	: false,
     })
     .done(function (data) {
-      console.log(data);
-
       if(data.success == true) {
         Swal.fire({
           icon: 'success',
@@ -480,8 +478,6 @@
     }).then((result) => {
       if (result.isConfirmed) {
         $.post("<?= base_url() ?>input/delete_input4", { id: id, main_id: main_id }, function(data) {
-          console.log(data);
-
           Swal.fire({
             icon: 'success',
             title: 'Data berhasil dihapus !',

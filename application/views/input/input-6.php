@@ -161,8 +161,6 @@
           // encode: true,
         })
         .done(function (data) {
-          console.log(data);
-
           Swal.fire({
             icon: 'success',
             title: 'Data survey berhasil disimpan !',

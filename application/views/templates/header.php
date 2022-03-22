@@ -5,6 +5,9 @@
   <title><?php echo $title ?></title>
   <!-- Mobile Specific Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <link rel="icon" type="image/x-icon" href="<?= base_url('assets/') ?>dist/img/logo.png">
+  
   <!-- Font-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -69,21 +72,65 @@
           </li>
         </ul>
         <form class="d-flex">
+          <span class="nav-icon me-2" style="font-size: 0.8rem; padding: 0.5rem">
+            <i>Selamat datang, <?php echo $this->session->userdata('user_fullname') ?></i>
+          </span>
           <div class="dropdown">
             <a href="javascript:void(0)" class="nav-icon dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none">
               <i class="bi-person-circle"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
               <li><h6 class="dropdown-header">Menu Pengguna</h6></li>
-              <li><a class="dropdown-item" href="#"><i class="bi-person"></i>&nbsp;&nbsp;Profile</a></li>
+              <li><a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#ubahPassword"><i class="bi-person"></i>&nbsp;&nbsp;Ganti Password</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="<?php base_url() ?>auth/logout"><i class="bi-box-arrow-right"></i>&nbsp;&nbsp;Keluar</a></li>
+              <li><a class="dropdown-item" href="<?= base_url() ?>auth/logout"><i class="bi-box-arrow-right"></i>&nbsp;&nbsp;Keluar</a></li>
             </ul>
           </div>
         </form>
       </div>
     </div>
   </nav>
+
+  <div class="modal fade" id="ubahPassword" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Ganti Password</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+        <form id="form_change_password">
+          <div class="modal-body">
+            <input type="hidden" name="user_id" value="<?php echo $this->session->userdata('user_id') ?>">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row mb-3">
+                  <label class="col-sm-6 col-form-label">Password Baru <span class="text-danger">*</span></label>
+                  <div class="col-sm-6">
+                    <input type="password" name="new_password" class="form-control form-control-sm" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="row mb-3">
+                  <label class="col-sm-6 col-form-label">Konfirmasi Password Baru <span class="text-danger">*</span></label>
+                  <div class="col-sm-6">
+                    <input type="password" name="confirm_password" class="form-control form-control-sm" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <div class="container-fluid p-4 mt-5">
     <div class="row mt-2">

@@ -31,7 +31,9 @@
                   <label class="col-md-5 col-form-label">Kecamatan <span class="text-danger">*</span></label>
                   <div class="col-md-6">
                     <select id="kecamatan_id" name="kecamatan_id" class="form-select form-select-sm">
-                      <option disabled selected>--- Pilih Kecataman --</option>
+                      <?php if($this->session->userdata('user_level') != 1) { ?>
+                        <option disabled selected>--- Pilih Kecataman --</option>
+                      <?php } ?>
                       <?php foreach($ref_kecamatan as $data) { ?>
                         <option value="<?php echo $data['id']; ?>"><?php echo $data['kecamatan'] ?></option>
                       <?php } ?>
@@ -156,8 +158,6 @@
       // encode: true,
     })
     .done(function (data) {
-      console.log(data);
-
       if(data.success == true) {
         $("#simpanData").attr("disabled", true);
         $.notify("Data berhasil disimpan !", "success");

@@ -17,39 +17,33 @@ class Auth extends CI_Controller
 		$username = $this->input->post('user_name');
 		$password = $this->input->post('user_auth');
 		
-		$where = array(
-			'user_name' => $username,
-			'user_password' => md5($password)
-		);
+		$user = $this->db->where('user_name', $username)->get('user')->row();
 		
-		// $user = $this->MasterModel->getBy('user', $where)->num_rows();
-		
-		// if($user > 0){
-		// 	$data_user = $this->MasterModel->getBy('user', $where)->row();
-		
-		// 	$user_level = $data_user->user_level == 1 ? 'Administrator' : 'User';
-		
-		// 	$data_session = array(
-		// 		'user_id'		=> $data_user->user_id,
-		// 		'user_fullname'	=> $data_user->user_fullname,
-		// 		'user_level'	=> $data_user->user_level,
-		// 		'level'			=> $user_level,
-		// 		'user_name'		=> $username,
-		// 		'user_password'	=> $data_user->user_password,
-		// 		'user_address'	=> $data_user->user_address,
-		// 		'user_phone'	=> $data_user->user_phone
-		// 	);
+		if(password_verify($password, $user->user_password))
+		{
+			$data_session = array(
+				'user_id'		=> $user->user_id,
+				'user_fullname'	=> $user->user_fullname,
+				'user_level'	=> $user->user_level,
+				'user_name'		=> $user->user_name,
+				'user_password'	=> $user->user_password,
+				'user_manager'	=> $user->user_manager,
+			);
  
-		// 	$this->session->set_userdata($data_session);
-			$this->session->set_userdata('user_id', 1);
- 
+			$this->session->set_userdata($data_session);
+
 			redirect(base_url(""));
-		// 	redirect(base_url(""));
-		// } else {
-		// 	$this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show">Username atau password salah !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-			
-		// 	redirect(base_url("auth"));
-		// }
+		} else {
+			if(!$user->user_name) {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show">Username tidak terdaftar !</div>');
+				
+				redirect(base_url("auth"));
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show">Password yang anda masukkan salah !</div>');
+				
+				redirect(base_url("auth"));
+			}
+		}
 	}
  
 	function logout(){

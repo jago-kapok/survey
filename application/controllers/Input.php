@@ -49,8 +49,14 @@ class Input extends CI_Controller
         $data['jabatan_pekerjaan'] = $this->db->get('jabatan_pekerjaan')->result_array();
         $data['status_anggota_ruta'] = $this->db->get('status_anggota_ruta')->result_array();
 
-        $data['ref_kecamatan'] = $this->db->get('ref_kecamatan')->result_array();
-        $data['ref_desa'] = $this->db->get('ref_desa')->result_array();
+        if($this->session->userdata('user_level') == 1) {
+            $data['ref_kecamatan'] = $this->db->where('id', $this->session->userdata('user_manager'))->get('ref_kecamatan')->result_array();
+            $data['ref_desa'] = $this->db->where('id', $this->session->userdata('user_name'))->get('ref_desa')->result_array();
+        } else {
+            $data['ref_kecamatan'] = $this->db->get('ref_kecamatan')->result_array();
+            $data['ref_desa'] = $this->db->get('ref_desa')->result_array();
+        }
+        
 
         $data['estimasi_pengeluaran'] = $this->db->get('estimasi_pengeluaran')->result_array();
         $data['jenis_bantuan'] = $this->db->get('jenis_bantuan')->result_array();
@@ -147,7 +153,7 @@ class Input extends CI_Controller
 
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');;
+            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
         }
         
         echo json_encode($data);
@@ -201,7 +207,7 @@ class Input extends CI_Controller
 
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');;
+            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
         }
         
         echo json_encode($data);
@@ -249,7 +255,7 @@ class Input extends CI_Controller
 
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');;
+            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
         }
         
         echo json_encode($data);
@@ -318,7 +324,7 @@ class Input extends CI_Controller
 
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');;
+            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
         }
         
         echo json_encode($data);
@@ -364,7 +370,7 @@ class Input extends CI_Controller
 
             'memiliki_usaha'    => $this->input->post('memiliki_usaha'),
             'estimasi_pengeluaran' => $this->input->post('estimasi_pengeluaran'),
-            'estimasi_pengeluaran_non_pangan' => $this->input->post('estimasi_pengeluaran_non_pangan'),
+            'estimasi_pengeluaran_non_makanan' => $this->input->post('estimasi_pengeluaran_non_makanan'),
         );
 
         if(empty($_POST['main_id'])) {
@@ -406,7 +412,7 @@ class Input extends CI_Controller
 
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');;
+            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
         }
         
         echo json_encode($data);
@@ -472,7 +478,7 @@ class Input extends CI_Controller
 
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');;
+            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
         }
         
         echo json_encode($data);
@@ -500,7 +506,7 @@ class Input extends CI_Controller
         $main_id = $this->key->crypts($main_id, 'd');
 
         $this->db->delete("main_keterangan_sosial_ekonomi", ["id" => $id]);
-        $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');;
+        $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
         
         echo json_encode($data);
     }

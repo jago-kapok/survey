@@ -617,7 +617,7 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="row mb-0">
-                    <label class="col-lg-5 col-form-label">Estimasi pengeluaran keluarga setiap bulan (untuk Pangan)</label>
+                    <label class="col-lg-5 col-form-label">Makanan (Bahan Makanan / Minuman, Makanan Jadi, Rokok, dll.)</label>
                     <div class="col-lg-6">
                       <label class="col-form-label">:
                         <?php echo (isset($tahap_lima->estimasi_pengeluaran) ? 'Rp '.$tahap_lima->estimasi_pengeluaran : '<span class="text-danger">Tidak Terisi</span>') ?>
@@ -627,10 +627,10 @@
                 </div>
                 <div class="col-lg-6">
                   <div class="row mb-0">
-                    <label class="col-lg-5 col-form-label">Estimasi pengeluaran keluarga setiap bulan (untuk Non-Pangan)</label>
+                    <label class="col-lg-5 col-form-label">Non Makanan (Listrik, Air, BBM, Pulsa, Pemeliharaan, Pakaian, Pendidikan, Kesehatan, dll.)</label>
                     <div class="col-lg-6">
                       <label class="col-form-label">:
-                        <?php echo (isset($tahap_lima->estimasi_pengeluaran_non_pangan) ? 'Rp '.$tahap_lima->estimasi_pengeluaran_non_pangan : '<span class="text-danger">Tidak Terisi</span>') ?>
+                        <?php echo (isset($tahap_lima->estimasi_pengeluaran_non_makanan) ? 'Rp '.$tahap_lima->estimasi_pengeluaran_non_makanan : '<span class="text-danger">Tidak Terisi</span>') ?>
                       </label>
                     </div>
                   </div>
