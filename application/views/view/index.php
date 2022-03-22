@@ -71,7 +71,7 @@
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Jumlah Anggota Keluarga</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_satu->jumlah_art ?></label>
+                    <label class="col-form-label">: <?php echo $tahap_satu->jumlah_art ?> orang</label>
                   </div>
                 </div>
                 <div class="row mb-0">
@@ -90,25 +90,33 @@
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Tanggal Pencacahan</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_dua->tanggal_pencacahan ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_dua->tanggal_pencacah)) ? $tahap_dua->tanggal_pencacah : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Nama Pencacah</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_dua->nama_pencacah ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_dua->nama_pencacah)) ? $tahap_dua->nama_pencacah : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Tanggal Pemeriksaan</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_dua->tanggal_pemeriksaan ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_dua->tanggal_pemeriksaan)) ? $tahap_dua->tanggal_pemeriksaan : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Nama Pemeriksa</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_dua->nama_pemeriksa ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_dua->nama_pemeriksa)) ? $tahap_dua->nama_pemeriksa : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -117,7 +125,9 @@
                 <div class="row mb-0">
                   <label class="col-lg-5 col-form-label">Hasil Pencacahan Rumah Tangga</label>
                   <div class="col-lg-6">
-                    <label class="col-form-label">: <?php echo $tahap_dua->desc ?></label>
+                    <label class="col-form-label">:
+                      <?php echo (isset($tahap_dua->hasil_pencacahan)) ? $tahap_dua->hasil_pencacahan : '<span class="text-danger">Tidak Terisi</span>' ?>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -615,9 +625,9 @@
               <label class="mt-2"><b><i>5. Estimasi pengeluaran rumah tangga :</i></b></label>
               
               <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                   <div class="row mb-0">
-                    <label class="col-lg-5 col-form-label">Makanan (Bahan Makanan / Minuman, Makanan Jadi, Rokok, dll.)</label>
+                    <label class="col-lg-6 col-form-label">Makanan (Bahan Makanan / Minuman, Makanan Jadi, Rokok, dll.)</label>
                     <div class="col-lg-6">
                       <label class="col-form-label">:
                         <?php echo (isset($tahap_lima->estimasi_pengeluaran) ? 'Rp '.$tahap_lima->estimasi_pengeluaran : '<span class="text-danger">Tidak Terisi</span>') ?>
@@ -625,9 +635,9 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                   <div class="row mb-0">
-                    <label class="col-lg-5 col-form-label">Non Makanan (Listrik, Air, BBM, Pulsa, Pemeliharaan, Pakaian, Pendidikan, Kesehatan, dll.)</label>
+                    <label class="col-lg-6 col-form-label">Non Makanan (Listrik, Air, BBM, Pulsa, Pemeliharaan, Pakaian, Pendidikan, Kesehatan, dll.)</label>
                     <div class="col-lg-6">
                       <label class="col-form-label">:
                         <?php echo (isset($tahap_lima->estimasi_pengeluaran_non_makanan) ? 'Rp '.$tahap_lima->estimasi_pengeluaran_non_makanan : '<span class="text-danger">Tidak Terisi</span>') ?>
@@ -657,7 +667,7 @@
                 <div class="col-lg-6">
                   <div class="row mb-0">
                     <label class="col-lg-5 col-form-label">Koordinat Lokasi</label>
-                    <div class="col-lg-6">
+                    <div class="col-lg-7">
                       <label class="col-form-label">
                         <?php if(isset($tahap_enam->latitude) && isset($tahap_enam->longitude)) { ?>
                           : <a href="https://google.com/maps/place/<?php echo $tahap_enam->latitude ?>,<?php echo $tahap_enam->longitude ?> "target="_blank" class="link-success">

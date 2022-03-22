@@ -92,7 +92,7 @@ class Input extends CI_Controller
         $errors = [];
         $data = [];
 
-        $data = array(
+        $data_post = array(
             'provinsi_id'       => $this->input->post('provinsi_id'),
             'kabupaten_id'      => $this->input->post('kabupaten_id'),
             'kecamatan_id'      => $this->input->post('kecamatan_id'),
@@ -109,6 +109,8 @@ class Input extends CI_Controller
             'relasi_no_kk'      => $this->input->post('relasi_no_kk'),
             'created_by'        => 1,
         );
+
+        $data_post = $this->security->xss_clean($data_post);
 
         if(empty($this->input->post('kecamatan_id'))) {
             $errors['kecamatan_id'] = 'Silakan pilih kecamatan';
@@ -148,12 +150,12 @@ class Input extends CI_Controller
             $data['success'] = false;
             $data['errors'] = $errors;
         } else {
-            $this->db->insert('main_pengenalan_tempat', $data);
+            $this->db->insert('main_pengenalan_tempat', $data_post);
             $main_id = $this->db->insert_id();
 
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
+            $data['main_id'] = $this->key->crypts($main_id, 'e');
         }
         
         echo json_encode($data);
@@ -167,7 +169,7 @@ class Input extends CI_Controller
         $main_id = $this->input->post('main_id');
         $main_id = $this->key->crypts($main_id, 'd');
 
-        $data = array(
+        $data_post = array(
             'main_id'               => $main_id,
             'tanggal_pencacahan'    => $this->input->post('tanggal_pencacahan'),
             'nama_pencacah'         => $this->input->post('nama_pencacah'),
@@ -203,11 +205,11 @@ class Input extends CI_Controller
             $data['success'] = false;
             $data['errors'] = $errors;
         } else {
-            $insert = $this->db->insert('main_keterangan_petugas_dan_responden', $data);
+            $insert = $this->db->insert('main_keterangan_petugas_dan_responden', $data_post);
 
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
+            $data['main_id'] = $this->key->crypts($main_id, 'e');
         }
         
         echo json_encode($data);
@@ -221,7 +223,7 @@ class Input extends CI_Controller
         $main_id = $this->input->post('main_id');
         $main_id = $this->key->crypts($main_id, 'd');
 
-        $data = array(
+        $data_post = array(
             'main_id'                   => $main_id,
             'status_bangunan_1a'        => $this->input->post('status_bangunan_value'),
             'status_lahan_1b'           => $this->input->post('status_lahan_value'),
@@ -251,7 +253,7 @@ class Input extends CI_Controller
             $data['success'] = false;
             $data['errors'] = $errors;
         } else {
-            $insert = $this->db->insert('main_keterangan_perumahan', $data);
+            $insert = $this->db->insert('main_keterangan_perumahan', $data_post);
 
             $data['success'] = true;
             $data['message'] = 'Success!';
@@ -269,7 +271,7 @@ class Input extends CI_Controller
         $main_id = $this->input->post('main_id');
         $main_id = $this->key->crypts($main_id, 'd');
 
-        $data = array(
+        $data_post = array(
             'main_id'                   => $main_id,
             'no_urut_keluarga'          => $this->input->post('no_urut_keluarga'),
             'nik_anggota'               => $this->input->post('nik_anggota'),
@@ -320,7 +322,7 @@ class Input extends CI_Controller
             $data['success'] = false;
             $data['errors'] = $errors;
         } else {
-            $insert = $this->db->insert('main_keterangan_sosial_ekonomi', $data);
+            $insert = $this->db->insert('main_keterangan_sosial_ekonomi', $data_post);
 
             $data['success'] = true;
             $data['message'] = 'Success!';
@@ -338,7 +340,7 @@ class Input extends CI_Controller
         $main_id = $this->input->post('main_id');
         $main_id = $this->key->crypts($main_id, 'd');
 
-        $data = array(
+        $data_post = array(
             'main_id'           => $main_id,
             'tabung_gas_3kg'    => $this->input->post('tabung_gas_3kg'),
             'tabung_gas_5kg'    => $this->input->post('tabung_gas_5kg'),
@@ -381,7 +383,7 @@ class Input extends CI_Controller
             $data['success'] = false;
             $data['errors'] = $errors;
         } else {
-            $insert = $this->db->insert('main_aset', $data);
+            $insert = $this->db->insert('main_aset', $data_post);
 
             if(isset($_POST['jenis_bantuan_id']) && $_POST['jenis_bantuan_id'] != "") {
                 foreach($_POST['jenis_bantuan_id'] as $key => $value) {
@@ -456,7 +458,7 @@ class Input extends CI_Controller
             $foto4 = "";
         }
 
-        $data = array(
+        $data_post = array(
             'main_id'   => $main_id,
             'latitude'  => $this->input->post('latitude'),
             'longitude' => $this->input->post('longitude'),
@@ -474,7 +476,7 @@ class Input extends CI_Controller
             $data['success'] = false;
             $data['errors'] = $errors;
         } else {
-            $insert = $this->db->insert('main_foto_lokasi', $data);
+            $insert = $this->db->insert('main_foto_lokasi', $data_post);
 
             $data['success'] = true;
             $data['message'] = 'Success!';

@@ -44,7 +44,7 @@
 					<i class="bi-map text-secondary"></i>
 				</div>
 			</div>
-			<span class="text-muted"><span style="color: #22c55e"><strong></strong></span>Jumlah di Kabupaten Bojonegoro</span>
+			<span class="text-muted"><span style="color: #22c55e"><strong></strong></span>Jumlah kecamatan</span>
 		</div>
 	</div>
 
@@ -60,7 +60,7 @@
 					<i class="bi-geo-alt text-danger"></i>
 				</div>
 			</div>
-			<span class="text-muted">Jumlah desa dan kelurahan di 28 kecamatan</span>
+			<span class="text-muted">Jumlah desa dan kelurahan</span>
 		</div>
 	</div>
 </div>

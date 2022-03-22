@@ -103,7 +103,8 @@ class Admin extends CI_Controller
         						->join('ref_desa', 'ref_desa.id = main_pengenalan_tempat.desa_id')
         						->get('main_pengenalan_tempat')->row();
 
-        $data['tahap_dua'] = $this->db->where('main_id', $main_id)
+        $data['tahap_dua'] = $this->db->select("main_keterangan_petugas_dan_responden.*, hasil_pencacahan.desc as hasil_pencacahan")
+                                ->where('main_id', $main_id)
         						->join('hasil_pencacahan', 'hasil_pencacahan.id = main_keterangan_petugas_dan_responden.hasil_pencacahan')
         						->get('main_keterangan_petugas_dan_responden')->row();
 
@@ -141,9 +142,9 @@ class Admin extends CI_Controller
         						->join('status_anggota_ruta', 'status_anggota_ruta.id = mse.status_anggota_ruta_id', 'left')
         						->get('main_keterangan_sosial_ekonomi mse')->result_array();
         
-        $data['tahap_lima'] = $this->db->select('main_aset.*, estimasi_pengeluaran.desc as estimasi_pengeluaran')
+        $data['tahap_lima'] = $this->db->select('main_aset.*')
                                 ->where('main_id', $main_id)
-                                ->join('estimasi_pengeluaran', 'estimasi_pengeluaran.id = main_aset.estimasi_pengeluaran')
+                                // ->join('estimasi_pengeluaran', 'estimasi_pengeluaran.id = main_aset.estimasi_pengeluaran')
         						->get('main_aset')->row();
 
         $data['tahap_lima_detail'] = $this->db->select('mud.*, mkse.nama_anggota as nama_anggota, lapangan_usaha.desc as lapangan_usaha')
