@@ -16,10 +16,6 @@
                 <div class="row mb-3">
                   <label class="col-md-6 col-form-label pt-0">a ) Tabung Gas 3 kg</label>
                   <div class="col-md-5">
-                    <!-- <select id="tabung_gas_3kg" class="form-select form-select-sm">
-                      <option value="Ya">Ya</option>
-                      <option value="Tidak">Tidak</option>
-                    </select> -->
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="tabung_gas_3kg" value="Ya">
                       <label class="form-check-label">Ya</label>
@@ -34,10 +30,6 @@
                 <div class="row mb-3">
                   <label class="col-md-6 col-form-label pt-0">b ) Tabung Gas 5,5 kg</label>
                   <div class="col-md-5">
-                    <!-- <select id="tabung_gas_5kg" class="form-select form-select-sm">
-                      <option value="Ya">Ya</option>
-                      <option value="Tidak">Tidak</option>
-                    </select> -->
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="tabung_gas_5kg" value="Ya">
                       <label class="form-check-label">Ya</label>
@@ -52,10 +44,6 @@
                 <div class="row mb-3">
                   <label class="col-md-6 col-form-label pt-0">c ) Tabung Gas 12 kg</label>
                   <div class="col-md-5">
-                    <!-- <select id="tabung_gas_12kg" class="form-select form-select-sm">
-                      <option value="Ya">Ya</option>
-                      <option value="Tidak">Tidak</option>
-                    </select> -->
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="tabung_gas_12kg" value="Ya">
                       <label class="form-check-label">Ya</label>
@@ -70,10 +58,6 @@
                 <div class="row mb-3">
                   <label class="col-md-6 col-form-label pt-0">d ) Lemari Es / Kulkas</label>
                   <div class="col-md-5">
-                    <!-- <select id="kulkas" class="form-select form-select-sm">
-                      <option value="Ya">Ya</option>
-                      <option value="Tidak">Tidak</option>
-                    </select> -->
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="kulkas" value="Ya">
                       <label class="form-check-label">Ya</label>
@@ -88,10 +72,6 @@
                 <div class="row mb-3">
                   <label class="col-md-6 col-form-label pt-0">e ) AC</label>
                   <div class="col-md-5">
-                    <!-- <select id="ac" class="form-select form-select-sm">
-                      <option value="Ya">Ya</option>
-                      <option value="Tidak">Tidak</option>
-                    </select> -->
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="ac" value="Ya">
                       <label class="form-check-label">Ya</label>
@@ -106,10 +86,6 @@
                 <div class="row mb-3">
                   <label class="col-md-6 col-form-label pt-0">f ) Pemanas Air (<i>Water Heater</i>)</label>
                   <div class="col-md-5">
-                    <!-- <select id="pemanas_air" class="form-select form-select-sm">
-                      <option value="Ya">Ya</option>
-                      <option value="Tidak">Tidak</option>
-                    </select> -->
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="pemanas_air" value="Ya">
                       <label class="form-check-label">Ya</label>
@@ -124,10 +100,6 @@
                 <div class="row mb-3">
                   <label class="col-md-6 col-form-label pt-0">g ) Telepon Rumah / <i>Handphone</i></label>
                   <div class="col-md-5">
-                    <!-- <select id="telepon" class="form-select form-select-sm">
-                      <option value="Ya">Ya</option>
-                      <option value="Tidak">Tidak</option>
-                    </select> -->
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="telepon" value="Ya">
                       <label class="form-check-label">Ya</label>
@@ -144,10 +116,6 @@
                 <div class="row mb-3">
                   <label class="col-md-6 col-form-label pt-0">h ) Televisi Layar Datar (min. 30 inch)</label>
                   <div class="col-md-5">
-                    <!-- <select id="televisi_flat" class="form-select form-select-sm">
-                      <option value="Ya">Ya</option>
-                      <option value="Tidak">Tidak</option>
-                    </select> -->
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="televisi_flat" value="Ya">
                       <label class="form-check-label">Ya</label>
@@ -162,10 +130,6 @@
                 <div class="row mb-3">
                   <label class="col-md-6 col-form-label pt-0">i ) Emas / Perhiasan (>= 10 gr Emas)</label>
                   <div class="col-md-5">
-                    <!-- <select id="perhiasan_10gr" class="form-select form-select-sm">
-                      <option value="Ya">Ya</option>
-                      <option value="Tidak">Tidak</option>
-                    </select> -->
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="perhiasan_10gr" value="Ya">
                       <label class="form-check-label">Ya</label>
@@ -180,10 +144,6 @@
                 <div class="row mb-3">
                   <label class="col-md-6 col-form-label pt-0">j ) Rekening Tabungan di Bank (Aktif)</label>
                   <div class="col-md-5">
-                    <!-- <select id="rekening_bank" class="form-select form-select-sm">
-                      <option value="Ya">Ya</option>
-                      <option value="Tidak">Tidak</option>
-                    </select> -->
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="rekening_bank" value="Ya">
                       <label class="form-check-label">Ya</label>
@@ -198,10 +158,6 @@
                 <div class="row mb-3">
                   <label class="col-md-6 col-form-label pt-0">k ) Komputer / Laptop</label>
                   <div class="col-md-5">
-                    <!-- <select id="komputer_laptop" class="form-select form-select-sm">
-                      <option value="Ya">Ya</option>
-                      <option value="Tidak">Tidak</option>
-                    </select> -->
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="komputer_laptop" value="Ya">
                       <label class="form-check-label">Ya</label>
@@ -216,10 +172,6 @@
                 <div class="row mb-3">
                   <label class="col-md-6 col-form-label pt-0">l ) Sepeda Motor</label>
                   <div class="col-md-5">
-                    <!-- <select id="sepeda_motor" class="form-select form-select-sm">
-                      <option value="Ya">Ya</option>
-                      <option value="Tidak">Tidak</option>
-                    </select> -->
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="sepeda_motor" value="Ya">
                       <label class="form-check-label">Ya</label>
@@ -234,10 +186,6 @@
                 <div class="row mb-3">
                   <label class="col-md-6 col-form-label pt-0">m ) Mobil</label>
                   <div class="col-md-5">
-                    <!-- <select id="mobil" class="form-select form-select-sm">
-                      <option value="Ya">Ya</option>
-                      <option value="Tidak">Tidak</option>
-                    </select> -->
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="mobil" value="Ya">
                       <label class="form-check-label">Ya</label>
@@ -252,10 +200,6 @@
                 <div class="row mb-3">
                   <label class="col-md-6 col-form-label pt-0">n ) Perahu</label>
                   <div class="col-md-5">
-                    <!-- <select id="perahu" class="form-select form-select-sm">
-                      <option value="Ya">Ya</option>
-                      <option value="Tidak">Tidak</option>
-                    </select> -->
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="perahu" value="Ya">
                       <label class="form-check-label">Ya</label>
@@ -270,10 +214,6 @@
                 <div class="row mb-3">
                   <label class="col-md-6 col-form-label pt-0">o ) Perahu Motor</label>
                   <div class="col-md-5">
-                    <!-- <select id="perahu_motor" class="form-select form-select-sm">
-                      <option value="Ya">Ya</option>
-                      <option value="Tidak">Tidak</option>
-                    </select> -->
                     <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="perahu_motor" value="Ya">
                       <label class="form-check-label">Ya</label>
@@ -291,14 +231,15 @@
               <label class="mb-2"><strong>2. Rumah tangga memiliki aset tidak bergerak sebagai berikut :</strong></label>
               <div class="col-md-6">
                 <div class="row mb-3">
-                  <label class="col-md-6 col-form-label">a ) Lahan</label>
-                  <div class="col-md-4">
-                    <div class="input-group input-group-sm">
+                  <label class="col-md-7 col-form-label">a ) Lahan</label>
+                  <div class="col-md-3">
+                    
                       <select id="lahan" name="lahan" class="form-select form-select-sm">
                         <option disabled selected>--- Pilihan ---</option>
                         <option value="Ya">Ya</option>
                         <option value="Tidak">Tidak</option>
                       </select>
+                    <div class="input-group input-group-sm mt-2">
                       <input id="lahan_luas" type="text" name="lahan_luas" class="form-control form-control-sm number">
                       <span class="input-group-text">m²</span>
                     </div>
@@ -446,7 +387,7 @@
                       <td><center><?php echo $key + 1 ?></center></td>
                       <td>
                         <input type="hidden" name="nama_id[]" value="<?php echo $data['id'] ?>">
-                        <input type="text" lass="form-control form-control-sm" value="<?php echo $data['nama_anggota'] ?>" readonly>
+                        <input type="text" class="form-control form-control-sm" value="<?php echo $data['nama_anggota'] ?>" readonly>
                       </td>
                       <td>
                         <input type="hidden" name="lapangan_usaha_id[]" value="<?php echo $data['lapangan_usaha_id'] ?>">
@@ -456,7 +397,7 @@
                       <td><input type="number" name="pegawai_tidak_dibayar[]" class="form-control form-control-sm"></td>
                       <td>
                         <select name="registrasi_usaha[]" class="form-select form-select-sm">
-                          <option disabled selected>--- Pilihan ---</option>
+                          <option value="" selected>--- Pilihan ---</option>
                           <option value="Ya">Ya</option>
                           <option value="Tidak">Tidak</option>
                         </select>
@@ -488,6 +429,9 @@
                       <span class="input-group-text">Rp</span>
                       <input type="number" name="estimasi_pengeluaran" class="form-control form-control-sm">
                     </div>
+                    <div class="form-text">
+                      Tanpa titik / koma
+                    </div>
                   </div>
                 </div>
               </div>
@@ -499,6 +443,9 @@
                     <div class="input-group input-group-sm">
                       <span class="input-group-text">Rp</span>
                       <input type="number" name="estimasi_pengeluaran_non_makanan" class="form-control form-control-sm">
+                    </div>
+                    <div class="form-text">
+                      Tanpa titik / koma
                     </div>
                   </div>
                 </div>
@@ -567,6 +514,7 @@
       // encode: true,
     })
     .done(function (data) {
+      console.log();
       $("#simpanData").attr("disabled", true);
       
       if(data.success == true) {

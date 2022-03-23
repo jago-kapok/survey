@@ -103,7 +103,7 @@
             <div class="row mb-3">
               <label class="col-sm-7 col-form-label">NIK Anggota Keluarga <span class="text-danger">*</span></label>
               <div class="col-sm-4">
-                <input id="nik_anggota" type="number" name="nik_anggota" class="form-control form-control-sm">
+                <input id="nik_anggota" type="text" name="nik_anggota" maxlength="16" class="form-control form-control-sm number">
               </div>
             </div>
 

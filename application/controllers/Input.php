@@ -398,7 +398,7 @@ class Input extends CI_Controller
 
             if(isset($_POST['nama_id']) && $_POST['main_id'] != "") {
                 foreach($_POST['nama_id'] as $key => $value) {
-                    $data_batch[] = array(
+                    $data_batch_usaha[] = array(
                         'main_id'           => $main_id,
                         'nama_id'           => $_POST['nama_id'][$key],
                         'lapangan_usaha_id' => $_POST['lapangan_usaha_id'][$key],
@@ -409,7 +409,7 @@ class Input extends CI_Controller
                     );
                 }
 
-                $insert_batch = $this->db->insert_batch('main_usaha_dimiliki', $data_batch);
+                $this->db->insert_batch('main_usaha_dimiliki', $data_batch_usaha);
             }
 
             $data['success'] = true;

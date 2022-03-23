@@ -177,11 +177,11 @@ class Admin extends CI_Controller
 			$data['button_lanjut'] = 3;
 			$data['tahap_tiga'] = '';
 		} else if(count($tahap4) < 1) {
-			$data['button_lanjut'] = 1;
+			$data['button_lanjut'] = 4;
 		} else if(count($tahap5) < 1) {
-			$data['button_lanjut'] = 1;
+			$data['button_lanjut'] = 5;
 		} else if(count($tahap6) < 1) {
-			$data['button_lanjut'] = 1;
+			$data['button_lanjut'] = 6;
 		} else {
 			$data['button_lanjut'] = "";
 		}

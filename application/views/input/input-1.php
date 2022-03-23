@@ -61,10 +61,10 @@
                     </div>
 
                     <div class="input-group input-group-sm">
-                      <span class="input-group-text">RW</span>
-                      <input id="rw" type="text" name="rw" maxlength="3" class="form-control form-control-sm number">
                       <span class="input-group-text">RT</span>
                       <input id="rt" type="text" name="rt" maxlength="3" class="form-control form-control-sm number">
+                      <span class="input-group-text">RW</span>
+                      <input id="rw" type="text" name="rw" maxlength="3" class="form-control form-control-sm number">
                     </div>
                   </div>
                 </div>

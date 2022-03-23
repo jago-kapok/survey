@@ -13,7 +13,7 @@
             <label class="text-secondary">Username</label>
             <div class="input-group mb-3">
               <span class="input-group-text"><i class="bi-person"></i></span>
-              <input type="text" name="user_name" class="form-control" placeholder="Username" autofocus required>
+              <input type="text" name="user_name" class="form-control" placeholder="Username" required>
             </div>
 
             <label class="text-secondary">Password</label>

@@ -91,7 +91,7 @@
                   <label class="col-lg-5 col-form-label">Tanggal Pencacahan</label>
                   <div class="col-lg-6">
                     <label class="col-form-label">:
-                      <?php echo (isset($tahap_dua->tanggal_pencacah)) ? $tahap_dua->tanggal_pencacah : '<span class="text-danger">Tidak Terisi</span>' ?>
+                      <?php echo (isset($tahap_dua->tanggal_pencacahan)) ? $tahap_dua->tanggal_pencacahan : '<span class="text-danger">Tidak Terisi</span>' ?>
                     </label>
                   </div>
                 </div>
