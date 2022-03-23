@@ -630,7 +630,7 @@
                     <label class="col-lg-6 col-form-label">Makanan (Bahan Makanan / Minuman, Makanan Jadi, Rokok, dll.)</label>
                     <div class="col-lg-6">
                       <label class="col-form-label">:
-                        <?php echo (isset($tahap_lima->estimasi_pengeluaran) ? 'Rp '.$tahap_lima->estimasi_pengeluaran : '<span class="text-danger">Tidak Terisi</span>') ?>
+                        <?php echo (isset($tahap_lima->estimasi_pengeluaran) ? 'Rp '.number_format($tahap_lima->estimasi_pengeluaran) : '<span class="text-danger">Tidak Terisi</span>') ?>
                       </label>
                     </div>
                   </div>
@@ -640,7 +640,7 @@
                     <label class="col-lg-6 col-form-label">Non Makanan (Listrik, Air, BBM, Pulsa, Pemeliharaan, Pakaian, Pendidikan, Kesehatan, dll.)</label>
                     <div class="col-lg-6">
                       <label class="col-form-label">:
-                        <?php echo (isset($tahap_lima->estimasi_pengeluaran_non_makanan) ? 'Rp '.$tahap_lima->estimasi_pengeluaran_non_makanan : '<span class="text-danger">Tidak Terisi</span>') ?>
+                        <?php echo (isset($tahap_lima->estimasi_pengeluaran_non_makanan) ? 'Rp '.number_format($tahap_lima->estimasi_pengeluaran_non_makanan) : '<span class="text-danger">Tidak Terisi</span>') ?>
                       </label>
                     </div>
                   </div>

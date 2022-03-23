@@ -48,6 +48,7 @@ class Auth extends CI_Controller
  
 	function logout(){
 		$this->session->sess_destroy();
+		session_write_close();
 		
 		$this->session->set_flashdata('message', '<div class="alert alert-info alert-dismissible fade show">Sign out berhasil !<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 		
