@@ -2,11 +2,11 @@
   <div class="container" style="margin-top:8%">
     <div class="col-md-8 offset-md-2">
 	  <div class="card">
-      <div class="d-flex justify-content-around p-2 align-items-center">
-        <div>
+      <div class="row">
+        <div class="col-md-6 p-2">
           <center><img src="<?= base_url() ?>assets/dist/img/vector-login.jpg" width="300"></center>
         </div>
-        <div>
+        <div class="col-md-6 p-4">
           <h5 class="mb-3">Survey Pemutakhiran DTKS</h5>
           <form action="auth/login" method="POST">
             <?= $this->session->flashdata('message'); ?>

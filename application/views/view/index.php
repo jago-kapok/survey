@@ -14,7 +14,9 @@
                 
           <div class="card p-4">
             <div class="row">
-              <label class="text-primary"><strong>I. PENGENALAN TEMPAT</strong></label>
+              <label class="text-primary"><strong>I. PENGENALAN TEMPAT</strong>
+                <a href="<?= base_url() ?>edit/quest/1/<?php echo $main_id ?>" class="btn btn-sm btn-warning ms-2"><i class="bi-pencil-square"></i>&nbsp;&nbsp;Edit</a>
+              </label>
 
               <div class="col-lg-6">
                 <div class="row mb-0">
@@ -84,7 +86,9 @@
             </div>
 
             <div class="row mt-4">
-              <label class="text-primary"><strong>II. KETERANGAN PETUGAS DAN RESPONDEN</strong></label>
+              <label class="text-primary"><strong>II. KETERANGAN PETUGAS DAN RESPONDEN</strong>
+                <a href="<?= base_url() ?>edit/quest/2/<?php echo $main_id ?>" class="btn btn-sm btn-warning ms-2"><i class="bi-pencil-square"></i>&nbsp;&nbsp;Edit</a>
+              </label>
 
               <div class="col-lg-6">
                 <div class="row mb-0">
@@ -134,7 +138,9 @@
             </div>
 
             <div class="row mt-4">
-              <label class="text-primary"><strong>III. KETERANGAN PERUMAHAN</strong></label>
+              <label class="text-primary"><strong>III. KETERANGAN PERUMAHAN</strong>
+                <a href="<?= base_url() ?>edit/quest/3/<?php echo $main_id ?>" class="btn btn-sm btn-warning ms-2"><i class="bi-pencil-square"></i>&nbsp;&nbsp;Edit</a>
+              </label>
 
               <div class="col-lg-6">
                 <div class="row mb-0">
@@ -280,7 +286,9 @@
             </div>
 
             <div class="row mt-4">
-              <label class="text-primary"><strong>IV. KETERANGAN SOSIAL EKONOMI ANGGOTA RUMAH TANGGA</strong></label>
+              <label class="text-primary"><strong>IV. KETERANGAN SOSIAL EKONOMI ANGGOTA RUMAH TANGGA</strong>
+                <a href="<?= base_url() ?>edit/quest/4/<?php echo $main_id ?>" class="btn btn-sm btn-warning ms-2"><i class="bi-pencil-square"></i>&nbsp;&nbsp;Edit</a>
+              </label>
 
               <div class="col-lg-12 mt-2 table-responsive">
                 <table class="table table-bordered table-striped" width="100%">
@@ -338,7 +346,9 @@
             </div>
 
             <div class="row mt-4">
-              <label class="text-primary"><strong>V. KEPEMILIKAN ASET DAN PENGELUARAN</strong></label>
+              <label class="text-primary"><strong>V. KEPEMILIKAN ASET DAN PENGELUARAN</strong>
+                <a href="<?= base_url() ?>edit/quest/5/<?php echo $main_id ?>" class="btn btn-sm btn-warning ms-2"><i class="bi-pencil-square"></i>&nbsp;&nbsp;Edit</a>
+              </label>
 
               <label class="mt-2"><b><i>1. Rumah tangga memiliki sendiri aset bergerak sebagai berikut :</i></b></label>
 
@@ -661,7 +671,9 @@
             </div>
 
             <div class="row mt-4">
-              <label class="text-primary"><strong>VI. KOORDINAT LOKASI DAN FOTO RUMAH</strong></label>
+              <label class="text-primary"><strong>VI. KOORDINAT LOKASI DAN FOTO RUMAH</strong>
+                <a href="<?= base_url() ?>edit/quest/6/<?php echo $main_id ?>" class="btn btn-sm btn-warning ms-2"><i class="bi-pencil-square"></i>&nbsp;&nbsp;Edit</a>
+              </label>
 
               <div class="row">
                 <div class="col-lg-6">
