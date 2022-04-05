@@ -54,7 +54,7 @@
 
             <div class="row mt-2">
               <div class="modal-footer">
-                <a href="<?= base_url() ?>input/quest/5/<?php echo $main_id ?>" class="btn btn-primary float-end"><i class="bi-clipboard-check">&nbsp;&nbsp;</i>Simpan & Lanjutkan</a>
+                <a href="<?= base_url() ?>admin/view/<?php echo $main_id_origin ?>" class="btn btn-primary float-end"><i class="bi-clipboard-check">&nbsp;&nbsp;</i>Simpan Data</a>
               </div>
             </div>
           </div>
@@ -67,12 +67,12 @@
 <div class="col-lg-2" data-aos="fade-up">
   <div class="list-group">
     <li class="list-group-item list-group-item-secondary">TAHAP PENGISIAN</li>
-    <a href="<?= base_url() ?>input/quest/1" class="list-group-item list-group-item-action disabled">KUISIONER 1</a>
-    <a href="<?= base_url() ?>input/quest/2" class="list-group-item list-group-item-action disabled">KUISIONER 2</a>
-    <a href="<?= base_url() ?>input/quest/3" class="list-group-item list-group-item-action disabled">KUISIONER 3</a>
-    <a href="<?= base_url() ?>input/quest/4" class="list-group-item list-group-item-action active">KUISIONER 4</a>
-    <a href="<?= base_url() ?>input/quest/5" class="list-group-item list-group-item-action disabled">KUISIONER 5</a>
-    <a href="<?= base_url() ?>input/quest/6" class="list-group-item list-group-item-action disabled">KUISIONER 6</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 1</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 2</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 3</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action active">KUISIONER 4</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 5</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 6</a>
   </div>
 
   <div class="card mt-2">
@@ -113,18 +113,6 @@
                 <input id="nama_anggota" type="text" name="nama_anggota" class="form-control form-control-sm">
               </div>
             </div>
-
-            <!-- <div class="row mb-3">
-              <label class="col-sm-7 col-form-label">Hubungan dengan kepala rumah tangga</label>
-              <div class="col-sm-4">
-                <select id="hubungan_rumah_tangga_id" name="hubungan_rumah_tangga_id" class="form-select form-select-sm">
-                  <option disabled selected>--- Pilihan ---</option>
-                  <?php foreach($hubungan_rumah_tangga as $data) { ?>
-                    <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
-                  <?php } ?>
-                </select>
-              </div>
-            </div> -->
 
             <div class="row mb-3">
               <label class="col-sm-7 col-form-label">Hubungan dengan Kepala Keluarga <span class="text-danger">*</span></label>
@@ -429,7 +417,7 @@
 
     $.ajax({
       type: "POST",
-      url: "<?= base_url() ?>input/input4_create",
+      url: "<?= base_url() ?>edit/input4_create",
       data: data,
       dataType: "json",
       cache       : false,
@@ -446,7 +434,7 @@
         })
 
         setInterval(() => {
-          window.location = "<?= base_url() ?>input/quest/4/" + data.main_id;
+          window.location = "<?= base_url() ?>edit/quest/4/" + data.main_id;
         }, 1200);
       } else {
         $.each(data.errors, function(index, value) {
@@ -477,7 +465,7 @@
       cancelButtonText: 'Batal'
     }).then((result) => {
       if (result.isConfirmed) {
-        $.post("<?= base_url() ?>input/delete_input4", { id: id, main_id: main_id }, function(data) {
+        $.post("<?= base_url() ?>edit/delete_input4", { id: id, main_id: main_id }, function(data) {
           Swal.fire({
             icon: 'success',
             title: 'Data berhasil dihapus !',
@@ -485,7 +473,7 @@
             timer: 1200
           })
           setInterval(() => {
-            window.location = "<?= base_url() ?>input/quest/4/" + main_id;
+            window.location = "<?= base_url() ?>edit/quest/4/" + main_id;
           }, 1000);
         });
       }

@@ -67,16 +67,22 @@ class Edit extends CI_Controller
         ->order_by("no_urut_keluarga")
         ->get('main_keterangan_sosial_ekonomi mkse')->result_array();
 
-        $data['anggota_keluarga_memiliki_usaha'] = $this->db->select("mkse.*, lu.desc as lapangan_usaha")
-        ->where("main_id", $main_id)
+        $data['anggota_keluarga_memiliki_usaha'] = $this->db->select("mkse.*, md.pegawai_dibayar, md.pegawai_tidak_dibayar, md.registrasi_usaha, md.omset_perbulan, lu.desc as lapangan_usaha")
+        ->where("mkse.main_id", $main_id)
+        ->join("main_usaha_dimiliki md", "mkse.main_id = md.main_id")
         ->join("lapangan_usaha lu", "mkse.lapangan_usaha_id = lu.id")
         ->get('main_keterangan_sosial_ekonomi mkse')->result_array();
 
         $data['main_pengenalan_tempat'] = $this->db->where('main_id', $main_id)->get('main_pengenalan_tempat')->row();
         $data['main_keterangan_petugas_dan_responden'] = $this->db->where('main_id', $main_id)->get('main_keterangan_petugas_dan_responden')->row();
-        $data['tes'] = 1;
+        $data['main_keterangan_perumahan'] = $this->db->where('main_id', $main_id)->get('main_keterangan_perumahan')->row();
+        $data['main_aset'] = $this->db->where('main_id', $main_id)->get('main_aset')->row();
+        $data['main_foto_lokasi'] = $this->db->where('main_id', $main_id)->get('main_foto_lokasi')->row();
+
+        $data['main_jenis_bantuan'] = $this->db->join('jenis_bantuan', 'main_jenis_bantuan.jenis_bantuan_id = jenis_bantuan.id AND main_jenis_bantuan.main_id = '.$main_id, 'right')->order_by('id')->get('main_jenis_bantuan')->result_array();
 
         $data["main_id"] = $this->key->crypts($main_id, 'e');
+        $data["main_id_origin"] = $main_id;
 
         if($main_id != "") {
             $this->load->view('templates/header', $data);
@@ -94,7 +100,8 @@ class Edit extends CI_Controller
         $errors = [];
         $data = [];
 
-        $main_id = $this->key->crypts($this->input->post('main_id'), 'd');
+        $main_id = $this->input->post('main_id');
+        $main_id = $this->key->crypts($main_id, 'd');
 
         $data_post = array(
             'provinsi_id'       => $this->input->post('provinsi_id'),
@@ -279,11 +286,20 @@ class Edit extends CI_Controller
             $data['success'] = false;
             $data['errors'] = $errors;
         } else {
-            $insert = $this->db->insert('main_keterangan_perumahan', $data_post);
+            $this->db->where('main_id', $main_id);
+            $this->db->update('main_keterangan_perumahan', $data_post);
+
+            $data_log = array(
+                'main_id'       => $main_id,
+                'log_activity'  => 'Update Data - III. Keterangan Perumahan',
+                'user_id'       => $this->session->userdata('user_id')
+            );
+
+            $this->db->insert('log_activity', $data_log);
 
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
+            $data['main_id'] = $main_id;
         }
         
         echo json_encode($data);
@@ -409,7 +425,14 @@ class Edit extends CI_Controller
             $data['success'] = false;
             $data['errors'] = $errors;
         } else {
-            $insert = $this->db->insert('main_aset', $data_post);
+            $this->db->where('main_id', $main_id);
+            $this->db->update('main_aset', $data_post);
+
+            $this->db->where('main_id', $main_id);
+            $this->db->delete('main_jenis_bantuan');
+
+            $this->db->where('main_id', $main_id);
+            $this->db->delete('main_usaha_dimiliki');
 
             if(isset($_POST['jenis_bantuan_id']) && $_POST['jenis_bantuan_id'] != "") {
                 foreach($_POST['jenis_bantuan_id'] as $key => $value) {
@@ -422,7 +445,7 @@ class Edit extends CI_Controller
                 $insert_batch = $this->db->insert_batch('main_jenis_bantuan', $data_batch);
             }
 
-            if(isset($_POST['nama_id']) && $_POST['main_id'] != "") {
+            if(isset($_POST['nama_id']) && $_POST['nama_id'] != "") {
                 foreach($_POST['nama_id'] as $key => $value) {
                     $data_batch_usaha[] = array(
                         'main_id'           => $main_id,
@@ -438,9 +461,17 @@ class Edit extends CI_Controller
                 $this->db->insert_batch('main_usaha_dimiliki', $data_batch_usaha);
             }
 
+            $data_log = array(
+                'main_id'       => $main_id,
+                'log_activity'  => 'Update Data - V. Kepemilikan Aset dan Pengeluaran',
+                'user_id'       => $this->session->userdata('user_id')
+            );
+
+            $this->db->insert('log_activity', $data_log);
+
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
+            $data['main_id'] = $main_id;
         }
         
         echo json_encode($data);
@@ -460,28 +491,30 @@ class Edit extends CI_Controller
             mkdir($location, 0777);
         }
 
+        $foto_exist = $this->db->where('main_id', $main_id)->get('main_foto_lokasi')->row();
+
         if(!$_FILES['files1']['error'] > 0) { 
             $foto1 = $this->upload_file($location, "files1");
         } else {
-            $foto1 = "";
+            $foto1 = $foto_exist->foto1;
         }
 
         if(!$_FILES['files2']['error'] > 0) { 
             $foto2 = $this->upload_file($location, "files2");
         } else {
-            $foto2 = "";
+            $foto2 = $foto_exist->foto2;
         }
 
         if(!$_FILES['files3']['error'] > 0) { 
             $foto3 = $this->upload_file($location, "files3");
         } else {
-            $foto3 = "";
+            $foto3 = $foto_exist->foto3;
         }
 
         if(!$_FILES['files4']['error'] > 0) { 
             $foto4 = $this->upload_file($location, "files4");
         } else {
-            $foto4 = "";
+            $foto4 = $foto_exist->foto4;
         }
 
         $data_post = array(
@@ -502,11 +535,20 @@ class Edit extends CI_Controller
             $data['success'] = false;
             $data['errors'] = $errors;
         } else {
-            $insert = $this->db->insert('main_foto_lokasi', $data_post);
+            $this->db->where('main_id', $main_id);
+            $this->db->update('main_foto_lokasi', $data_post);
+
+            $data_log = array(
+                'main_id'       => $main_id,
+                'log_activity'  => 'Update Data - VI. Koordinat Lokasi dan Foto Rumah',
+                'user_id'       => $this->session->userdata('user_id')
+            );
+
+            $this->db->insert('log_activity', $data_log);
 
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
+            $data['main_id'] = $main_id;
         }
         
         echo json_encode($data);
@@ -535,6 +577,14 @@ class Edit extends CI_Controller
 
         $this->db->delete("main_keterangan_sosial_ekonomi", ["id" => $id]);
         $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
+
+        $data_log = array(
+            'main_id'       => $main_id,
+            'log_activity'  => 'Delete Data - IV. Keterangan Sosial Ekonomi',
+            'user_id'       => $this->session->userdata('user_id')
+        );
+
+        $this->db->insert('log_activity', $data_log);
         
         echo json_encode($data);
     }

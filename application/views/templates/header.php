@@ -108,6 +108,7 @@
                   <label class="col-sm-6 col-form-label">Password Baru <span class="text-danger">*</span></label>
                   <div class="col-sm-6">
                     <input type="password" name="new_password" class="form-control form-control-sm" required>
+                    <div class="form-text">Harap gunakan kombinasi huruf dan angka demi keamanan</div>
                   </div>
                 </div>
               </div>

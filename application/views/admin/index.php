@@ -1,5 +1,14 @@
 <div class="container-fluid mt-2">
 <div class="row" data-aos="zoom-out">
+	<?php if($this->session->userdata('user_password') == $pass->default_password) { ?>
+		<div class="col-md-12">
+			<div class="alert alert-danger mx-1" role="alert">
+				1. Mohon segera melakukan penggantian password.<br>
+				2. Segala bentuk kebocoran data yang diakibatkan karena belum mengganti password, menjadi tanggungjawab pemilik akun.
+			</div>
+		</div>
+	<?php } ?>
+
 	<div class="col-md-3">
 		<div class="card p-4">
 			<div class="d-flex justify-content-between mb-1">
@@ -110,6 +119,18 @@
 </div>
 
 <script>
+	$(document).ready(function() {
+		<?php if($this->session->userdata('user_password') == $pass->default_password) { ?>
+			Swal.fire({
+	      title: 'PENTING !',
+	      text: "Harap segera melakukan penggantian password anda.",
+	      icon: 'warning',
+	      showCancelButton: false,
+	      confirmButtonColor: '#3085d6'
+	    });
+		<?php } ?>
+	});
+
 	var options = {
 	  chart: {
 	    type: 'bar',

@@ -77,12 +77,12 @@
 <div class="col-lg-2" data-aos="fade-up">
   <div class="list-group">
     <li class="list-group-item list-group-item-secondary">TAHAP PENGISIAN</li>
-    <a href="<?= base_url() ?>input/quest/1" class="list-group-item list-group-item-action disabled">KUISIONER 1</a>
-    <a href="<?= base_url() ?>input/quest/2" class="list-group-item list-group-item-action active">KUISIONER 2</a>
-    <a href="<?= base_url() ?>input/quest/3" class="list-group-item list-group-item-action disabled">KUISIONER 3</a>
-    <a href="<?= base_url() ?>input/quest/4" class="list-group-item list-group-item-action disabled">KUISIONER 4</a>
-    <a href="<?= base_url() ?>input/quest/5" class="list-group-item list-group-item-action disabled">KUISIONER 5</a>
-    <a href="<?= base_url() ?>input/quest/6" class="list-group-item list-group-item-action disabled">KUISIONER 6</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 1</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action active">KUISIONER 2</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 3</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 4</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 5</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 6</a>
   </div>
 
   <div class="card mt-2">

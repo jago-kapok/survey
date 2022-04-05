@@ -17,11 +17,11 @@
                   <label class="col-md-6 col-form-label pt-0">a ) Tabung Gas 3 kg</label>
                   <div class="col-md-5">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="tabung_gas_3kg" value="Ya">
+                      <input class="form-check-input" type="radio" name="tabung_gas_3kg" value="Ya" <?php echo $checked = ($main_aset->tabung_gas_3kg == 'Ya' ? 'checked' : '') ?>>
                       <label class="form-check-label">Ya</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="tabung_gas_3kg" value="Tidak">
+                      <input class="form-check-input" type="radio" name="tabung_gas_3kg" value="Tidak" <?php echo $checked = ($main_aset->tabung_gas_3kg == 'Tidak' ? 'checked' : '') ?>>
                       <label class="form-check-label">Tidak</label>
                     </div>
                   </div>
@@ -31,11 +31,11 @@
                   <label class="col-md-6 col-form-label pt-0">b ) Tabung Gas 5,5 kg</label>
                   <div class="col-md-5">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="tabung_gas_5kg" value="Ya">
+                      <input class="form-check-input" type="radio" name="tabung_gas_5kg" value="Ya" <?php echo $checked = ($main_aset->tabung_gas_5kg == 'Ya' ? 'checked' : '') ?>>
                       <label class="form-check-label">Ya</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="tabung_gas_5kg" value="Tidak">
+                      <input class="form-check-input" type="radio" name="tabung_gas_5kg" value="Tidak" <?php echo $checked = ($main_aset->tabung_gas_5kg == 'Tidak' ? 'checked' : '') ?>>
                       <label class="form-check-label">Tidak</label>
                     </div>
                   </div>
@@ -45,11 +45,11 @@
                   <label class="col-md-6 col-form-label pt-0">c ) Tabung Gas 12 kg</label>
                   <div class="col-md-5">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="tabung_gas_12kg" value="Ya">
+                      <input class="form-check-input" type="radio" name="tabung_gas_12kg" value="Ya" <?php echo $checked = ($main_aset->tabung_gas_12kg == 'Ya' ? 'checked' : '') ?>>
                       <label class="form-check-label">Ya</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="tabung_gas_12kg" value="Tidak">
+                      <input class="form-check-input" type="radio" name="tabung_gas_12kg" value="Tidak" <?php echo $checked = ($main_aset->tabung_gas_12kg == 'Tidak' ? 'checked' : '') ?>>
                       <label class="form-check-label">Tidak</label>
                     </div>
                   </div>
@@ -59,11 +59,11 @@
                   <label class="col-md-6 col-form-label pt-0">d ) Lemari Es / Kulkas</label>
                   <div class="col-md-5">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="kulkas" value="Ya">
+                      <input class="form-check-input" type="radio" name="kulkas" value="Ya" <?php echo $checked = ($main_aset->kulkas == 'Ya' ? 'checked' : '') ?>>
                       <label class="form-check-label">Ya</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="kulkas" value="Tidak">
+                      <input class="form-check-input" type="radio" name="kulkas" value="Tidak" <?php echo $checked = ($main_aset->kulkas == 'Tidak' ? 'checked' : '') ?>>
                       <label class="form-check-label">Tidak</label>
                     </div>
                   </div>
@@ -73,11 +73,11 @@
                   <label class="col-md-6 col-form-label pt-0">e ) AC</label>
                   <div class="col-md-5">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="ac" value="Ya">
+                      <input class="form-check-input" type="radio" name="ac" value="Ya" <?php echo $checked = ($main_aset->ac == 'Ya' ? 'checked' : '') ?>>
                       <label class="form-check-label">Ya</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="ac" value="Tidak">
+                      <input class="form-check-input" type="radio" name="ac" value="Tidak" <?php echo $checked = ($main_aset->ac == 'Tidak' ? 'checked' : '') ?>>
                       <label class="form-check-label">Tidak</label>
                     </div>
                   </div>
@@ -87,11 +87,11 @@
                   <label class="col-md-6 col-form-label pt-0">f ) Pemanas Air (<i>Water Heater</i>)</label>
                   <div class="col-md-5">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="pemanas_air" value="Ya">
+                      <input class="form-check-input" type="radio" name="pemanas_air" value="Ya" <?php echo $checked = ($main_aset->pemanas_air == 'Ya' ? 'checked' : '') ?>>
                       <label class="form-check-label">Ya</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="pemanas_air" value="Tidak">
+                      <input class="form-check-input" type="radio" name="pemanas_air" value="Tidak" <?php echo $checked = ($main_aset->pemanas_air == 'Tidak' ? 'checked' : '') ?>>
                       <label class="form-check-label">Tidak</label>
                     </div>
                   </div>
@@ -101,11 +101,11 @@
                   <label class="col-md-6 col-form-label pt-0">g ) Telepon Rumah / <i>Handphone</i></label>
                   <div class="col-md-5">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="telepon" value="Ya">
+                      <input class="form-check-input" type="radio" name="telepon" value="Ya" <?php echo $checked = ($main_aset->telepon == 'Ya' ? 'checked' : '') ?>>
                       <label class="form-check-label">Ya</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="telepon" value="Tidak">
+                      <input class="form-check-input" type="radio" name="telepon" value="Tidak" <?php echo $checked = ($main_aset->telepon == 'Tidak' ? 'checked' : '') ?>>
                       <label class="form-check-label">Tidak</label>
                     </div>
                   </div>
@@ -117,11 +117,11 @@
                   <label class="col-md-6 col-form-label pt-0">h ) Televisi Layar Datar (min. 30 inch)</label>
                   <div class="col-md-5">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="televisi_flat" value="Ya">
+                      <input class="form-check-input" type="radio" name="televisi_flat" value="Ya" <?php echo $checked = ($main_aset->televisi_flat == 'Ya' ? 'checked' : '') ?>>
                       <label class="form-check-label">Ya</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="televisi_flat" value="Tidak">
+                      <input class="form-check-input" type="radio" name="televisi_flat" value="Tidak" <?php echo $checked = ($main_aset->televisi_flat == 'Tidak' ? 'checked' : '') ?>>
                       <label class="form-check-label">Tidak</label>
                     </div>
                   </div>
@@ -131,11 +131,11 @@
                   <label class="col-md-6 col-form-label pt-0">i ) Emas / Perhiasan (>= 10 gr Emas)</label>
                   <div class="col-md-5">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="perhiasan_10gr" value="Ya">
+                      <input class="form-check-input" type="radio" name="perhiasan_10gr" value="Ya" <?php echo $checked = ($main_aset->perhiasan_10gr == 'Ya' ? 'checked' : '') ?>>
                       <label class="form-check-label">Ya</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="perhiasan_10gr" value="Tidak">
+                      <input class="form-check-input" type="radio" name="perhiasan_10gr" value="Tidak" <?php echo $checked = ($main_aset->perhiasan_10gr == 'Tidak' ? 'checked' : '') ?>>
                       <label class="form-check-label">Tidak</label>
                     </div>
                   </div>
@@ -145,11 +145,11 @@
                   <label class="col-md-6 col-form-label pt-0">j ) Rekening Tabungan di Bank (Aktif)</label>
                   <div class="col-md-5">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="rekening_bank" value="Ya">
+                      <input class="form-check-input" type="radio" name="rekening_bank" value="Ya" <?php echo $checked = ($main_aset->rekening_bank == 'Ya' ? 'checked' : '') ?>>
                       <label class="form-check-label">Ya</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="rekening_bank" value="Tidak">
+                      <input class="form-check-input" type="radio" name="rekening_bank" value="Tidak" <?php echo $checked = ($main_aset->rekening_bank == 'Tidak' ? 'checked' : '') ?>>
                       <label class="form-check-label">Tidak</label>
                     </div>
                   </div>
@@ -159,11 +159,11 @@
                   <label class="col-md-6 col-form-label pt-0">k ) Komputer / Laptop</label>
                   <div class="col-md-5">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="komputer_laptop" value="Ya">
+                      <input class="form-check-input" type="radio" name="komputer_laptop" value="Ya" <?php echo $checked = ($main_aset->komputer_laptop == 'Ya' ? 'checked' : '') ?>>
                       <label class="form-check-label">Ya</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="komputer_laptop" value="Tidak">
+                      <input class="form-check-input" type="radio" name="komputer_laptop" value="Tidak" <?php echo $checked = ($main_aset->komputer_laptop == 'Tidak' ? 'checked' : '') ?>>
                       <label class="form-check-label">Tidak</label>
                     </div>
                   </div>
@@ -173,11 +173,11 @@
                   <label class="col-md-6 col-form-label pt-0">l ) Sepeda Motor</label>
                   <div class="col-md-5">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="sepeda_motor" value="Ya">
+                      <input class="form-check-input" type="radio" name="sepeda_motor" value="Ya" <?php echo $checked = ($main_aset->sepeda_motor == 'Ya' ? 'checked' : '') ?>>
                       <label class="form-check-label">Ya</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="sepeda_motor" value="Tidak">
+                      <input class="form-check-input" type="radio" name="sepeda_motor" value="Tidak" <?php echo $checked = ($main_aset->sepeda_motor == 'Tidak' ? 'checked' : '') ?>>
                       <label class="form-check-label">Tidak</label>
                     </div>
                   </div>
@@ -187,11 +187,11 @@
                   <label class="col-md-6 col-form-label pt-0">m ) Mobil</label>
                   <div class="col-md-5">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="mobil" value="Ya">
+                      <input class="form-check-input" type="radio" name="mobil" value="Ya" <?php echo $checked = ($main_aset->mobil == 'Ya' ? 'checked' : '') ?>>
                       <label class="form-check-label">Ya</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="mobil" value="Tidak">
+                      <input class="form-check-input" type="radio" name="mobil" value="Tidak" <?php echo $checked = ($main_aset->mobil == 'Tidak' ? 'checked' : '') ?>>
                       <label class="form-check-label">Tidak</label>
                     </div>
                   </div>
@@ -201,11 +201,11 @@
                   <label class="col-md-6 col-form-label pt-0">n ) Perahu</label>
                   <div class="col-md-5">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="perahu" value="Ya">
+                      <input class="form-check-input" type="radio" name="perahu" value="Ya" <?php echo $checked = ($main_aset->perahu == 'Ya' ? 'checked' : '') ?>>
                       <label class="form-check-label">Ya</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="perahu" value="Tidak">
+                      <input class="form-check-input" type="radio" name="perahu" value="Tidak" <?php echo $checked = ($main_aset->perahu == 'Tidak' ? 'checked' : '') ?>>
                       <label class="form-check-label">Tidak</label>
                     </div>
                   </div>
@@ -215,11 +215,11 @@
                   <label class="col-md-6 col-form-label pt-0">o ) Perahu Motor</label>
                   <div class="col-md-5">
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="perahu_motor" value="Ya">
+                      <input class="form-check-input" type="radio" name="perahu_motor" value="Ya" <?php echo $checked = ($main_aset->perahu_motor == 'Ya' ? 'checked' : '') ?>>
                       <label class="form-check-label">Ya</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="perahu_motor" value="Tidak">
+                      <input class="form-check-input" type="radio" name="perahu_motor" value="Tidak" <?php echo $checked = ($main_aset->perahu_motor == 'Tidak' ? 'checked' : '') ?>>
                       <label class="form-check-label">Tidak</label>
                     </div>
                   </div>
@@ -236,11 +236,11 @@
                     
                       <select id="lahan" name="lahan" class="form-select form-select-sm">
                         <option disabled selected>--- Pilihan ---</option>
-                        <option value="Ya">Ya</option>
-                        <option value="Tidak">Tidak</option>
+                        <option value="Ya" <?php echo $checked = ($main_aset->lahan == 'Ya' ? 'selected' : '') ?>>Ya</option>
+                        <option value="Tidak" <?php echo $checked = ($main_aset->lahan == 'Tidak' ? 'selected' : '') ?>>Tidak</option>
                       </select>
                     <div class="input-group input-group-sm mt-2">
-                      <input id="lahan_luas" type="text" name="lahan_luas" class="form-control form-control-sm number">
+                      <input id="lahan_luas" type="text" name="lahan_luas" class="form-control form-control-sm number" value="<?php echo $main_aset->lahan_luas ?>">
                       <span class="input-group-text">m²</span>
                     </div>
                   </div>
@@ -253,8 +253,8 @@
                   <div class="col-md-3">
                     <select id="rumah_lain" name="rumah_lain" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>
-                      <option value="Ya">Ya</option>
-                      <option value="Tidak">Tidak</option>
+                      <option value="Ya" <?php echo $checked = ($main_aset->rumah_lain == 'Ya' ? 'selected' : '') ?>>Ya</option>
+                      <option value="Tidak" <?php echo $checked = ($main_aset->rumah_lain == 'Tidak' ? 'selected' : '') ?>>Tidak</option>
                     </select>
                   </div>
                 </div>
@@ -268,7 +268,7 @@
                   <label class="col-md-7 col-form-label">a ) Sapi</label>
                   <div class="col-md-3">
                     <div class="input-group input-group-sm">
-                      <input id="sapi" type="number" name="sapi" class="form-control form-control-sm">
+                      <input id="sapi" type="number" name="sapi" class="form-control form-control-sm" value="<?php echo $main_aset->sapi ?>">
                       <span class="input-group-text">ekor</span>
                     </div>
                   </div>
@@ -278,7 +278,7 @@
                   <label class="col-md-7 col-form-label">b ) Kerbau</label>
                   <div class="col-md-3">
                     <div class="input-group input-group-sm">
-                      <input id="kerbau" type="number" name="kerbau" class="form-control form-control-sm">
+                      <input id="kerbau" type="number" name="kerbau" class="form-control form-control-sm" value="<?php echo $main_aset->kerbau ?>">
                       <span class="input-group-text">ekor</span>
                     </div>
                   </div>
@@ -288,7 +288,7 @@
                   <label class="col-md-7 col-form-label">c ) Kuda</label>
                   <div class="col-md-3">
                     <div class="input-group input-group-sm">
-                      <input id="kuda" type="number" name="kuda" class="form-control form-control-sm">
+                      <input id="kuda" type="number" name="kuda" class="form-control form-control-sm" value="<?php echo $main_aset->kuda ?>">
                       <span class="input-group-text">ekor</span>
                     </div>
                   </div>
@@ -298,7 +298,7 @@
                   <label class="col-md-7 col-form-label">d ) Kambing / Domba</label>
                   <div class="col-md-3">
                     <div class="input-group input-group-sm">
-                      <input id="kambing" type="number" name="kambing" class="form-control form-control-sm">
+                      <input id="kambing" type="number" name="kambing" class="form-control form-control-sm" value="<?php echo $main_aset->kambing ?>">
                       <span class="input-group-text">ekor</span>
                     </div>
                   </div>
@@ -310,7 +310,7 @@
                   <label class="col-md-7 col-form-label">e ) Unggas</label>
                   <div class="col-md-3">
                     <div class="input-group input-group-sm">
-                      <input id="unggas" type="number" name="unggas" class="form-control form-control-sm">
+                      <input id="unggas" type="number" name="unggas" class="form-control form-control-sm" value="<?php echo $main_aset->unggas ?>">
                       <span class="input-group-text">ekor</span>
                     </div>
                   </div>
@@ -320,17 +320,17 @@
                   <label class="col-md-7 col-form-label">f ) Kelinci</label>
                   <div class="col-md-3">
                     <div class="input-group input-group-sm">
-                      <input id="kelinci" type="number" name="kelinci" class="form-control form-control-sm">
+                      <input id="kelinci" type="number" name="kelinci" class="form-control form-control-sm" value="<?php echo $main_aset->kelinci ?>">
                       <span class="input-group-text">ekor</span>
                     </div>
                   </div>
                 </div>
 
                 <div class="row mb-3">
-                  <label class="col-md-7 col-form-label">g ) Perikanan (bibit)</label>
+                  <label class="col-md-7 col-form-label">g ) Perikanan (bibit / kolam)</label>
                   <div class="col-md-3">
                     <div class="input-group input-group-sm">
-                      <input id="perikanan" type="number" name="perikanan" class="form-control form-control-sm">
+                      <input id="perikanan" type="number" name="perikanan" class="form-control form-control-sm" value="<?php echo $main_aset->perikanan ?>">
                       <span class="input-group-text">ekor</span>
                     </div>
                   </div>
@@ -344,37 +344,25 @@
                 <div class="row mb-3">
                   <label class="col-md-7 col-form-label">a ) Apakah ada ART yang memiliki usaha sendiri / bersama ?</label>
                   <div class="col-md-3">
-                    <!-- <select id="memiliki_usaha" name="memiliki_usaha" class="form-select form-select-sm">
-                      <option disabled selected>--- Pilihan ---</option>
-                      <option value="Ya">Ya</option>
-                      <option value="Tidak">Tidak</option>
-                    </select> -->
-                    <?php
-                      if(count($anggota_keluarga_memiliki_usaha) > 0) {
-                        $memiliki_usaha = 'Ya';
-                        $detail_usaha = '';
-                      } else {
-                        $memiliki_usaha = 'Tidak';
-                        $detail_usaha = 'hidden';
-                      }
-                    ?>
-                    <input id="memiliki_usaha" type="text" name="memiliki_usaha" class="form-control form-control-sm" value="<?php echo $memiliki_usaha ?>" readonly>
+                    <select name="memiliki_usaha" class="form-select form-select-sm">
+                      <option value="Ya" <?php echo $selected = ($main_aset->memiliki_usaha == 'Ya' ? 'selected' : '') ?>>Ya</option>
+                      <option value="Tidak" <?php echo $selected = ($main_aset->memiliki_usaha == 'Tidak' ? 'selected' : '') ?>>Tidak</option>
+                    </select>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div id="detail_usaha" class="row m-0" <?php echo $detail_usaha ?>>
+            <div id="detail_usaha" class="row m-0">
               <table class="table table-bordered table-striped" width="100%">
                 <thead>
                   <tr>
-                    <th rowspan="2" style="vertical-align: middle; text-align: center; width: 5%">No.</th>
                     <th rowspan="2" style="vertical-align: middle; text-align: center; width: 25%">Nama</th>
                     <th rowspan="2" style="vertical-align: middle; text-align: center; width: 15%">Lapangan Usaha</th>
                     <th colspan="2" style="vertical-align: middle; text-align: center">Jumlah Pekerja (Orang)</th>
                     <th rowspan="2" style="vertical-align: middle; text-align: center; width: 15%">Registrasi Usaha</th>
                     <th rowspan="2" style="vertical-align: middle; text-align: center; width: 15%">Omset Perbulan</th>
-                    <!-- <th rowspan="2" style="vertical-align: middle; text-align: center; width: 5%"></th> -->
+                    <th rowspan="2" style="vertical-align: middle; text-align: center; width: 5%"></th>
                   </tr>
                   <tr>
                     <th style="vertical-align: middle; text-align: center; width: 10%">Dibayar</th>
@@ -384,7 +372,6 @@
                 <tbody>
                   <?php foreach($anggota_keluarga_memiliki_usaha as $key => $data) { ?>
                     <tr id="row_<?php echo $key ?>">
-                      <td><center><?php echo $key + 1 ?></center></td>
                       <td>
                         <input type="hidden" name="nama_id[]" value="<?php echo $data['id'] ?>">
                         <input type="text" class="form-control form-control-sm" value="<?php echo $data['nama_anggota'] ?>" readonly>
@@ -393,11 +380,53 @@
                         <input type="hidden" name="lapangan_usaha_id[]" value="<?php echo $data['lapangan_usaha_id'] ?>">
                         <input type="text" class="form-control form-control-sm" value="<?php echo $data['lapangan_usaha'] ?>" readonly>
                       </td>
+                      <td><input type="number" name="pegawai_dibayar[]" class="form-control form-control-sm" value="<?php echo $data['pegawai_dibayar'] ?>" readonly></td>
+                      <td><input type="number" name="pegawai_tidak_dibayar[]" class="form-control form-control-sm" value="<?php echo $data['pegawai_tidak_dibayar'] ?>" readonly></td>
+                      <td>
+                        <select name="registrasi_usaha[]" class="form-select form-select-sm">
+                          <option value="" selected>--- Pilihan ---</option>
+                          <option value="Ya" <?php echo $selected = ($data['registrasi_usaha'] == 'Ya' ? 'selected' : '') ?>>Ya</option>
+                          <option value="Tidak" <?php echo $selected = ($data['registrasi_usaha'] == 'Tidak' ? 'selected' : '') ?>>Tidak</option>
+                        </select>
+                      </td>
+                      <td>
+                        <div class="input-group input-group-sm">
+                          <span class="input-group-text">Rp</span>
+                          <input type="number" name="omset_perbulan[]" class="form-control form-control-sm" value="<?php echo $data['omset_perbulan'] ?>" readonly>
+                        </div>
+                      </td>
+                      <td>
+                        <center>
+                          <button type="button" class="btn btn-sm btn-danger" onclick="deleteRow(<?php echo $key ?>)"><i class="bi-trash"></i></button>
+                        </center>
+                      </td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+                <tbody>
+                  <?php for($i = 10 ; $i < 12 ; $i++) { ?>
+                    <tr id="row_<?php echo $i ?>">
+                      <td>
+                        <select id="name_id<?php echo $key ?>" name="nama_id[]" class="form-select form-select-sm">
+                          <option disabled selected></option>
+                          <?php foreach($anggota_keluarga_memiliki_usaha as $value) { ?>
+                            <option value="<?php echo $value['id'] ?>"><?php echo $value['nama_anggota'] ?></option>
+                          <?php } ?>
+                        </select>
+                      </td>
+                      <td>
+                        <select name="lapangan_usaha_id[]" class="form-select form-select-sm">
+                          <option disabled selected></option>
+                          <?php foreach($lapangan_usaha as $value) { ?>
+                            <option value="<?php echo $value['id'] ?>"><?php echo $value['desc'] ?></option>
+                          <?php } ?>
+                        </select>
+                      </td>
                       <td><input type="number" name="pegawai_dibayar[]" class="form-control form-control-sm"></td>
                       <td><input type="number" name="pegawai_tidak_dibayar[]" class="form-control form-control-sm"></td>
                       <td>
                         <select name="registrasi_usaha[]" class="form-select form-select-sm">
-                          <option value="" selected>--- Pilihan ---</option>
+                          <option value="" selected></option>
                           <option value="Ya">Ya</option>
                           <option value="Tidak">Tidak</option>
                         </select>
@@ -408,11 +437,11 @@
                           <input type="number" name="omset_perbulan[]" class="form-control form-control-sm">
                         </div>
                       </td>
-                      <!-- <td>
+                      <td>
                         <center>
                           <button type="button" class="btn btn-sm btn-danger" onclick="deleteRow(<?php echo $i ?>)"><i class="bi-trash"></i></button>
                         </center>
-                      </td> -->
+                      </td>
                     </tr>
                   <?php } ?>
                 </tbody>
@@ -427,7 +456,7 @@
                   <div class="col-md-3">
                     <div class="input-group input-group-sm">
                       <span class="input-group-text">Rp</span>
-                      <input type="number" name="estimasi_pengeluaran" class="form-control form-control-sm">
+                      <input type="number" name="estimasi_pengeluaran" class="form-control form-control-sm" value="<?php echo $main_aset->estimasi_pengeluaran ?>">
                     </div>
                     <div class="form-text">
                       Tanpa titik / koma
@@ -442,7 +471,7 @@
                   <div class="col-md-3">
                     <div class="input-group input-group-sm">
                       <span class="input-group-text">Rp</span>
-                      <input type="number" name="estimasi_pengeluaran_non_makanan" class="form-control form-control-sm">
+                      <input type="number" name="estimasi_pengeluaran_non_makanan" class="form-control form-control-sm" value="<?php echo $main_aset->estimasi_pengeluaran_non_makanan ?>">
                     </div>
                     <div class="form-text">
                       Tanpa titik / koma
@@ -455,10 +484,10 @@
             <div class="row">
               <label class="mb-2"><strong>6. Apakah keluarga ini pernah / sedang mendapatkan bantuan dari pemerintah selama setahun terakhir :</strong></label>
               <div class="row m-0 mb-3">
-                <?php foreach($jenis_bantuan as $data) { ?>
+                <?php foreach($main_jenis_bantuan as $value) { ?>                  
                   <div class="form-check form-check-inline col-md-3">
-                    <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="<?php echo $data['id'] ?>">
-                    <label class="form-check-label"><?php echo $data['desc'] ?></label>
+                    <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="<?php echo $value['id'] ?>" <?php echo $checked = ($value['id'] == $value['jenis_bantuan_id']) ? 'checked' : '' ?>>
+                    <label class="form-check-label"><?php echo $value['desc'] ?></label>
                   </div>
                 <?php } ?>
               </div>
@@ -466,7 +495,7 @@
 
             <div class="row mt-2">
               <div class="modal-footer">
-                <button id="simpanData" type="submit" class="btn btn-primary float-end"><i class="bi-clipboard-check">&nbsp;&nbsp;</i>Simpan & Lanjutkan</button>
+                <button id="simpanData" type="submit" class="btn btn-primary float-end"><i class="bi-clipboard-check">&nbsp;&nbsp;</i>Simpan Data</button>
               </div>
             </div>
             </form>
@@ -480,12 +509,12 @@
 <div class="col-lg-2" data-aos="fade-up">
   <div class="list-group">
     <li class="list-group-item list-group-item-secondary">TAHAP PENGISIAN</li>
-    <a href="<?= base_url() ?>input/quest/1" class="list-group-item list-group-item-action disabled">KUISIONER 1</a>
-    <a href="<?= base_url() ?>input/quest/2" class="list-group-item list-group-item-action disabled">KUISIONER 2</a>
-    <a href="<?= base_url() ?>input/quest/3" class="list-group-item list-group-item-action disabled">KUISIONER 3</a>
-    <a href="<?= base_url() ?>input/quest/4" class="list-group-item list-group-item-action disabled">KUISIONER 4</a>
-    <a href="<?= base_url() ?>input/quest/5" class="list-group-item list-group-item-action active">KUISIONER 5</a>
-    <a href="<?= base_url() ?>input/quest/6" class="list-group-item list-group-item-action disabled">KUISIONER 6</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 1</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 2</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 3</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 4</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action active">KUISIONER 5</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 6</a>
   </div>
 
   <div class="card mt-2">
@@ -505,7 +534,7 @@
 
     $.ajax({
       type: "POST",
-      url: "<?= base_url() ?>input/input5_create",
+      url: "<?= base_url() ?>edit/input5_create",
       data: data,
       dataType: "json",
       cache		: false,
@@ -521,7 +550,7 @@
         $.notify("Data berhasil disimpan !", "success");
 
         setInterval(function () {
-          window.location = "<?= base_url() ?>input/quest/6/" + data.main_id;
+          window.location = "<?= base_url() ?>admin/view/" + data.main_id;
         }, 1000);
       } else {
         $.each(data.errors, function(index, item) {
@@ -533,7 +562,8 @@
 
   function deleteRow(id) {
     $("#row_" + id).find("input, select").each(function() {
-      $(this).val("");
+      // $(this).val("");
+      $("#row_" + id).remove();
     });
   }
 </script>

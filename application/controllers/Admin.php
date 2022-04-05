@@ -15,17 +15,18 @@ class Admin extends CI_Controller
     {
         $data['title'] = 'Survey Pemutakhiran DTKS - Kab. Bojonegoro';
 
-        $desa_id = $this->session->userdata('user_name');
-        $kecamatan_id = $this->session->userdata('user_manager');
+        $user_name = $this->session->userdata('user_name');
+
+        $data['pass'] = $this->db->where('id', 1)->get('default_password')->row();
 
         if($this->session->userdata('user_level') == 1) {
-        	$survey_hari_ini = $this->db->where('desa_id', $desa_id)->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
-        	$survey_kemarin = $this->db->where('desa_id', $desa_id)->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
-        	$total_survey = $this->db->where('desa_id', $desa_id)->get('main_pengenalan_tempat')->result_array();
+        	$survey_hari_ini = $this->db->where('desa_id', $user_name)->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
+        	$survey_kemarin = $this->db->where('desa_id', $user_name)->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
+        	$total_survey = $this->db->where('desa_id', $user_name)->get('main_pengenalan_tempat')->result_array();
         } else if($this->session->userdata('user_level') == 2) {
-        	$survey_hari_ini = $this->db->where('kecamatan_id', $kecamatan_id)->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
-        	$survey_kemarin = $this->db->where('kecamatan_id', $kecamatan_id)->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
-        	$total_survey = $this->db->where('kecamatan_id', $kecamatan_id)->get('main_pengenalan_tempat')->result_array();
+        	$survey_hari_ini = $this->db->where('kecamatan_id', $user_name)->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
+        	$survey_kemarin = $this->db->where('kecamatan_id', $user_name)->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
+        	$total_survey = $this->db->where('kecamatan_id', $user_name)->get('main_pengenalan_tempat')->result_array();
         } else {
         	$survey_hari_ini = $this->db->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
         	$survey_kemarin = $this->db->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
@@ -79,7 +80,7 @@ class Admin extends CI_Controller
 		if($this->session->userdata('user_level') == 1) {
 			$_where	= "main_pengenalan_tempat.desa_id = ".$this->session->userdata('user_name');
 		} else if($this->session->userdata('user_level') == 2) {
-			$_where	= "main_pengenalan_tempat.kecamatan_id = ".$this->session->userdata('user_manager');
+			$_where	= "main_pengenalan_tempat.kecamatan_id = ".$this->session->userdata('user_name');
 		} else {
 			$_where = "";
 		}
@@ -204,14 +205,26 @@ class Admin extends CI_Controller
         if($this->input->post('new_password') != $this->input->post('confirm_password')) {
             $errors['password_error'] = 'Password Baru dan Password Konfirmasi harus sama !';
         }
+
+        if(strlen($this->input->post('new_password')) < 8) {
+            $errors['password_error'] = 'Password Baru minimal 8 karakter dengan kombinasi huruf dan angka';
+        }
+
+        if(password_verify($this->input->post('new_password'), $this->session->userdata('user_password'))) {
+        	$errors['password_error'] = 'Password Baru tidak boleh sama dengan password sebelumnya';
+        }
         
         if (!empty($errors)) {
             $data['success'] = false;
             $data['errors'] = $errors;
         } else {
-        	$this->db->set('user_password', password_hash($this->input->post('new_password'), PASSWORD_BCRYPT));
+        	$password_hash = password_hash($this->input->post('new_password'), PASSWORD_BCRYPT);
+
+        	$this->db->set('user_password', $password_hash);
         	$this->db->where('user_id', $user_id);
         	$this->db->update('user');
+
+        	$this->session->set_userdata('user_password', $password_hash);
 
             $data['success'] = true;
             $data['message'] = 'Success!';

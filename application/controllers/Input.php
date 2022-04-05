@@ -107,7 +107,7 @@ class Input extends CI_Controller
             'jumlah_art'        => $this->input->post('jumlah_art'),
             'jumlah_keluarga'   => $this->input->post('jumlah_keluarga'),
             'relasi_no_kk'      => $this->input->post('relasi_no_kk'),
-            'created_by'        => 1,
+            'created_by'        => $this->session->userdata('user_id'),
         );
 
         $data_post = $this->security->xss_clean($data_post);

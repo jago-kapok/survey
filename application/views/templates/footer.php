@@ -142,9 +142,9 @@
         processData : false,
       })
       .done(function (data) {
-        $("#ubahPassword").modal('hide');
-
         if(data.success == true) {
+          $("#ubahPassword").modal('hide');
+
           Swal.fire({
             icon: 'success',
             title: 'Password Berhasil Diubah !',
@@ -153,7 +153,11 @@
           });
         } else {
           $.each(data.errors, function(index, value) {
-            $.notify(value, "error");
+            Swal.fire({
+              icon: 'warning',
+              text: value,
+              showConfirmButton: true
+            });
           })
         }
       })

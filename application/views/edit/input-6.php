@@ -14,14 +14,14 @@
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">Latidue</label>
             <div class="col-sm-3">
-              <input id="latitude" type="text" name="latitude" class="form-control form-control-sm">
+              <input id="latitude" type="text" name="latitude" class="form-control form-control-sm" value="<?php echo $main_foto_lokasi->latitude ?>">
             </div>
           </div>
 
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">Longitude</label>
             <div class="col-sm-3">
-              <input id="longitude" type="text" name="longitude" class="form-control form-control-sm">
+              <input id="longitude" type="text" name="longitude" class="form-control form-control-sm" value="<?php echo $main_foto_lokasi->longitude ?>">
             </div>
           </div>
 
@@ -30,7 +30,9 @@
           <div class="row">
             <div class="col-lg-6 mb-3">
               <div class="card">
-                <img id="previewImg1" class="card-img-top" style="width: 200px; display: block; margin-left: auto; margin-right: auto">
+                <img id="previewImg1" class="card-img-top" style="width: 200px; display: block; margin-left: auto; margin-right: auto"
+                  src="<?= base_url() ?>files/<?php echo $main_id_origin ?>/<?php echo $main_foto_lokasi->foto1 ?>"
+                >
                 <div class="card-body">
                   <h6 class="card-title">Foto Rumah : Tampak Depan</h6>
                   <div class="input-group input-group-sm">
@@ -43,7 +45,9 @@
 
             <div class="col-lg-6 mb-3">
               <div class="card">
-                <img id="previewImg2" class="card-img-top" style="width: 200px; display: block; margin-left: auto; margin-right: auto">
+                <img id="previewImg2" class="card-img-top" style="width: 200px; display: block; margin-left: auto; margin-right: auto"
+                  src="<?= base_url() ?>files/<?php echo $main_id_origin ?>/<?php echo $main_foto_lokasi->foto2 ?>"
+                >
                 <div class="card-body">
                   <h6 class="card-title">Foto Rumah : Tampak Dalam</h6>
                   <div class="input-group input-group-sm">
@@ -58,7 +62,9 @@
           <div class="row">
             <div class="col-lg-6 mb-3">
               <div class="card">
-                <img id="previewImg3" class="card-img-top" style="width: 200px; display: block; margin-left: auto; margin-right: auto">
+                <img id="previewImg3" class="card-img-top" style="width: 200px; display: block; margin-left: auto; margin-right: auto"
+                  src="<?= base_url() ?>files/<?php echo $main_id_origin ?>/<?php echo $main_foto_lokasi->foto3 ?>"
+                >
                 <div class="card-body">
                   <h6 class="card-title">Foto Rumah : Tampak Samping (Opsional)</h6>
                   <div class="input-group input-group-sm">
@@ -71,7 +77,9 @@
 
             <div class="col-lg-6 mb-3">
               <div class="card">
-                <img id="previewImg4" class="card-img-top" style="width: 200px; display: block; margin-left: auto; margin-right: auto">
+                <img id="previewImg4" class="card-img-top" style="width: 200px; display: block; margin-left: auto; margin-right: auto"
+                  src="<?= base_url() ?>files/<?php echo $main_id_origin ?>/<?php echo $main_foto_lokasi->foto4 ?>"
+                >
                 <div class="card-body">
                   <h6 class="card-title">Foto Rumah : Tampak Samping / Belakang (Opsional)</h6>
                   <div class="input-group input-group-sm">
@@ -85,7 +93,7 @@
 
           <div class="row mt-2">
             <div class="modal-footer">
-              <button type="submit" class="btn btn-success float-end"><i class="bi-clipboard-check">&nbsp;&nbsp;</i>Simpan Hasil Survey</button>
+              <button type="submit" class="btn btn-primary float-end"><i class="bi-clipboard-check">&nbsp;&nbsp;</i>Simpan Data</button>
             </div>
           </div>
           </form>
@@ -138,40 +146,32 @@
     event.preventDefault();
     var data = new FormData($("#form_data")[0]);
 
-    Swal.fire({
-      title: 'Akhiri survey',
-      text: "Simpan semua data survey ?",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Ya',
-      cancelButtonText: 'Batal'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        $.ajax({
-          type: "POST",
-          url: "<?= base_url() ?>input/input6_create",
-          data: data,
-          dataType: "json",
-          enctype: 'multipart/form-data',
-          processData: false,
-          contentType: false,
-          cache: false,
-          // encode: true,
-        })
-        .done(function (data) {
-          Swal.fire({
-            icon: 'success',
-            title: 'Data survey berhasil disimpan !',
-            showConfirmButton: false,
-            timer: 2000
-          })
-          setInterval(() => {
-            window.location = "<?= base_url() ?>";
-          }, 1000);
+    $.ajax({
+      type: "POST",
+      url: "<?= base_url() ?>edit/input6_create",
+      data: data,
+      dataType: "json",
+      enctype: 'multipart/form-data',
+      cache   : false,
+      contentType : false,
+      processData : false,
+      // encode: true,
+    })
+    .done(function (data) {
+      console.log();
+      $("#simpanData").attr("disabled", true);
+      
+      if(data.success == true) {
+        $.notify("Data berhasil disimpan !", "success");
+
+        setInterval(function () {
+          window.location = "<?= base_url() ?>admin/view/" + data.main_id;
+        }, 1000);
+      } else {
+        $.each(data.errors, function(index, item) {
+          $.notify(item, "error");
         });
       }
-    })
+    });
   });
 </script>
