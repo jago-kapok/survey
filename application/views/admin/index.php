@@ -137,7 +137,7 @@
 	    height: 400
 	  },
 	  title: {
-	    text: "Hasil Survey per Kecamatan di Kab. Bojonegoro",
+	    text: "Total Hasil Pencacahan di Kab. Bojonegoro",
 	    align: 'left',
 	    style: {
 	    	fontSize: '15px',
@@ -147,10 +147,18 @@
 	  },
 	  series: [{
 	    name: 'survey',
-	    data: [30,40,45,50,49,60,70,91,125,150,165]
+	    data: [
+	    	<?php foreach ($grafik_survey as $data) : ?>
+					<?= $data['total']; ?>,
+				<?php endforeach; ?>
+	    ]
 	  }],
 	  xaxis: {
-	    categories: ['Ngraho', 'Tambakrejo', 'Ngambon', 'Ngasem', 'Bubulan', 'Dander', 'Sugihwaras', 'Kedungadem', 'Kepohbaru', 'Baureno', 'Kanor']
+	    categories: [
+	    	<?php foreach ($grafik_survey as $data) : ?>
+					'<?= $data['category']; ?>',
+				<?php endforeach; ?>
+	    ]
 	  }
 	}
 

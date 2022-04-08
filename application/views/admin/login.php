@@ -7,7 +7,7 @@
           <center><img src="<?= base_url() ?>assets/dist/img/vector-login.jpg" width="300"></center>
         </div>
         <div class="col-md-6 p-4">
-          <h5 class="mb-3">Survey Pemutakhiran DTKS</h5>
+          <h5 class="mb-3">DAMISDA Kabupaten Bojoengoro</h5>
           <form action="auth/login" method="POST">
             <?= $this->session->flashdata('message'); ?>
             <label class="text-secondary">Username</label>

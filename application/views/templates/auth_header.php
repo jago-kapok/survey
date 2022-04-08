@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Survey Pemutakhiran DTKS - Kab. Bojonegoro</title>
+  <title>DAMISDA - Kab. Bojonegoro</title>
   <!-- Mobile Specific Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 

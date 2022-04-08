@@ -16,6 +16,7 @@ class Admin extends CI_Controller
         $data['title'] = 'Survey Pemutakhiran DTKS - Kab. Bojonegoro';
 
         $user_name = $this->session->userdata('user_name');
+        $user_manager = $this->session->userdata('user_manager');
 
         $data['pass'] = $this->db->where('id', 1)->get('default_password')->row();
 
@@ -23,14 +24,27 @@ class Admin extends CI_Controller
         	$survey_hari_ini = $this->db->where('desa_id', $user_name)->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
         	$survey_kemarin = $this->db->where('desa_id', $user_name)->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
         	$total_survey = $this->db->where('desa_id', $user_name)->get('main_pengenalan_tempat')->result_array();
+
+        	$data['grafik_survey'] = $this->db->select('ref_desa.nama_desa as category, COUNT(*) as total')->where('status IS NULL')
+        	->join('ref_desa', 'main_pengenalan_tempat.desa_id = ref_desa.id AND main_pengenalan_tempat.kecamatan_id = '.$user_manager)
+        	->order_by('ref_desa.nama_desa')->group_by('main_pengenalan_tempat.desa_id')->get('main_pengenalan_tempat')->result_array();
+
         } else if($this->session->userdata('user_level') == 2) {
         	$survey_hari_ini = $this->db->where('kecamatan_id', $user_name)->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
         	$survey_kemarin = $this->db->where('kecamatan_id', $user_name)->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
         	$total_survey = $this->db->where('kecamatan_id', $user_name)->get('main_pengenalan_tempat')->result_array();
+
+        	$data['grafik_survey'] = $this->db->select('ref_desa.nama_desa as category, COUNT(*) as total')->where('status IS NULL')
+        	->join('ref_desa', 'ref_desa.id = main_pengenalan_tempat.desa_id AND main_pengenalan_tempat.kecamatan_id ='.$user_name)
+        	->order_by('ref_desa.nama_desa')->group_by('main_pengenalan_tempat.desa_id')->get('main_pengenalan_tempat')->result_array();
         } else {
         	$survey_hari_ini = $this->db->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
         	$survey_kemarin = $this->db->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
         	$total_survey = $this->db->get('main_pengenalan_tempat')->result_array();
+
+        	$data['grafik_survey'] = $this->db->select('ref_kecamatan.kecamatan as category, COUNT(*) as total')->where('status IS NULL')
+        	->join('ref_kecamatan', 'ref_kecamatan.id = main_pengenalan_tempat.kecamatan_id')
+        	->order_by('ref_kecamatan.kecamatan')->group_by('main_pengenalan_tempat.kecamatan_id')->get('main_pengenalan_tempat')->result_array();
         }
 
         $data['survey_hari_ini'] = count($survey_hari_ini);
