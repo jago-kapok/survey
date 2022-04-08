@@ -8,7 +8,7 @@ class Admin extends CI_Controller
     {
         parent::__construct();
         $this->load->library('key');
-	authentication();
+		authentication();
     }
 
     public function index()
@@ -78,11 +78,11 @@ class Admin extends CI_Controller
 		];
 		
 		if($this->session->userdata('user_level') == 1) {
-			$_where	= "main_pengenalan_tempat.desa_id = ".$this->session->userdata('user_name');
+			$_where	= "status IS NULL AND main_pengenalan_tempat.desa_id = ".$this->session->userdata('user_name');
 		} else if($this->session->userdata('user_level') == 2) {
-			$_where	= "main_pengenalan_tempat.kecamatan_id = ".$this->session->userdata('user_name');
+			$_where	= "status IS NULL AND main_pengenalan_tempat.kecamatan_id = ".$this->session->userdata('user_name');
 		} else {
-			$_where = "";
+			$_where = "status IS NULL";
 		}
 		
 		$_join	= "JOIN ref_kecamatan ON main_pengenalan_tempat.kecamatan_id = ref_kecamatan.id
@@ -232,4 +232,25 @@ class Admin extends CI_Controller
         
         echo json_encode($data);
 	}
+
+	public function delete_data()
+    {
+        // $id = $this->input->post('main_id');
+        $id = $this->uri->segment(3);
+
+		if (!empty($errors)) {
+            $data['success'] = false;
+            $data['errors'] = $errors;
+        } else {
+        	$this->db->set('status', 1);
+        	$this->db->where('main_id', $id);
+        	$this->db->update("main_pengenalan_tempat");
+
+            $data['success'] = true;
+            $data['message'] = 'Success!';
+            $data['id'] = $id;
+        }
+        
+        echo json_encode($data);
+    }
 }

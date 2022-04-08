@@ -6,8 +6,8 @@ var table = $("table#table_data").DataTable({
     zeroRecords	: "<center>Tidak Ada Data</center>",
     processing	: "<center>Silakan Tunggu</center>",
     paginate	: {
-      previous: "<i class=\"fa fa-chevron-left\"></i>",
-      next: "<i class=\"fa fa-chevron-right\"></i>"
+      previous: "<<",
+      next: ">>"
     },
   },
   bInfo 		: true,
@@ -31,7 +31,7 @@ var table = $("table#table_data").DataTable({
       data: "main_id",
         render: function(data, type, row) {
           <?php if($this->session->userdata('user_level') == 1) { ?>
-            return '<a href="<?php base_url() ?>admin/view/' + data + '" class="btn btn-success btn-sm"><i class="bi-search"></i></a>&nbsp;<a href="javascript:void(0)' + data + '" class="btn btn-danger btn-sm" onclick="hapusData()"><i class="bi-trash"></i></a>';
+            return '<a href="<?php base_url() ?>admin/view/' + data + '" class="btn btn-success btn-sm"><i class="bi-search"></i></a>&nbsp;<a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="hapusData(' + data + ')"><i class="bi-trash"></i></a>';
           <?php } else { ?>
             return '<a href="<?php base_url() ?>admin/view/' + data + '" class="btn btn-success btn-sm"><i class="bi-search"></i></a>';
           <?php } ?>
@@ -60,13 +60,40 @@ $('.filter-category').on('click', function(){
   table.search(this.id).draw();
 });
 
-function hapusData()
+function hapusData(id)
 {
   Swal.fire({
-    text: 'Untuk menghapus data, hubungi administrator',
+    title: 'PERHATIAN !',
+    text: "Anda yakin ingin menghapus data survey ?",
     icon: 'warning',
-    title: 'Perhatian !',
-    showConfirmButton: true,
-  });
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Ya',
+    cancelButtonText: 'Batal'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: "GET",
+        url: "<?= base_url() ?>admin/delete_data/" + id,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        cache: false,
+        // encode: true,
+      })
+      .done(function (data) {
+        console.log(data);
+        Swal.fire({
+          icon: 'success',
+          title: 'Data survey berhasil dihapus !',
+          showConfirmButton: false,
+          timer: 2000
+        })
+
+        table.draw();
+      });
+    }
+  })
 }
 </script>
