@@ -140,7 +140,7 @@ class Input extends CI_Controller
             $errors['relasi_no_kk'] = 'Relasi KK harus berisi 16 digit angka';
         }
 
-        $query = $this->db->where('no_kk_krt', $this->input->post('no_kk_krt'))->get('main_pengenalan_tempat')->result_array();
+        $query = $this->db->where('no_kk_krt', $this->input->post('no_kk_krt'))->where('status IS NULL', NULL)->get('main_pengenalan_tempat')->result_array();
 
         if(count($query) > 0) {
             $errors['no_kk_krt_exist'] = 'No. KK sudah terdaftar';
