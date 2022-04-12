@@ -3,10 +3,12 @@
     <div class="row">
       <div class="tab-content" id="v-pills-tabContent">
         <div class="tab-pane fade show active" id="v-pills-kuesioner-1" role="tabpanel" aria-labelledby="v-pills-home-tab">
-          <?php if($button_lanjut != "") { ?>
-            <a href="<?= base_url() ?>input/quest/<?php echo $button_lanjut ?>/<?php echo $main_id ?>" class="btn btn-success mb-3">
-              Lanjutkan Survey&nbsp;&nbsp;<i class="bi-forward"></i>
-            </a>
+          <?php if($this->session->userdata('user_level') == 1) { ?>
+            <?php if($button_lanjut != "") { ?>
+              <a href="<?= base_url() ?>input/quest/<?php echo $button_lanjut ?>/<?php echo $main_id ?>" class="btn btn-success mb-3">
+                Lanjutkan Survey&nbsp;&nbsp;<i class="bi-forward"></i>
+              </a>
+            <?php } ?>
           <?php } ?>
           <div class="card mb-2" style="padding: 8px 15px">
             <h6 class="mb-0"><strong>DATA HASIL SURVEY => <?php echo strtoupper($tahap_satu->nama_krt) ?></strong></h6>

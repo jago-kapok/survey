@@ -267,4 +267,26 @@ class Admin extends CI_Controller
         
         echo json_encode($data);
     }
+
+    public function getChart()
+    {
+    	$value = $this->uri->segment(3);
+    	$order = $this->uri->segment(4);
+
+    	$result = [];
+
+    	$chart = $this->db->select('ref_kecamatan.kecamatan as category, COUNT(*) as total')->where('status IS NULL')
+        	->join('ref_kecamatan', 'ref_kecamatan.id = main_pengenalan_tempat.kecamatan_id')
+        	->order_by($value, $order)->group_by('main_pengenalan_tempat.kecamatan_id')->get('main_pengenalan_tempat')->result_array();
+
+        foreach($chart as $value) {
+        	$result[] = array(
+        		'x' => $value['category'],
+        		'y' => $value['total']
+        	);
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($result, true);
+    }
 }

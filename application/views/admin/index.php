@@ -9,7 +9,7 @@
 		</div>
 	<?php } ?>
 
-	<div class="col-md-3">
+	<div class="col-md-3 mb-2">
 		<div class="card p-4">
 			<div class="d-flex justify-content-between mb-1">
 				<div>
@@ -25,7 +25,7 @@
 		</div>
 	</div>
 
-	<div class="col-md-3">
+	<div class="col-md-3 mb-2">
 		<div class="card p-4">
 			<div class="d-flex justify-content-between mb-1">
 				<div>
@@ -41,7 +41,7 @@
 		</div>
 	</div>
 
-	<div class="col-md-3">
+	<div class="col-md-3 mb-2">
 		<div class="card p-4">
 			<div class="d-flex justify-content-between mb-1">
 				<div>
@@ -57,7 +57,7 @@
 		</div>
 	</div>
 
-	<div class="col-md-3">
+	<div class="col-md-3 mb-2">
 		<div class="card p-4">
 			<div class="d-flex justify-content-between mb-1">
 				<div>
@@ -75,7 +75,20 @@
 </div>
 
 <div class="card mt-3" data-aos="fade-up">
-	<div id="chart"></div>
+	<div class="row">
+		<div class="dropdown col-md-5">
+		  <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+		    Urutkan berdasarkan
+		  </button>
+		  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+		    <li><a class="dropdown-item" href="javascript:void(0)" onclick="orderData('kecamatan', 'asc')">Kecamatan (A-Z)</a></li>
+		    <li><a class="dropdown-item" href="javascript:void(0)" onclick="orderData('kecamatan', 'desc')">Kecamatan (Z-A)</a></li>
+		    <li><a class="dropdown-item" href="javascript:void(0)" onclick="orderData('total', 'asc')">Data Paling Sedikit</a></li>
+		    <li><a class="dropdown-item" href="javascript:void(0)" onclick="orderData('total', 'desc')">Data Terbanyak</a></li>
+		  </ul>
+		</div>
+	</div>
+	<div id="chart" class="mt-3"></div>
 </div>
 
 <div class="card mt-3" data-aos="fade-in">
@@ -133,8 +146,12 @@
 
 	var options = {
 	  chart: {
+	  	id: 'homeChart',
 	    type: 'bar',
 	    height: 400,
+	    toolbar: {
+		  	show: true
+		  }
 	  },
 	  dataLabels: {
       enabled: true,
@@ -154,15 +171,12 @@
 	    }
 	  },
 	  series: [{
-	    name: 'survey',
+	    name: 'Survey',
 	    data: [
 	    	<?php foreach ($grafik_survey as $data) : ?>
 					<?= $data['total']; ?>,
 				<?php endforeach; ?>
-	    ],
-	    style: {
-	      fontSize:  '14px',
-	    }
+	    ]
 	  }],
 	  xaxis: {
 	    categories: [
@@ -176,4 +190,27 @@
 	var chart = new ApexCharts(document.querySelector("#chart"), options);
 
 	chart.render();
+
+	function orderData(value, order) {
+		var url = 'http://survey.egov/admin/getChart/' + value + '/' + order;
+
+		$.getJSON(url, function(response) {
+			var categories = [];
+
+			$.each(response, function(key, val) {
+				categories.push(val.x);
+			});
+
+		 	chart.updateOptions({
+		    xaxis: {
+		      categories: categories
+		    }
+		  });
+
+			chart.updateSeries([{
+		    name: 'Survey',
+		    data: response
+		  }]);			
+		});
+	}
 </script>
