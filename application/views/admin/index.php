@@ -75,19 +75,21 @@
 </div>
 
 <div class="card mt-3" data-aos="fade-up">
-	<div class="row">
-		<div class="dropdown col-md-5">
-		  <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-		    Urutkan berdasarkan
-		  </button>
-		  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-		    <li><a class="dropdown-item" href="javascript:void(0)" onclick="orderData('kecamatan', 'asc')">Kecamatan (A-Z)</a></li>
-		    <li><a class="dropdown-item" href="javascript:void(0)" onclick="orderData('kecamatan', 'desc')">Kecamatan (Z-A)</a></li>
-		    <li><a class="dropdown-item" href="javascript:void(0)" onclick="orderData('total', 'asc')">Data Paling Sedikit</a></li>
-		    <li><a class="dropdown-item" href="javascript:void(0)" onclick="orderData('total', 'desc')">Data Terbanyak</a></li>
-		  </ul>
+	<?php if($this->session->userdata('user_level') == 3) { ?>
+		<div class="row">
+			<div class="dropdown col-md-5">
+			  <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+			    Urutkan berdasarkan
+			  </button>
+			  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+			  	<li><a class="dropdown-item" href="javascript:void(0)" onclick="orderData('kecamatan', 'asc')">Kecamatan (A-Z)</a></li>
+				  <li><a class="dropdown-item" href="javascript:void(0)" onclick="orderData('kecamatan', 'desc')">Kecamatan (Z-A)</a></li>
+			    <li><a class="dropdown-item" href="javascript:void(0)" onclick="orderData('total', 'asc')">Data Paling Sedikit</a></li>
+			    <li><a class="dropdown-item" href="javascript:void(0)" onclick="orderData('total', 'desc')">Data Terbanyak</a></li>
+			  </ul>
+			</div>
 		</div>
-	</div>
+	<?php } ?>
 	<div id="chart" class="mt-3"></div>
 </div>
 
