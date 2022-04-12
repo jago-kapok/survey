@@ -192,7 +192,7 @@
 	chart.render();
 
 	function orderData(value, order) {
-		var url = 'http://survey.egov/admin/getChart/' + value + '/' + order;
+		var url = '<?= base_url() ?>admin/getChart/' + value + '/' + order;
 
 		$.getJSON(url, function(response) {
 			var categories = [];
