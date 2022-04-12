@@ -23,7 +23,7 @@ class Admin extends CI_Controller
         if($this->session->userdata('user_level') == 1) {
         	$survey_hari_ini = $this->db->where('desa_id', $user_name)->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
         	$survey_kemarin = $this->db->where('desa_id', $user_name)->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
-        	$total_survey = $this->db->where('desa_id', $user_name)->get('main_pengenalan_tempat')->result_array();
+        	$total_survey = $this->db->where('status IS NULL')->where('desa_id', $user_name)->get('main_pengenalan_tempat')->result_array();
 
         	$data['grafik_survey'] = $this->db->select('ref_desa.nama_desa as category, COUNT(*) as total')->where('status IS NULL')
         	->join('ref_desa', 'main_pengenalan_tempat.desa_id = ref_desa.id AND main_pengenalan_tempat.kecamatan_id = '.$user_manager)
@@ -32,7 +32,7 @@ class Admin extends CI_Controller
         } else if($this->session->userdata('user_level') == 2) {
         	$survey_hari_ini = $this->db->where('kecamatan_id', $user_name)->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
         	$survey_kemarin = $this->db->where('kecamatan_id', $user_name)->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
-        	$total_survey = $this->db->where('kecamatan_id', $user_name)->get('main_pengenalan_tempat')->result_array();
+        	$total_survey = $this->db->where('status IS NULL')->where('kecamatan_id', $user_name)->get('main_pengenalan_tempat')->result_array();
 
         	$data['grafik_survey'] = $this->db->select('ref_desa.nama_desa as category, COUNT(*) as total')->where('status IS NULL')
         	->join('ref_desa', 'ref_desa.id = main_pengenalan_tempat.desa_id AND main_pengenalan_tempat.kecamatan_id ='.$user_name)
@@ -40,7 +40,7 @@ class Admin extends CI_Controller
         } else {
         	$survey_hari_ini = $this->db->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
         	$survey_kemarin = $this->db->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
-        	$total_survey = $this->db->get('main_pengenalan_tempat')->result_array();
+        	$total_survey = $this->db->where('status IS NULL')->get('main_pengenalan_tempat')->result_array();
 
         	$data['grafik_survey'] = $this->db->select('ref_kecamatan.kecamatan as category, COUNT(*) as total')->where('status IS NULL')
         	->join('ref_kecamatan', 'ref_kecamatan.id = main_pengenalan_tempat.kecamatan_id')

@@ -81,7 +81,7 @@
 <div class="card mt-3" data-aos="fade-in">
   <div class="row mb-1">
 	<div class="col-md-8">
-	  <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#form_create"><i class="bi-filter-square"></i>
+	  <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#form_create" onclick="alert('Tahap Pengembangan ! Gunakan pencarian melalui input box')"><i class="bi-filter-square"></i>
 	    &nbsp;&nbsp;Filter Data
 	  </button>
 	</div>
@@ -134,10 +134,18 @@
 	var options = {
 	  chart: {
 	    type: 'bar',
-	    height: 400
+	    height: 400,
 	  },
+	  dataLabels: {
+      enabled: true,
+      style: {
+        fontSize: "20px",
+        fontFamily: "Helvetica, Arial, sans-serif",
+        fontWeight: "bold"
+      }
+    },
 	  title: {
-	    text: "Total Hasil Pencacahan di Kab. Bojonegoro",
+	    text: "Total Hasil Pencacahan di Kab. Bojonegoro (dalam satuan KK)",
 	    align: 'left',
 	    style: {
 	    	fontSize: '15px',
@@ -151,7 +159,10 @@
 	    	<?php foreach ($grafik_survey as $data) : ?>
 					<?= $data['total']; ?>,
 				<?php endforeach; ?>
-	    ]
+	    ],
+	    style: {
+	      fontSize:  '14px',
+	    }
 	  }],
 	  xaxis: {
 	    categories: [

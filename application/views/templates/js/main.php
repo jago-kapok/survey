@@ -3,6 +3,7 @@ var table = $("table#table_data").DataTable({
   processing 	: true,
   language	: {
     lengthMenu	: "_MENU_",
+    infoFiltered : "",
     zeroRecords	: "<center>Tidak Ada Data</center>",
     processing	: "<center>Silakan Tunggu</center>",
     paginate	: {
