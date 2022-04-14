@@ -344,11 +344,6 @@
                 <div class="row mb-3">
                   <label class="col-md-7 col-form-label">a ) Apakah ada ART yang memiliki usaha sendiri / bersama ?</label>
                   <div class="col-md-3">
-                    <!-- <select id="memiliki_usaha" name="memiliki_usaha" class="form-select form-select-sm">
-                      <option disabled selected>--- Pilihan ---</option>
-                      <option value="Ya">Ya</option>
-                      <option value="Tidak">Tidak</option>
-                    </select> -->
                     <?php
                       if(count($anggota_keluarga_memiliki_usaha) > 0) {
                         $memiliki_usaha = 'Ya';
@@ -358,7 +353,12 @@
                         $detail_usaha = 'hidden';
                       }
                     ?>
-                    <input id="memiliki_usaha" type="text" name="memiliki_usaha" class="form-control form-control-sm" value="<?php echo $memiliki_usaha ?>" readonly>
+                    <select id="memiliki_usaha" name="memiliki_usaha" class="form-select form-select-sm">
+                      <option disabled selected>--- Pilihan ---</option>
+                      <option value="Ya" <?php echo $selected = $memiliki_usaha == 'Ya' ? 'selected' : '' ?>>Ya</option>
+                      <option value="Tidak" <?php echo $selected = $memiliki_usaha == 'Tidak' ? 'selected' : '' ?>>Tidak</option>
+                    </select>
+                    <!-- <input id="memiliki_usaha" type="text" name="memiliki_usaha" class="form-control form-control-sm" value="<?php echo $memiliki_usaha ?>" readonly> -->
                   </div>
                 </div>
               </div>
@@ -374,7 +374,6 @@
                     <th colspan="2" style="vertical-align: middle; text-align: center">Jumlah Pekerja (Orang)</th>
                     <th rowspan="2" style="vertical-align: middle; text-align: center; width: 15%">Registrasi Usaha</th>
                     <th rowspan="2" style="vertical-align: middle; text-align: center; width: 15%">Omset Perbulan</th>
-                    <!-- <th rowspan="2" style="vertical-align: middle; text-align: center; width: 5%"></th> -->
                   </tr>
                   <tr>
                     <th style="vertical-align: middle; text-align: center; width: 10%">Dibayar</th>

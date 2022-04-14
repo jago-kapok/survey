@@ -18,7 +18,13 @@
             <div class="row">
               <label class="text-primary">
                 <?php if($this->session->userdata('user_level') == 1) { ?>
-                  <a href="<?= base_url() ?>edit/quest/1/<?php echo $main_id ?>" class="btn btn-sm btn-warning me-2"><i class="bi-pencil-square"></i>&nbsp;&nbsp;Edit</a>
+                  <?php if($button_lanjut <= 1) { ?>
+                    <a href="<?= base_url() ?>input/quest/<?php echo $button_lanjut ?>/<?php echo $main_id ?>" class="btn btn-sm btn-success me-2">
+                      Lanjutkan Survey&nbsp;&nbsp;<i class="bi-forward"></i>
+                    </a>
+                  <?php } else { ?>
+                    <a href="<?= base_url() ?>edit/quest/1/<?php echo $main_id ?>" class="btn btn-sm btn-warning me-2"><i class="bi-pencil-square"></i>&nbsp;&nbsp;Edit</a>
+                  <?php } ?>
                 <?php } ?>
                 <strong>I. PENGENALAN TEMPAT</strong>
               </label>
@@ -93,7 +99,13 @@
             <div class="row mt-4">
               <label class="text-primary">
                 <?php if($this->session->userdata('user_level') == 1) { ?>
-                  <a href="<?= base_url() ?>edit/quest/2/<?php echo $main_id ?>" class="btn btn-sm btn-warning me-2"><i class="bi-pencil-square"></i>&nbsp;&nbsp;Edit</a>
+                  <?php if($button_lanjut <= 2) { ?>
+                    <a href="<?= base_url() ?>input/quest/<?php echo $button_lanjut ?>/<?php echo $main_id ?>" class="btn btn-sm btn-success me-2">
+                      Lanjutkan Survey&nbsp;&nbsp;<i class="bi-forward"></i>
+                    </a>
+                  <?php } else { ?>
+                    <a href="<?= base_url() ?>edit/quest/2/<?php echo $main_id ?>" class="btn btn-sm btn-warning me-2"><i class="bi-pencil-square"></i>&nbsp;&nbsp;Edit</a>
+                  <?php } ?>
                 <?php } ?>
                 <strong>II. KETERANGAN PETUGAS DAN RESPONDEN</strong>
               </label>
@@ -148,7 +160,13 @@
             <div class="row mt-4">
               <label class="text-primary">
                 <?php if($this->session->userdata('user_level') == 1) { ?>
-                  <a href="<?= base_url() ?>edit/quest/3/<?php echo $main_id ?>" class="btn btn-sm btn-warning me-2"><i class="bi-pencil-square"></i>&nbsp;&nbsp;Edit</a>
+                  <?php if($button_lanjut <= 3) { ?>
+                    <a href="<?= base_url() ?>input/quest/<?php echo $button_lanjut ?>/<?php echo $main_id ?>" class="btn btn-sm btn-success me-2">
+                      Lanjutkan Survey&nbsp;&nbsp;<i class="bi-forward"></i>
+                    </a>
+                  <?php } else { ?>
+                    <a href="<?= base_url() ?>edit/quest/3/<?php echo $main_id ?>" class="btn btn-sm btn-warning me-2"><i class="bi-pencil-square"></i>&nbsp;&nbsp;Edit</a>
+                  <?php } ?>
                 <?php } ?>
                 <strong>III. KETERANGAN PERUMAHAN</strong>
               </label>
@@ -299,9 +317,15 @@
             <div class="row mt-4">
               <label class="text-primary">
                 <?php if($this->session->userdata('user_level') == 1) { ?>
-                  <a href="<?= base_url() ?>edit/quest/4/<?php echo $main_id ?>" class="btn btn-sm btn-warning me-2"><i class="bi-pencil-square"></i>&nbsp;&nbsp;Edit</a>
+                  <?php if($button_lanjut <= 4) { ?>
+                    <a href="<?= base_url() ?>input/quest/<?php echo $button_lanjut ?>/<?php echo $main_id ?>" class="btn btn-sm btn-success me-2">
+                      Lanjutkan Survey&nbsp;&nbsp;<i class="bi-forward"></i>
+                    </a>
+                  <?php } else { ?>
+                    <a href="<?= base_url() ?>edit/quest/4/<?php echo $main_id ?>" class="btn btn-sm btn-warning me-2"><i class="bi-pencil-square"></i>&nbsp;&nbsp;Edit</a>
+                  <?php } ?>
                 <?php } ?>
-                <strong>IV. KETERANGAN SOSIAL EKONOMI ANGGOTA RUMAH TANGGA</strong>
+                <strong>IV. KETERANGAN SOSIAL EKONOMI ANGGOTA KELUARGA</strong>
               </label>
 
               <div class="col-lg-12 mt-2 table-responsive">
@@ -362,7 +386,13 @@
             <div class="row mt-4">
               <label class="text-primary">
                 <?php if($this->session->userdata('user_level') == 1) { ?>
-                  <a href="<?= base_url() ?>edit/quest/5/<?php echo $main_id ?>" class="btn btn-sm btn-warning me-2"><i class="bi-pencil-square"></i>&nbsp;&nbsp;Edit</a>
+                  <?php if($button_lanjut <= 5) { ?>
+                    <a href="<?= base_url() ?>input/quest/<?php echo $button_lanjut ?>/<?php echo $main_id ?>" class="btn btn-sm btn-success me-2">
+                      Lanjutkan Survey&nbsp;&nbsp;<i class="bi-forward"></i>
+                    </a>
+                  <?php } else { ?>
+                    <a href="<?= base_url() ?>edit/quest/5/<?php echo $main_id ?>" class="btn btn-sm btn-warning me-2"><i class="bi-pencil-square"></i>&nbsp;&nbsp;Edit</a>
+                  <?php } ?>
                 <?php } ?>
                 <strong>V. KEPEMILIKAN ASET DAN PENGELUARAN</strong>
               </label>
@@ -690,7 +720,13 @@
             <div class="row mt-4">
               <label class="text-primary">
                 <?php if($this->session->userdata('user_level') == 1) { ?>
-                  <a href="<?= base_url() ?>edit/quest/6/<?php echo $main_id ?>" class="btn btn-sm btn-warning me-2"><i class="bi-pencil-square"></i>&nbsp;&nbsp;Edit</a>
+                  <?php if($button_lanjut <= 6) { ?>
+                    <a href="<?= base_url() ?>input/quest/<?php echo $button_lanjut ?>/<?php echo $main_id ?>" class="btn btn-sm btn-success me-2">
+                      Lanjutkan Survey&nbsp;&nbsp;<i class="bi-forward"></i>
+                    </a>
+                  <?php } else { ?>
+                    <a href="<?= base_url() ?>edit/quest/6/<?php echo $main_id ?>" class="btn btn-sm btn-warning me-2"><i class="bi-pencil-square"></i>&nbsp;&nbsp;Edit</a>
+                  <?php } ?>
                 <?php } ?>
                 <strong>VI. KOORDINAT LOKASI DAN FOTO RUMAH</strong>
               </label>

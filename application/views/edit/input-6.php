@@ -14,7 +14,7 @@
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">Latidue</label>
             <div class="col-sm-3">
-              <input id="latitude" type="text" name="latitude" class="form-control form-control-sm" value="<?php echo $main_foto_lokasi->latitude ?>">
+              <input id="latitude" type="text" name="latitude" class="form-control form-control-sm" value="<?php echo $latitude = $main_foto_lokasi->latitude != '' ? $main_foto_lokasi->latitude : '' ?>">
             </div>
           </div>
 

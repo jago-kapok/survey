@@ -85,7 +85,11 @@ class Admin extends CI_Controller
 			["db" => "kecamatan",	"dt" => "kecamatan"],
 			["db" => "nama_desa",	"dt" => "nama_desa"],
 			["db" => "no_kk_krt",	"dt" => "no_kk_krt"],
-			["db" => "nama_krt",	"dt" => "nama_krt"],
+			["db" => "nama_krt",	"dt" => "nama_krt",
+				"formatter" => function($data, $row) {
+					return strtoupper($data);
+				}
+			],
 			["db" => "jumlah_art",	"dt" => "jumlah_art"],
 
 			["db" => "main_id",	    "dt" => "main_id"],

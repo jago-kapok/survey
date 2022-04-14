@@ -338,7 +338,8 @@ class Edit extends CI_Controller
             'status_anggota_ruta_id'    => $this->input->post('status_anggota_ruta_id'),
         );
 
-        $query = $this->db->where("nik_anggota", $this->input->post("nik_anggota"))->get("main_keterangan_sosial_ekonomi")->result_array();
+        $query = $this->db->where(["nik_anggota"=>$this->input->post("nik_anggota"), 'main_pengenalan_tempat.status IS NULL'])->join('main_pengenalan_tempat', 'main_pengenalan_tempat.main_id = main_keterangan_sosial_ekonomi.main_id')
+                    ->get("main_keterangan_sosial_ekonomi")->result_array();
 
         if(count($query) >= 1) {
             $errors["nik_terdaftar"] = "Maaf, NIK sudah terdaftar";
@@ -365,6 +366,88 @@ class Edit extends CI_Controller
             $data['errors'] = $errors;
         } else {
             $insert = $this->db->insert('main_keterangan_sosial_ekonomi', $data_post);
+
+            $data['success'] = true;
+            $data['message'] = 'Success!';
+            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
+        }
+        
+        echo json_encode($data);
+    }
+
+    public function input4_edit()
+    {
+        $errors = [];
+        $data = [];
+
+        $main_id = $this->input->post('main_id');
+        $main_id = $this->key->crypts($main_id, 'd');
+        $id = $this->input->post('id');
+
+        $data_post = array(
+            'no_urut_keluarga'          => $this->input->post('no_urut_keluarga'),
+            'nik_anggota'               => $this->input->post('nik_anggota'),
+            'nama_anggota'              => $this->input->post('nama_anggota'),
+            'hubungan_rumah_tangga_id'  => $this->input->post('hubungan_rumah_tangga_id'),
+            'hubungan_keluarga_id'      => $this->input->post('hubungan_keluarga_id'),
+            'jenis_kelamin'             => $this->input->post('jenis_kelamin'),
+            'tanggal_lahir'             => $this->input->post('tanggal_lahir'),
+            'umur'                      => $this->input->post('umur'),
+            'status_perkawinan_id'      => $this->input->post('status_perkawinan_id'),
+            'status_kehamilan'          => $this->input->post('status_kehamilan'),
+            'penyakit_kronis_id'        => $this->input->post('penyakit_kronis_id'),
+            'jenis_disabilitas_id'      => $this->input->post('jenis_disabilitas_id'),
+            'apakah_perokok_id'         => $this->input->post('apakah_perokok_id'),
+            'partisipasi_sekolah_id'    => $this->input->post('partisipasi_sekolah_id'),
+            'jenjang_pendidikan_id'     => $this->input->post('jenjang_pendidikan_id'),
+            'kelas_tertinggi'           => $this->input->post('kelas_tertinggi'),
+            'ijazah_terakhir_id'        => $this->input->post('ijazah_terakhir_id'),
+            'status_bekerja'            => $this->input->post('status_bekerja'),
+            'lapangan_usaha_id'         => $this->input->post('lapangan_usaha_id'),
+            'jabatan_pekerjaan_id'      => $this->input->post('jabatan_pekerjaan_id'),
+            'status_anggota_ruta_id'    => $this->input->post('status_anggota_ruta_id'),
+        );
+
+        $query = $this->db->where("nik_anggota", $this->input->post("nik_anggota"))->get("main_keterangan_sosial_ekonomi")->result_array();
+
+        if(count($query) >= 1) {
+            foreach($query as $data) {
+                if($data['nik_anggota'] != $this->input->post('nik_anggota')) {
+                    $errors['nik_anggota_exist'] = 'Maaf, NIK sudah terdaftar';
+                }
+            }
+        }
+
+        if(empty($main_id)) {
+            $errors['main_id'] = 'Server sibuk ! Mohon refresh browser anda terlebih dahulu !';
+        }
+
+        if(strlen($this->input->post('nik_anggota')) < 16) {
+            $errors['nik_anggota'] = 'NIK harus berisi 16 digit angka';
+        }
+
+        if(empty($this->input->post('nama_anggota'))) {
+            $errors['nama_anggota'] = 'Nama anggota keluarga tidak boleh kosong';
+        }
+
+        if(empty($this->input->post('hubungan_keluarga_id')) || empty($this->input->post('jenis_kelamin')) || empty($this->input->post('tanggal_lahir')) || empty($this->input->post('status_perkawinan_id')) || empty($this->input->post('partisipasi_sekolah_id')) || empty($this->input->post('status_bekerja')) || empty($this->input->post('status_anggota_ruta_id'))) {
+            $errors['empty_message'] = 'Kolom input dengan tanda * tidak boleh kosong';
+        }
+        
+        if (!empty($errors)) {
+            $data['success'] = false;
+            $data['errors'] = $errors;
+        } else {
+            $this->db->where('id', $id);
+            $this->db->update('main_keterangan_sosial_ekonomi', $data_post);
+
+            $data_log = array(
+                'main_id'       => $main_id,
+                'log_activity'  => 'Update Data - IV. Main Keterangan Sosial Ekonomi Anggota Keluarga',
+                'user_id'       => $this->session->userdata('user_id')
+            );
+
+            $this->db->insert('log_activity', $data_log);
 
             $data['success'] = true;
             $data['message'] = 'Success!';
