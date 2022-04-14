@@ -298,7 +298,8 @@ class Input extends CI_Controller
 
         // $query = $this->db->where("nik_anggota", $this->input->post("nik_anggota"))->get("main_keterangan_sosial_ekonomi")->result_array();
 
-        $query = $this->db->where("nik_anggota", $this->input->post("nik_anggota"))->where('main_pengenalan_tempat.status IS NULL')->join('main_pengenalan_tempat', 'main_pengenalan_tempat.main_id = main_keterangan_sosial_ekonomi.main_id')
+        $query = $this->db->where("nik_anggota", $this->input->post("nik_anggota"))->where('main_pengenalan_tempat.status IS NULL')
+                    ->join('main_pengenalan_tempat', 'main_pengenalan_tempat.main_id = main_keterangan_sosial_ekonomi.main_id')
                     ->get("main_keterangan_sosial_ekonomi")->result_array();
 
         if(count($query) >= 1) {

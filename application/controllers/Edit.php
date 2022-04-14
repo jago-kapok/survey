@@ -338,7 +338,8 @@ class Edit extends CI_Controller
             'status_anggota_ruta_id'    => $this->input->post('status_anggota_ruta_id'),
         );
 
-        $query = $this->db->where(["nik_anggota"=>$this->input->post("nik_anggota"), 'main_pengenalan_tempat.status IS NULL'])->join('main_pengenalan_tempat', 'main_pengenalan_tempat.main_id = main_keterangan_sosial_ekonomi.main_id')
+        $query = $this->db->where("nik_anggota", $this->input->post("nik_anggota"))->where('main_pengenalan_tempat.status IS NULL')
+                    ->join('main_pengenalan_tempat', 'main_pengenalan_tempat.main_id = main_keterangan_sosial_ekonomi.main_id')
                     ->get("main_keterangan_sosial_ekonomi")->result_array();
 
         if(count($query) >= 1) {
