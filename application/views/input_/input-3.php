@@ -14,27 +14,24 @@
               <div class="">
                 <div class="row mb-3">
                   <label class="col-sm-5 col-form-label">1 ) Status Penguasaan Bangunan Tempat Tinggal yang Ditempati</label>
-                  <div class="col-sm-3">
+                  <div class="col-sm-2">
                     <select id="status_bangunan_value" name="status_bangunan_value" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>
-                      <option value="1">1. Milik sendiri</option>
-                      <option value="2">2. Kontrak / sewa</option>
-                      <option value="3">3. Bebas sewa / menumpang</option>
-                      <option value="4">4. Dinas / tanah kas desa</option>
-                      <option value="5">5. Lainnya</option>
+                      <?php foreach($status_bangunan as $data) { ?>
+                        <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
 
                 <div id="status_lahan" class="row mb-3">
                   <label class="col-sm-5 col-form-label text-primary">1b ) Status Lahan Tempat Tinggal yang Ditempati</label>
-                  <div class="col-sm-3">
+                  <div class="col-sm-2">
                     <select id="status_lahan_value" name="status_lahan_value" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>
-                      <option value="1">1. Milik sendiri</option>
-                      <option value="2">2. Milik orang lain</option>
-                      <option value="3">3. Tanah negara</option>
-                      <option value="4">4. Lainnya</option>
+                      <?php foreach($status_lahan as $data) { ?>
+                        <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
@@ -54,15 +51,9 @@
                   <div class="col-sm-3">
                     <select id="jenis_lantai_value" name="jenis_lantai_value" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>
-                      <option value="1">1. Marmer / granit</option>
-                      <option value="2">2. Keramik</option>
-                      <option value="3">3. Parket / vinil / karpet</option>
-                      <option value="4">4. Ubin / tegel / teraso</option>
-                      <option value="5">5. Kayu / papan</option>
-                      <option value="6">6. Semen / bata merah</option>
-                      <option value="7">7. Bambu</option>
-                      <option value="8">8. Tanah</option>
-                      <option value="9">9. Lainnya</option>
+                      <?php foreach($jenis_lantai as $data) { ?>
+                        <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
@@ -72,24 +63,21 @@
                   <div class="col-sm-4">
                     <select id="jenis_dinding_value" name="jenis_dinding_value" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>
-                      <option value="1">1. Tembok</option>
-                      <option value="2">2. Plesteran anyaman bambu / kawat</option>
-                      <option value="3">3. Kayu / papan</option>
-                      <option value="4">4. Anyaman bambu</option>
-                      <option value="5">5. Batang kayu</option>
-                      <option value="6">6. Bambu</option>
-                      <option value="7">7. Lainnya</option>
+                      <?php foreach($jenis_dinding as $data) { ?>
+                        <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
 
                 <div id="kondisi_dinding" class="row mb-3">
                   <label class="col-sm-5 col-form-label text-primary">4b ) Kondisi Dinding</label>
-                  <div class="col-sm-4">
+                  <div class="col-sm-3">
                     <select id="kondisi_dinding_value" name="kondisi_dinding_value" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>
-                      <option value="1">1. Bagus / kualitas tinggi</option>
-                      <option value="2">2. Jelek / kualitas rendah</option>
+                      <?php foreach($kondisi_dinding as $data) { ?>
+                        <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
@@ -99,14 +87,9 @@
                   <div class="col-sm-4">
                     <select id="jenis_atap_value" name="jenis_atap_value" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>
-                      <option value="1">1. Beton</option>
-                      <option value="2">2. Genteng</option>
-                      <option value="3">3. Seng</option>
-                      <option value="4">4. Asbes</option>
-                      <option value="5">5. Kayu / sirap</option>
-                      <option value="6">6. Bambu</option>
-                      <option value="7">7. Jerami / ijuk / daun-daunan / rumbia</option>
-                      <option value="8">8. Lainnya</option>
+                      <?php foreach($jenis_atap as $data) { ?>
+                        <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
@@ -116,8 +99,9 @@
                   <div class="col-sm-3">
                     <select id="kondisi_atap_value" name="kondisi_atap_value" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>
-                      <option value="1">1. Bagus / kualitas tinggi</option>
-                      <option value="2">2. Jelek / kualitas rendah</option>
+                      <?php foreach($kondisi_atap as $data) { ?>
+                        <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
@@ -137,17 +121,9 @@
                   <div class="col-sm-5">
                     <select id="sumber_airminum_value" name="sumber_airminum_value" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>
-                      <option value="1">1. Air kemasan bermerk</option>
-                      <option value="2">2. Air isi ulang</option>
-                      <option value="3">3. Leding</option>
-                      <option value="4">4. Sumur bor / pompa</option>
-                      <option value="5">5. Sumur terlindung</option>
-                      <option value="6">6. Sumur tak terlindung</option>
-                      <option value="7">7. Mata air terlindung</option>
-                      <option value="8">8. Mata air tak terlindung</option>
-                      <option value="9">9. Air permukaan (sungai / danau / waduk / kolam / irigasi)</option>
-                      <option value="10">10. Air hujan</option>
-                      <option value="11">11. Lainnya</option>
+                      <?php foreach($sumber_airminum as $data) { ?>
+                        <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
@@ -157,9 +133,9 @@
                   <div class="col-sm-2">
                     <select id="cara_memperoleh_airminum_value" name="cara_memperoleh_airminum_value" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>
-                      <option value="1">1. Membeli eceran</option>
-                      <option value="2">2. Langganan</option>
-                      <option value="3">3. Tidak membeli</option>
+                      <?php foreach($cara_memperoleh_airminum as $data) { ?>
+                        <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
@@ -169,10 +145,9 @@
                   <div class="col-sm-3">
                     <select id="sumber_listrik_value" name="sumber_listrik_value" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>
-                      <option value="1">1. Listrik PLN meteran</option>
-                      <option value="2">2. Listrik PLN non meteran</option>
-                      <option value="3">3. Listrik non PLN</option>
-                      <option value="4">4. Bukan listrik</option>
+                      <?php foreach($sumber_listrik as $data) { ?>
+                        <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
@@ -182,12 +157,9 @@
                   <div class="col-sm-3">
                     <select id="daya_listrik_value" name="daya_listrik_value" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>
-                      <option value="1">1. 450 watt</option>
-                      <option value="2">2. 900 watt</option>
-                      <option value="3">3. 1300 watt</option>
-                      <option value="4">4. 2200 watt</option>
-                      <option value="5">5. Lebih dari 2200 watt</option>
-                      <option value="6">6. Tanpa meteran</option>
+                      <?php foreach($daya_listrik as $data) { ?>
+                        <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
@@ -204,33 +176,21 @@
                   <div class="col-sm-3">
                     <select id="energi_untuk_memasak_value" name="energi_untuk_memasak_value" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>
-                      <option value="1">1. Listrik</option>
-                      <option value="2">2. Gas 5,5 kg / blue gaz</option>
-                      <option value="3">3. Gas 12 kg</option>
-                      <option value="4">4. Gas 3 kg</option>
-                      <option value="5">5. Gas kota / meteran PGN</option>
-                      <option value="6">6. Biogas</option>
-                      <option value="7">7. Minyak tanah</option>
-                      <option value="8">8. Briket</option>
-                      <option value="9">9. Arang</option>
-                      <option value="10">10. Kayu bakar</option>
-                      <option value="11">11. Lainnya</option>
-                      <option value="12">12. Tidak memasak di rumah</option>
+                      <?php foreach($energi_untuk_memasak as $data) { ?>
+                        <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label class="col-sm-5 col-form-label">11 ) Kepemilikan dan Penggunaan Fasilitas Tempat Buang Air Besar</label>
-                  <div class="col-sm-4">
+                  <div class="col-sm-3">
                     <select id="status_toilet_value" name="status_toilet_value" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>
-                      <option value="1">1. Ada, digunakan hanya anggota keluarga sendiri</option>
-                      <option value="2">2. Ada, digunakan bersama anggota keluarga tertentu</option>
-                      <option value="3">3. Ada, di MCK komunal</option>
-                      <option value="4">4. Ada, di MCK umum / siapapun menggunakan</option>
-                      <option value="5">5. Ada, anggota keluarga tidak menggunakan</option>
-                      <option value="6">6. Tidak ada</option>
+                      <?php foreach($status_toilet as $data) { ?>
+                        <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
@@ -240,10 +200,9 @@
                   <div class="col-sm-3">
                     <select id="jenis_toilet_value" name="jenis_toilet_value" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>
-                      <option value="1">1. Leher angsa</option>
-                      <option value="2">2. Plengsengan dengan tutup</option>
-                      <option value="3">3. Plengsengan tanpa tutup</option>
-                      <option value="4">4. Cemplung / cubluk</option>
+                      <?php foreach($jenis_toilet as $data) { ?>
+                        <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
@@ -253,12 +212,9 @@
                   <div class="col-sm-3">
                     <select id="tpa_value" name="tpa_value" class="form-select form-select-sm">
                       <option disabled selected>--- Pilihan ---</option>
-                      <option value="1">1. Tangki septik</option>
-                      <option value="2">2. IPAL</option>
-                      <option value="3">3. Kolam / sawah / sungai / danau / laut</option>
-                      <option value="4">4. Lubang tanah</option>
-                      <option value="5">5. Pantai / tanah lapang / kebun</option>
-                      <option value="6">6. Lainnya</option>
+                      <?php foreach($tpa as $data) { ?>
+                        <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
@@ -282,12 +238,12 @@
 <div class="col-lg-2" data-aos="fade-up">
   <div class="list-group">
     <li class="list-group-item list-group-item-secondary">TAHAP PENGISIAN</li>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 1</a>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 2</a>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action active">KUISIONER 3</a>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 4</a>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 5</a>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 6</a>
+    <a href="<?= base_url() ?>input/quest/1" class="list-group-item list-group-item-action disabled">KUISIONER 1</a>
+    <a href="<?= base_url() ?>input/quest/2" class="list-group-item list-group-item-action disabled">KUISIONER 2</a>
+    <a href="<?= base_url() ?>input/quest/3" class="list-group-item list-group-item-action active">KUISIONER 3</a>
+    <a href="<?= base_url() ?>input/quest/4" class="list-group-item list-group-item-action disabled">KUISIONER 4</a>
+    <a href="<?= base_url() ?>input/quest/5" class="list-group-item list-group-item-action disabled">KUISIONER 5</a>
+    <a href="<?= base_url() ?>input/quest/6" class="list-group-item list-group-item-action disabled">KUISIONER 6</a>
   </div>
 
   <div class="card mt-2">

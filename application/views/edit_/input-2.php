@@ -15,14 +15,14 @@
                 <div class="row mb-3">
                   <label class="col-lg-5 col-form-label">Tanggal Pencacahan <span class="text-danger">*</span></label>
                   <div class="col-lg-4">
-                    <input id="tanggal_pencacahan" type="date" name="tanggal_pencacahan" class="form-control form-control-sm">
+                    <input id="tanggal_pencacahan" type="date" name="tanggal_pencacahan" class="form-control form-control-sm" value="<?php echo date('Y-m-d', strtotime($main_keterangan_petugas_dan_responden->tanggal_pencacahan)) ?>">
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label class="col-lg-5 col-form-label">Nama Pencacah <span class="text-danger">*</span></label>
                   <div class="col-lg-6">
                     <div class="input-group input-group-sm">
-                      <input id="nama_pencacah" type="text" name="nama_pencacah" class="form-control form-control-sm">
+                      <input id="nama_pencacah" type="text" name="nama_pencacah" class="form-control form-control-sm" value="<?php echo $main_keterangan_petugas_dan_responden->nama_pencacah ?>">
                     </div>
                   </div>
                 </div>
@@ -30,14 +30,14 @@
                 <div class="row mb-3">
                   <label class="col-lg-5 col-form-label">Tanggal Pemeriksaan <span class="text-danger">*</span></label>
                   <div class="col-lg-4">
-                    <input id="tanggal_pemeriksaan" type="date" name="tanggal_pemeriksaan" class="form-control form-control-sm">
+                    <input id="tanggal_pemeriksaan" type="date" name="tanggal_pemeriksaan" class="form-control form-control-sm" value="<?php echo date('Y-m-d', strtotime($main_keterangan_petugas_dan_responden->tanggal_pemeriksaan)) ?>">
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label class="col-lg-5 col-form-label">Nama Pemeriksa <span class="text-danger">*</span></label>
                   <div class="col-lg-6">
                     <div class="input-group input-group-sm">
-                      <input id="nama_pemeriksa" type="text" name="nama_pemeriksa" class="form-control form-control-sm">
+                      <input id="nama_pemeriksa" type="text" name="nama_pemeriksa" class="form-control form-control-sm" value="<?php echo $main_keterangan_petugas_dan_responden->nama_pemeriksa ?>">
                     </div>
                   </div>
                 </div>
@@ -49,12 +49,12 @@
                   <div class="col-lg-11">
                     <select id="hasil_pencacahan" name="hasil_pencacahan" class="form-select form-select-sm">
                       <option disabled selected>--- Pilih status hasil pencacahan rumah tangga ---</option>
-                      <option value="1">1. Terisi lengkap</option>
-                      <option value="2">2. Tidak ada ART / responden yang dapat memberi jawaban sampai akhir masa pencacahan</option>
-                      <option value="3">3. Keluarga tidak ditemukan</option>
-                      <option value="4">4. Responden menolak</option>
-                      <option value="5">5. Rumah tangga pindah / bangunan sudah tidak ada</option>
-                      <option value="6">6. Bagian dari keluarga di dokumen lain</option>
+                      <?php
+                        foreach($hasil_pencacahan as $data) {
+                          $selected = $data['id'] == $main_keterangan_petugas_dan_responden->hasil_pencacahan ? 'selected' : '';
+                      ?>
+                        <option value="<?php echo $data['id'] ?>" <?php echo $selected ?>><?php echo $data['id'].". ".$data['desc'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
@@ -63,7 +63,7 @@
 
             <div class="row mt-2">
               <div class="modal-footer">
-                <button id="simpanData" type="submit" class="btn btn-primary float-end"><i class="bi-clipboard-check">&nbsp;&nbsp;</i>Simpan & Lanjutkan</button>
+                <button id="simpanData" type="submit" class="btn btn-primary float-end"><i class="bi-clipboard-check">&nbsp;&nbsp;</i>Simpan Data</button>
               </div>
             </div>
           </form>
@@ -77,12 +77,12 @@
 <div class="col-lg-2" data-aos="fade-up">
   <div class="list-group">
     <li class="list-group-item list-group-item-secondary">TAHAP PENGISIAN</li>
-    <a href="<?= base_url() ?>input/quest/1" class="list-group-item list-group-item-action disabled">KUISIONER 1</a>
-    <a href="<?= base_url() ?>input/quest/2" class="list-group-item list-group-item-action active">KUISIONER 2</a>
-    <a href="<?= base_url() ?>input/quest/3" class="list-group-item list-group-item-action disabled">KUISIONER 3</a>
-    <a href="<?= base_url() ?>input/quest/4" class="list-group-item list-group-item-action disabled">KUISIONER 4</a>
-    <a href="<?= base_url() ?>input/quest/5" class="list-group-item list-group-item-action disabled">KUISIONER 5</a>
-    <a href="<?= base_url() ?>input/quest/6" class="list-group-item list-group-item-action disabled">KUISIONER 6</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 1</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action active">KUISIONER 2</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 3</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 4</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 5</a>
+    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 6</a>
   </div>
 
   <div class="card mt-2">
@@ -97,7 +97,7 @@
 
     $.ajax({
       type: "POST",
-      url: "<?= base_url() ?>input/input2_create",
+      url: "<?= base_url() ?>edit/input2_create",
       data: data,
       dataType: "json",
       processData: false,
@@ -112,7 +112,7 @@
         $.notify("Data berhasil disimpan !", "success");
 
         setInterval(function () {
-          window.location = "<?= base_url() ?>input/quest/3/" + data.main_id;
+          window.location = "<?= base_url() ?>admin/view/" + data.main_id;
         }, 1200);
       } else {
         $.each(data.errors, function(index, item) {

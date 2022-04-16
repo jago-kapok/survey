@@ -71,6 +71,9 @@
           <li class="nav-item ms-4">
             <a href="<?= base_url() ?>input/quest/1/a2ErZWkvZXcvZTcyei9YUyt5b0RrZz09" class="nav-link active" aria-current="page">Pengisian Survey</a>
           </li>
+          <li class="nav-item ms-4">
+            <a href="<?= base_url() ?>admin/report" class="nav-link active" aria-current="page">Rekapitulasi Data</a>
+          </li>
         </ul>
         <form class="d-flex">
           <span class="nav-icon me-2" style="font-size: 0.8rem; padding: 0.5rem">

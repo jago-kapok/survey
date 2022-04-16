@@ -233,11 +233,12 @@
                 <div class="row mb-3">
                   <label class="col-md-7 col-form-label">a ) Lahan</label>
                   <div class="col-md-3">
-                    <select id="lahan" name="lahan" class="form-select form-select-sm">
-                      <option disabled selected>--- Pilihan ---</option>
-                      <option value="Ya">Ya</option>
-                      <option value="Tidak">Tidak</option>
-                    </select>
+                    
+                      <select id="lahan" name="lahan" class="form-select form-select-sm">
+                        <option disabled selected>--- Pilihan ---</option>
+                        <option value="Ya">Ya</option>
+                        <option value="Tidak">Tidak</option>
+                      </select>
                     <div class="input-group input-group-sm mt-2">
                       <input id="lahan_luas" type="text" name="lahan_luas" class="form-control form-control-sm number">
                       <span class="input-group-text">m²</span>
@@ -453,86 +454,12 @@
             <div class="row">
               <label class="mb-2"><strong>6. Apakah keluarga ini pernah / sedang mendapatkan bantuan dari pemerintah selama setahun terakhir :</strong></label>
               <div class="row m-0 mb-3">
-                <div class="form-check form-check-inline col-md-3">
-                  <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="1">
-                  <label class="form-check-label">Program Petani Mandiri</label>
-                </div>
-                <div class="form-check form-check-inline col-md-3">
-                  <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="2">
-                  <label class="form-check-label">Bantuan Langsung Tunai Daerah</label>
-                </div>
-                <div class="form-check form-check-inline col-md-3">
-                  <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="3">
-                  <label class="form-check-label">Universal Health Coverage</label>
-                </div>
-                <div class="form-check form-check-inline col-md-3">
-                  <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="4">
-                  <label class="form-check-label">Aladin / RLTH</label>
-                </div>
-                <div class="form-check form-check-inline col-md-3">
-                  <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="5">
-                  <label class="form-check-label">Program Keluarga Harapan</label>
-                </div>
-                <div class="form-check form-check-inline col-md-3">
-                  <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="6">
-                  <label class="form-check-label">Bantuan Sosial Tunai</label>
-                </div>
-                <div class="form-check form-check-inline col-md-3">
-                  <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="7">
-                  <label class="form-check-label">Kartu Pedagang Produktif</label>
-                </div>
-                <div class="form-check form-check-inline col-md-3">
-                  <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="8">
-                  <label class="form-check-label">Bantuan Langsung Tunai Dana Desa</label>
-                </div>
-                <div class="form-check form-check-inline col-md-3">
-                  <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="9">
-                  <label class="form-check-label">Bansos Asistensi Disabilitas</label>
-                </div>
-                <div class="form-check form-check-inline col-md-3">
-                  <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="10">
-                  <label class="form-check-label">Penyediaan Air Bersih</label>
-                </div>
-                <div class="form-check form-check-inline col-md-3">
-                  <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="11">
-                  <label class="form-check-label">Beasiswa</label>
-                </div>
-                <div class="form-check form-check-inline col-md-3">
-                  <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="12">
-                  <label class="form-check-label">Jatim Puspa</label>
-                </div>
-                <div class="form-check form-check-inline col-md-3">
-                  <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="13">
-                  <label class="form-check-label">Rantang Kasih Moe</label>
-                </div>
-                <div class="form-check form-check-inline col-md-3">
-                  <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="14">
-                  <label class="form-check-label">DAK Madrasah Aliyah</label>
-                </div>
-                <div class="form-check form-check-inline col-md-3">
-                  <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="15">
-                  <label class="form-check-label">Bansos Anak Yatim</label>
-                </div>
-                <div class="form-check form-check-inline col-md-3">
-                  <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="16">
-                  <label class="form-check-label">Pembangunan Jamban Sehat</label>
-                </div>
-                <div class="form-check form-check-inline col-md-3">
-                  <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="17">
-                  <label class="form-check-label">Bantuan Pangan Non Tunai Daerah</label>
-                </div>
-                <div class="form-check form-check-inline col-md-3">
-                  <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="18">
-                  <label class="form-check-label">Bantuan Pangan Non Tunai Pusat</label>
-                </div>
-                <div class="form-check form-check-inline col-md-3">
-                  <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="19">
-                  <label class="form-check-label">Santunan Duka</label>
-                </div>
-                <div class="form-check form-check-inline col-md-3">
-                  <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="20">
-                  <label class="form-check-label">Bantuan Orang Sakit Menahun</label>
-                </div>
+                <?php foreach($jenis_bantuan as $data) { ?>
+                  <div class="form-check form-check-inline col-md-3">
+                    <input class="form-check-input" type="checkbox" name="jenis_bantuan_id[]" value="<?php echo $data['id'] ?>">
+                    <label class="form-check-label"><?php echo $data['desc'] ?></label>
+                  </div>
+                <?php } ?>
               </div>
             </div>
 
@@ -552,12 +479,12 @@
 <div class="col-lg-2" data-aos="fade-up">
   <div class="list-group">
     <li class="list-group-item list-group-item-secondary">TAHAP PENGISIAN</li>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 1</a>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 2</a>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 3</a>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 4</a>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action active">KUISIONER 5</a>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 6</a>
+    <a href="<?= base_url() ?>input/quest/1" class="list-group-item list-group-item-action disabled">KUISIONER 1</a>
+    <a href="<?= base_url() ?>input/quest/2" class="list-group-item list-group-item-action disabled">KUISIONER 2</a>
+    <a href="<?= base_url() ?>input/quest/3" class="list-group-item list-group-item-action disabled">KUISIONER 3</a>
+    <a href="<?= base_url() ?>input/quest/4" class="list-group-item list-group-item-action disabled">KUISIONER 4</a>
+    <a href="<?= base_url() ?>input/quest/5" class="list-group-item list-group-item-action active">KUISIONER 5</a>
+    <a href="<?= base_url() ?>input/quest/6" class="list-group-item list-group-item-action disabled">KUISIONER 6</a>
   </div>
 
   <div class="card mt-2">

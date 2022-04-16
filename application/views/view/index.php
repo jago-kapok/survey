@@ -4,7 +4,7 @@
       <div class="tab-content" id="v-pills-tabContent">
         <div class="tab-pane fade show active" id="v-pills-kuesioner-1" role="tabpanel" aria-labelledby="v-pills-home-tab">
           <?php if($this->session->userdata('user_level') == 1) { ?>
-            <?php if($button_lanjut != "") { ?>
+            <?php if($button_lanjut != 10) { ?>
               <a href="<?= base_url() ?>input/quest/<?php echo $button_lanjut ?>/<?php echo $main_id ?>" class="btn btn-success mb-3">
                 Lanjutkan Survey&nbsp;&nbsp;<i class="bi-forward"></i>
               </a>
@@ -150,7 +150,7 @@
                   <label class="col-lg-5 col-form-label">Hasil Pencacahan Rumah Tangga</label>
                   <div class="col-lg-6">
                     <label class="col-form-label">:
-                      <?php echo (isset($tahap_dua->hasil_pencacahan)) ? $tahap_dua->hasil_pencacahan : '<span class="text-danger">Tidak Terisi</span>' ?>
+                      <?php echo (isset($tahap_dua->hasil_pencacahan_desc)) ? $tahap_dua->hasil_pencacahan_desc : '<span class="text-danger">Tidak Terisi</span>' ?>
                     </label>
                   </div>
                 </div>

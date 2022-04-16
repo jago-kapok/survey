@@ -19,6 +19,36 @@ class Input extends CI_Controller
 
         $data['title'] = 'Survey Pemutakhiran DTKS - Kab. Bojonegoro';
 
+        $data['hasil_pencacahan'] = $this->db->get('hasil_pencacahan')->result_array();
+        $data['status_bangunan'] = $this->db->get('status_bangunan')->result_array();
+        $data['status_lahan'] = $this->db->get('status_lahan')->result_array();
+        $data['jenis_lantai'] = $this->db->get('jenis_lantai')->result_array();
+        $data['jenis_dinding'] = $this->db->get('jenis_dinding')->result_array();
+        $data['kondisi_dinding'] = $this->db->get('kondisi_dinding')->result_array();
+        $data['jenis_atap'] = $this->db->get('jenis_atap')->result_array();
+        $data['kondisi_atap'] = $this->db->get('kondisi_atap')->result_array();
+        $data['sumber_airminum'] = $this->db->get('sumber_airminum')->result_array();
+        $data['cara_memperoleh_airminum'] = $this->db->get('cara_memperoleh_airminum')->result_array();
+        $data['sumber_listrik'] = $this->db->get('sumber_listrik')->result_array();
+        $data['daya_listrik'] = $this->db->get('daya_listrik')->result_array();
+        $data['energi_untuk_memasak'] = $this->db->get('energi_untuk_memasak')->result_array();
+        $data['status_toilet'] = $this->db->get('status_toilet')->result_array();
+        $data['jenis_toilet'] = $this->db->get('jenis_toilet')->result_array();
+        $data['tpa'] = $this->db->get('tpa')->result_array();
+
+        $data['hubungan_rumah_tangga'] = $this->db->get('hubungan_rumah_tangga')->result_array();
+        $data['hubungan_keluarga'] = $this->db->get('hubungan_keluarga')->result_array();
+        $data['status_perkawinan'] = $this->db->get('status_perkawinan')->result_array();
+        $data['penyakit_kronis'] = $this->db->get('penyakit_kronis')->result_array();
+        $data['jenis_disabilitas'] = $this->db->get('jenis_disabilitas')->result_array();
+        $data['apakah_perokok'] = $this->db->get('apakah_perokok')->result_array();
+        $data['partisipasi_sekolah'] = $this->db->get('partisipasi_sekolah')->result_array();
+        $data['jenjang_pendidikan'] = $this->db->get('jenjang_pendidikan')->result_array();
+        $data['ijazah_terakhir'] = $this->db->get('ijazah_terakhir')->result_array();
+        $data['lapangan_usaha'] = $this->db->get('lapangan_usaha')->result_array();
+        $data['jabatan_pekerjaan'] = $this->db->get('jabatan_pekerjaan')->result_array();
+        $data['status_anggota_ruta'] = $this->db->get('status_anggota_ruta')->result_array();
+
         if($this->session->userdata('user_level') == 1) {
             $data['ref_kecamatan'] = $this->db->where('id', $this->session->userdata('user_manager'))->get('ref_kecamatan')->result_array();
             $data['ref_desa'] = $this->db->where('id', $this->session->userdata('user_name'))->get('ref_desa')->result_array();
@@ -26,9 +56,19 @@ class Input extends CI_Controller
             $data['ref_kecamatan'] = $this->db->get('ref_kecamatan')->result_array();
             $data['ref_desa'] = $this->db->get('ref_desa')->result_array();
         }
-
-        $data['anggota_keluarga'] = $this->db->where('main_id', $main_id)->get('view_anggota_keluarga')->result_array();
         
+
+        $data['estimasi_pengeluaran'] = $this->db->get('estimasi_pengeluaran')->result_array();
+        $data['jenis_bantuan'] = $this->db->get('jenis_bantuan')->result_array();
+
+        $data['anggota_keluarga'] = $this->db->select("mkse.*, hk.desc as hubungan_keluarga, sp.desc as status_perkawinan")
+        ->where("main_id", $main_id)
+        // ->join("hubungan_rumah_tangga hrt", "mkse.hubungan_rumah_tangga_id = hrt.id")
+        ->join("hubungan_keluarga hk", "mkse.hubungan_keluarga_id = hk.id")
+        ->join("status_perkawinan sp", "mkse.status_perkawinan_id = sp.id")
+        ->order_by("no_urut_keluarga")
+        ->get('main_keterangan_sosial_ekonomi mkse')->result_array();
+
         $data['anggota_keluarga_memiliki_usaha'] = $this->db->select("mkse.*, lu.desc as lapangan_usaha")
         ->where("main_id", $main_id)
         ->join("lapangan_usaha lu", "mkse.lapangan_usaha_id = lu.id")

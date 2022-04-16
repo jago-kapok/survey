@@ -32,9 +32,9 @@ var table = $("table#table_data").DataTable({
       data: "main_id",
         render: function(data, type, row) {
           <?php if($this->session->userdata('user_level') == 1) { ?>
-            return '<a href="<?php base_url() ?>admin/view/' + data + '" class="btn btn-success btn-sm"><i class="bi-search"></i></a>&nbsp;<a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="hapusData(' + data + ')"><i class="bi-trash"></i></a>';
+            return '<a href="<?= base_url() ?>admin/view/' + data + '" class="btn btn-success btn-sm"><i class="bi-search"></i></a>&nbsp;<a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="hapusData(' + data + ')"><i class="bi-trash"></i></a>';
           <?php } else { ?>
-            return '<a href="<?php base_url() ?>admin/view/' + data + '" class="btn btn-success btn-sm"><i class="bi-search"></i></a>';
+            return '<a href="<?= base_url() ?>admin/view/' + data + '" class="btn btn-success btn-sm"><i class="bi-search"></i></a>';
           <?php } ?>
       }
     }	

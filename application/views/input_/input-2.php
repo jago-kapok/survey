@@ -49,15 +49,19 @@
                   <div class="col-lg-11">
                     <select id="hasil_pencacahan" name="hasil_pencacahan" class="form-select form-select-sm">
                       <option disabled selected>--- Pilih status hasil pencacahan rumah tangga ---</option>
-                      <option value="1">1. Terisi lengkap</option>
-                      <option value="2">2. Tidak ada ART / responden yang dapat memberi jawaban sampai akhir masa pencacahan</option>
-                      <option value="3">3. Keluarga tidak ditemukan</option>
-                      <option value="4">4. Responden menolak</option>
-                      <option value="5">5. Rumah tangga pindah / bangunan sudah tidak ada</option>
-                      <option value="6">6. Bagian dari keluarga di dokumen lain</option>
+                      <?php foreach($hasil_pencacahan as $data) { ?>
+                        <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
+
+                <!-- <div id="bagian_no_ruta" class="row mb-3">
+                  <label class="col-lg-4 col-form-label">No. KK</label>
+                  <div class="col-lg-3">
+                    <input id="bagian_no_ruta_value" type="number" name="bagian_no_ruta" class="form-control form-control-sm">
+                  </div>
+                </div> -->
               </div>
             </div>
 

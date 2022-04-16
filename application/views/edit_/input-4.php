@@ -35,6 +35,7 @@
                       <td class="text-center"><?php echo $key + 1 ?></td>
                       <td class="text-center"><?php echo $data["no_urut_keluarga"] ?></td>
                       <td><?php echo strtoupper($data["nama_anggota"]) ?><br>NIK : <?php echo $data["nik_anggota"] ?></td>
+                      <!-- <td><?php echo $data["hubungan_rumah_tangga"] ?></td> -->
                       <td><?php echo $data["hubungan_keluarga"] ?></td>
                       <td class="text-center"><?php echo $jenis_kelamin ?></td>
                       <td><?php echo date("d-m-Y", strtotime($data["tanggal_lahir"])) ?><br>Umur : <?php echo $data["umur"] ?> th</td>
@@ -89,12 +90,12 @@
 <div class="col-lg-2" data-aos="fade-up">
   <div class="list-group">
     <li class="list-group-item list-group-item-secondary">TAHAP PENGISIAN</li>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 1</a>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 2</a>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 3</a>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action active">KUISIONER 4</a>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 5</a>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 6</a>
+    <a href="<?= base_url() ?>input/quest/1" class="list-group-item list-group-item-action disabled">KUISIONER 1</a>
+    <a href="<?= base_url() ?>input/quest/2" class="list-group-item list-group-item-action disabled">KUISIONER 2</a>
+    <a href="<?= base_url() ?>input/quest/3" class="list-group-item list-group-item-action disabled">KUISIONER 3</a>
+    <a href="<?= base_url() ?>input/quest/4" class="list-group-item list-group-item-action active">KUISIONER 4</a>
+    <a href="<?= base_url() ?>input/quest/5" class="list-group-item list-group-item-action disabled">KUISIONER 5</a>
+    <a href="<?= base_url() ?>input/quest/6" class="list-group-item list-group-item-action disabled">KUISIONER 6</a>
   </div>
 
   <div class="card mt-2">
@@ -141,14 +142,9 @@
               <div class="col-sm-4">
                 <select id="hubungan_keluarga_id" name="hubungan_keluarga_id" class="form-select form-select-sm">
                   <option disabled selected>--- Pilihan ---</option>
-                  <option value="1">1. Kepala Keluarga</option>
-                  <option value="2">2. Istri / Suami</option>
-                  <option value="3">3. Anak</option>
-                  <option value="4">4. Menantu</option>
-                  <option value="5">5. Cucu</option>
-                  <option value="6">6. Orang Tua / Mertua</option>
-                  <option value="7">7. Pembantu Rumah Tangga</option>
-                  <option value="8">8. Lainnya</option>
+                  <?php foreach($hubungan_keluarga as $data) { ?>
+                    <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                  <?php } ?>
                 </select>
               </div>
             </div>
@@ -186,10 +182,9 @@
               <div class="col-sm-4">
                 <select id="status_perkawinan_id" name="status_perkawinan_id" class="form-select form-select-sm">
                   <option disabled selected>--- Pilihan ---</option>
-                  <option value="1">1. Belum Kawin</option>
-                  <option value="2">2. Kawin / Menikah</option>
-                  <option value="3">3. Cerai Hidup</option>
-                  <option value="4">4. Cerai Mati</option>
+                  <?php foreach($status_perkawinan as $data) { ?>
+                    <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                  <?php } ?>
                 </select>
               </div>
             </div>
@@ -210,12 +205,9 @@
               <div class="col-sm-4">
                 <select id="status_anggota_ruta_id" name="status_anggota_ruta_id" class="form-select form-select-sm">
                   <option disabled selected>--- Pilihan ---</option>
-                  <option value="1">1. Tinggal di Rumah Tangga</option>
-                  <option value="2">2. Meninggal</option>
-                  <option value="3">3. Tidak Tinggal di Keluarga / Pindah</option>
-                  <option value="4">4. Anggota Keluarga Baru</option>
-                  <option value="5">5. Kesalahan Perlist</option>
-                  <option value="6">6. Tidak Ditemukan</option>
+                  <?php foreach($status_anggota_ruta as $data) { ?>
+                    <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                  <?php } ?>
                 </select>
               </div>
             </div>
@@ -227,18 +219,9 @@
               <div class="col-sm-4">
                 <select id="penyakit_kronis_id" name="penyakit_kronis_id" class="form-select form-select-sm">
                   <option disabled selected>--- Pilihan ---</option>
-                  <option value="1">1. Hipertensi (Tekanan Darah Tinggi)</option>
-                  <option value="2">2. Rematik</option>
-                  <option value="3">3. Asma</option>
-                  <option value="4">4. Masalah Jantung</option>
-                  <option value="5">5. Diabetes (Kencing Manis)</option>
-                  <option value="6">6. Tuberculosis (TBC)</option>
-                  <option value="7">7. Stroke</option>
-                  <option value="8">8. Kanker atau Tumor Ganas</option>
-                  <option value="9">9. Gagal Ginjal</option>
-                  <option value="10">10. Lainnya (Paru-Paru Flek, dsb)</option>
-                  <option value="11">11. Covid-19</option>
-                  <option value="12">12. Tidak Ada</option>
+                  <?php foreach($penyakit_kronis as $data) { ?>
+                    <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                  <?php } ?>
                 </select>
               </div>
             </div>
@@ -248,19 +231,9 @@
               <div class="col-sm-4">
                 <select id="jenis_disabilitas_id" name="jenis_disabilitas_id" class="form-select form-select-sm">
                   <option disabled selected>--- Pilihan ---</option>
-                  <option value="1">1. Penyandang Disabilitas Fisik</option>
-                  <option value="2">2. Penyandang Disabilitas Netra</option>
-                  <option value="3">3. Penyandang Disabilitas Rungu</option>
-                  <option value="4">4. Penyandang Disabilitas Wicara</option>
-                  <option value="5">5. Penyandang Disabilitas Rungu dan Wicara</option>
-                  <option value="6">6. Penyandang Disabilitas Netra dan Fisik</option>
-                  <option value="7">7. Penyandang Disabilitas Netra, Rungu dan Wicara</option>
-                  <option value="8">8. Penyandang Disabilitas Rungu, Wicara dan Fisik</option>
-                  <option value="9">9. Penyandang Disabilitas Rungu, Wicara, Netra dan Fisik</option>
-                  <option value="10">10. Penyandang Disabilitas Intelektual</option>
-                  <option value="11">11. Penyandang Disabilitas Mental (OMK dan CDK)</option>
-                  <option value="12">12. Penyandang Disabilitas Ganda / Multi</option>
-                  <option value="13">13. Non Penyandang Disabilitas</option>
+                  <?php foreach($jenis_disabilitas as $data) { ?>
+                    <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                  <?php } ?>
                 </select>
               </div>
             </div>
@@ -271,10 +244,9 @@
               <div class="col-sm-4">
                 <select id="apakah_perokok_id" name="apakah_perokok_id" class="form-select form-select-sm">
                   <option disabled selected>--- Pilihan ---</option>
-                  <option value="1">1. Ya, Setiap Hari</option>
-                  <option value="2">2. Ya, Tidak Setiap Hari</option>
-                  <option value="3">3. Tidak</option>
-                  <option value="4">4. Tidak Tahu</option>
+                  <?php foreach($apakah_perokok as $data) { ?>
+                    <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                  <?php } ?>
                 </select>
               </div>
             </div>
@@ -284,9 +256,9 @@
               <div class="col-sm-4">
                 <select id="partisipasi_sekolah_id" name="partisipasi_sekolah_id" class="form-select form-select-sm">
                   <option disabled selected>--- Pilihan ---</option>
-                  <option value="1">1. Masih Sekolah</option>
-                  <option value="2">2. Tidak Bersekolah Lagi</option>
-                  <option value="3">3. Tidak / Belum Pernah Sekolah</option>
+                  <?php foreach($partisipasi_sekolah as $data) { ?>
+                    <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                  <?php } ?>
                 </select>
               </div>
             </div>
@@ -297,16 +269,9 @@
                 <div class="col-sm-4">
                   <select id="jenjang_pendidikan_id" name="jenjang_pendidikan_id" class="form-select form-select-sm">
                     <option disabled selected>--- Pilihan ---</option>
-                    <option value="1">1. SD / SDLB</option>
-                    <option value="2">2. Paket A</option>
-                    <option value="3">3. Madrasah Ibtidaiyah</option>
-                    <option value="4">4. SMP / SMPLB</option>
-                    <option value="5">5. Paket B</option>
-                    <option value="6">6. Madrasah Tsanawiyah</option>
-                    <option value="7">7. SMA / SMK / SMALB</option>
-                    <option value="8">8. Paket C</option>
-                    <option value="9">9. Madrasah Aliyah</option>
-                    <option value="10">10. Perguruan Tinggi</option>
+                    <?php foreach($jenjang_pendidikan as $data) { ?>
+                      <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
@@ -317,14 +282,9 @@
                   <select id="kelas_tertinggi" name="kelas_tertinggi" class="form-select form-select-sm">
                     <option disabled selected>--- Pilihan ---</option>
                     <option value="10">Tamat</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
+                    <?php for($i=1 ; $i <= 8 ; $i++) { ?>
+                      <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
@@ -334,13 +294,9 @@
                 <div class="col-sm-4">
                   <select id="ijazah_terakhir_id" name="ijazah_terakhir_id" class="form-select form-select-sm">
                     <option disabled selected>--- Pilihan ---</option>
-                    <option value="1">0. Tidak Punya Ijazah</option>
-                    <option value="2">1. SD / Sederajat</option>
-                    <option value="3">2. SMP / Sederajat</option>
-                    <option value="4">3. SMA / Sederajat</option>
-                    <option value="5">4. D1 / D2 / D3</option>
-                    <option value="6">5. D4 / S1</option>
-                    <option value="7">6. S2 / S3</option>
+                    <?php foreach($ijazah_terakhir as $data) { ?>
+                      <option value="<?php echo $data['id'] ?>"><?php echo ((int)$data['id'] - 1).". ".$data['desc'] ?></option>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
@@ -364,28 +320,9 @@
                 <div class="col-sm-4">
                   <select id="lapangan_usaha_id" name="lapangan_usaha_id" class="form-select form-select-sm">
                     <option disabled selected>--- Pilihan ---</option>
-                    <option value="1">1. Pertanian Tanaman Padi dan Palawija</option>
-                    <option value="2">2. Hortikultura</option>
-                    <option value="3">3. Perkebunan</option>
-                    <option value="4">4. Perikanan Tangkap</option>
-                    <option value="5">5. Perikanan Budidaya</option>
-                    <option value="6">6. Peternakan</option>
-                    <option value="7">7. Kehutanan dan Pertanian Lainnya</option>
-                    <option value="8">8. Pertambangan / Penggalian</option>
-                    <option value="9">9. Industri Pengolahan</option>
-                    <option value="10">10. Ketenagalistrikan</option>
-                    <option value="11">11. Bangunan / Konstruksi</option>
-                    <option value="12">12. Perdagangan</option>
-                    <option value="13">13. Hotel dan Rumah Makan</option>
-                    <option value="14">14. Transportasi dan Pergudangan</option>
-                    <option value="15">15. Angkutan Ojek Motor / Online</option>
-                    <option value="16">16. Informasi dan Komunikasi</option>
-                    <option value="17">17. Keuangan dan Asuransi</option>
-                    <option value="18">18. Jasa Pendidikan</option>
-                    <option value="19">19. Jasa Kesehatan</option>
-                    <option value="20">20. Jasa Kemasyarakatan, Pemerintahan dan Perorangan</option>
-                    <option value="21">21. Pemulung</option>
-                    <option value="22">22. Lainnya</option>
+                    <?php foreach($lapangan_usaha as $data) { ?>
+                      <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
@@ -395,14 +332,9 @@
                 <div class="col-sm-4">
                   <select id="jabatan_pekerjaan_id" name="jabatan_pekerjaan_id" class="form-select form-select-sm">
                     <option disabled selected>--- Pilihan ---</option>
-                    <option value="1">1. Berusaha Sendiri</option>
-                    <option value="2">2. Berusaha Dibantu Buruh Tidak Tetap / Buruh Tidak Dibayar</option>
-                    <option value="3">3. Berusaha Dibantu Buruh Tetap / Buruh Dibayar</option>
-                    <option value="4">4. Buruh / Karyawan / Pegawai Swasta</option>
-                    <option value="5">5. PNS / TNI / Polri / BUMN / BUMD / Anggota Legislatif</option>
-                    <option value="6">6. Pekerja Bebas Pertanian</option>
-                    <option value="7">7. Pekerja Bebas Non-Pertanian</option>
-                    <option value="8">8. Pekerja Keluarga / Tidak Dibayar</option>
+                    <?php foreach($jabatan_pekerjaan as $data) { ?>
+                      <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
@@ -460,14 +392,9 @@
               <div class="col-sm-4">
                 <select name="hubungan_keluarga_id" class="form-select form-select-sm">
                   <option disabled selected>--- Pilihan ---</option>
-                  <option value="1">1. Kepala Keluarga</option>
-                  <option value="2">2. Istri / Suami</option>
-                  <option value="3">3. Anak</option>
-                  <option value="4">4. Menantu</option>
-                  <option value="5">5. Cucu</option>
-                  <option value="6">6. Orang Tua / Mertua</option>
-                  <option value="7">7. Pembantu Rumah Tangga</option>
-                  <option value="8">8. Lainnya</option>
+                  <?php foreach($hubungan_keluarga as $data) { ?>
+                    <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                  <?php } ?>
                 </select>
               </div>
             </div>
@@ -505,10 +432,9 @@
               <div class="col-sm-4">
                 <select id="status_perkawinan_id_edit" name="status_perkawinan_id" class="form-select form-select-sm">
                   <option disabled selected>--- Pilihan ---</option>
-                  <option value="1">1. Belum Kawin</option>
-                  <option value="2">2. Kawin / Menikah</option>
-                  <option value="3">3. Cerai Hidup</option>
-                  <option value="4">4. Cerai Mati</option>
+                  <?php foreach($status_perkawinan as $data) { ?>
+                    <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                  <?php } ?>
                 </select>
               </div>
             </div>
@@ -529,12 +455,9 @@
               <div class="col-sm-4">
                 <select name="status_anggota_ruta_id" class="form-select form-select-sm">
                   <option disabled selected>--- Pilihan ---</option>
-                  <option value="1">1. Tinggal di Rumah Tangga</option>
-                  <option value="2">2. Meninggal</option>
-                  <option value="3">3. Tidak Tinggal di Keluarga / Pindah</option>
-                  <option value="4">4. Anggota Keluarga Baru</option>
-                  <option value="5">5. Kesalahan Perlist</option>
-                  <option value="6">6. Tidak Ditemukan</option>
+                  <?php foreach($status_anggota_ruta as $data) { ?>
+                    <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                  <?php } ?>
                 </select>
               </div>
             </div>
@@ -546,18 +469,9 @@
               <div class="col-sm-4">
                 <select name="penyakit_kronis_id" class="form-select form-select-sm">
                   <option disabled selected>--- Pilihan ---</option>
-                  <option value="1">1. Hipertensi (Tekanan Darah Tinggi)</option>
-                  <option value="2">2. Rematik</option>
-                  <option value="3">3. Asma</option>
-                  <option value="4">4. Masalah Jantung</option>
-                  <option value="5">5. Diabetes (Kencing Manis)</option>
-                  <option value="6">6. Tuberculosis (TBC)</option>
-                  <option value="7">7. Stroke</option>
-                  <option value="8">8. Kanker atau Tumor Ganas</option>
-                  <option value="9">9. Gagal Ginjal</option>
-                  <option value="10">10. Lainnya (Paru-Paru Flek, dsb)</option>
-                  <option value="11">11. Covid-19</option>
-                  <option value="12">12. Tidak Ada</option>
+                  <?php foreach($penyakit_kronis as $data) { ?>
+                    <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                  <?php } ?>
                 </select>
               </div>
             </div>
@@ -567,19 +481,9 @@
               <div class="col-sm-4">
                 <select name="jenis_disabilitas_id" class="form-select form-select-sm">
                   <option disabled selected>--- Pilihan ---</option>
-                  <option value="1">1. Penyandang Disabilitas Fisik</option>
-                  <option value="2">2. Penyandang Disabilitas Netra</option>
-                  <option value="3">3. Penyandang Disabilitas Rungu</option>
-                  <option value="4">4. Penyandang Disabilitas Wicara</option>
-                  <option value="5">5. Penyandang Disabilitas Rungu dan Wicara</option>
-                  <option value="6">6. Penyandang Disabilitas Netra dan Fisik</option>
-                  <option value="7">7. Penyandang Disabilitas Netra, Rungu dan Wicara</option>
-                  <option value="8">8. Penyandang Disabilitas Rungu, Wicara dan Fisik</option>
-                  <option value="9">9. Penyandang Disabilitas Rungu, Wicara, Netra dan Fisik</option>
-                  <option value="10">10. Penyandang Disabilitas Intelektual</option>
-                  <option value="11">11. Penyandang Disabilitas Mental (OMK dan CDK)</option>
-                  <option value="12">12. Penyandang Disabilitas Ganda / Multi</option>
-                  <option value="13">13. Non Penyandang Disabilitas</option>
+                  <?php foreach($jenis_disabilitas as $data) { ?>
+                    <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                  <?php } ?>
                 </select>
               </div>
             </div>
@@ -590,10 +494,9 @@
               <div class="col-sm-4">
                 <select name="apakah_perokok_id" class="form-select form-select-sm">
                   <option disabled selected>--- Pilihan ---</option>
-                  <option value="1">1. Ya, Setiap Hari</option>
-                  <option value="2">2. Ya, Tidak Setiap Hari</option>
-                  <option value="3">3. Tidak</option>
-                  <option value="4">4. Tidak Tahu</option>
+                  <?php foreach($apakah_perokok as $data) { ?>
+                    <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                  <?php } ?>
                 </select>
               </div>
             </div>
@@ -603,9 +506,9 @@
               <div class="col-sm-4">
                 <select id="partisipasi_sekolah_id_edit" name="partisipasi_sekolah_id" class="form-select form-select-sm">
                   <option disabled selected>--- Pilihan ---</option>
-                  <option value="1">1. Masih Sekolah</option>
-                  <option value="2">2. Tidak Bersekolah Lagi</option>
-                  <option value="3">3. Tidak / Belum Pernah Sekolah</option>
+                  <?php foreach($partisipasi_sekolah as $data) { ?>
+                    <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                  <?php } ?>
                 </select>
               </div>
             </div>
@@ -616,16 +519,9 @@
                 <div class="col-sm-4">
                   <select id="jenjang_pendidikan_id_edit" name="jenjang_pendidikan_id" class="form-select form-select-sm">
                     <option disabled selected>--- Pilihan ---</option>
-                    <option value="1">1. SD / SDLB</option>
-                    <option value="2">2. Paket A</option>
-                    <option value="3">3. Madrasah Ibtidaiyah</option>
-                    <option value="4">4. SMP / SMPLB</option>
-                    <option value="5">5. Paket B</option>
-                    <option value="6">6. Madrasah Tsanawiyah</option>
-                    <option value="7">7. SMA / SMK / SMALB</option>
-                    <option value="8">8. Paket C</option>
-                    <option value="9">9. Madrasah Aliyah</option>
-                    <option value="10">10. Perguruan Tinggi</option>
+                    <?php foreach($jenjang_pendidikan as $data) { ?>
+                      <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
@@ -636,14 +532,9 @@
                   <select id="kelas_tertinggi_edit" name="kelas_tertinggi" class="form-select form-select-sm">
                     <option disabled selected>--- Pilihan ---</option>
                     <option value="10">Tamat</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
+                    <?php for($i=1 ; $i <= 8 ; $i++) { ?>
+                      <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
@@ -653,13 +544,9 @@
                 <div class="col-sm-4">
                   <select id="ijazah_terakhir_id_edit" name="ijazah_terakhir_id" class="form-select form-select-sm">
                     <option disabled selected>--- Pilihan ---</option>
-                    <option value="1">0. Tidak Punya Ijazah</option>
-                    <option value="2">1. SD / Sederajat</option>
-                    <option value="3">2. SMP / Sederajat</option>
-                    <option value="4">3. SMA / Sederajat</option>
-                    <option value="5">4. D1 / D2 / D3</option>
-                    <option value="6">5. D4 / S1</option>
-                    <option value="7">6. S2 / S3</option>
+                    <?php foreach($ijazah_terakhir as $data) { ?>
+                      <option value="<?php echo $data['id'] ?>"><?php echo ((int)$data['id'] - 1).". ".$data['desc'] ?></option>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
@@ -683,28 +570,9 @@
                 <div class="col-sm-4">
                   <select id="lapangan_usaha_id_edit" name="lapangan_usaha_id" class="form-select form-select-sm">
                     <option disabled selected>--- Pilihan ---</option>
-                    <option value="1">1. Pertanian Tanaman Padi dan Palawija</option>
-                    <option value="2">2. Hortikultura</option>
-                    <option value="3">3. Perkebunan</option>
-                    <option value="4">4. Perikanan Tangkap</option>
-                    <option value="5">5. Perikanan Budidaya</option>
-                    <option value="6">6. Peternakan</option>
-                    <option value="7">7. Kehutanan dan Pertanian Lainnya</option>
-                    <option value="8">8. Pertambangan / Penggalian</option>
-                    <option value="9">9. Industri Pengolahan</option>
-                    <option value="10">10. Ketenagalistrikan</option>
-                    <option value="11">11. Bangunan / Konstruksi</option>
-                    <option value="12">12. Perdagangan</option>
-                    <option value="13">13. Hotel dan Rumah Makan</option>
-                    <option value="14">14. Transportasi dan Pergudangan</option>
-                    <option value="15">15. Angkutan Ojek Motor / Online</option>
-                    <option value="16">16. Informasi dan Komunikasi</option>
-                    <option value="17">17. Keuangan dan Asuransi</option>
-                    <option value="18">18. Jasa Pendidikan</option>
-                    <option value="19">19. Jasa Kesehatan</option>
-                    <option value="20">20. Jasa Kemasyarakatan, Pemerintahan dan Perorangan</option>
-                    <option value="21">21. Pemulung</option>
-                    <option value="22">22. Lainnya</option>
+                    <?php foreach($lapangan_usaha as $data) { ?>
+                      <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
@@ -714,14 +582,9 @@
                 <div class="col-sm-4">
                   <select id="jabatan_pekerjaan_id_edit" name="jabatan_pekerjaan_id" class="form-select form-select-sm">
                     <option disabled selected>--- Pilihan ---</option>
-                    <option value="1">1. Berusaha Sendiri</option>
-                    <option value="2">2. Berusaha Dibantu Buruh Tidak Tetap / Buruh Tidak Dibayar</option>
-                    <option value="3">3. Berusaha Dibantu Buruh Tetap / Buruh Dibayar</option>
-                    <option value="4">4. Buruh / Karyawan / Pegawai Swasta</option>
-                    <option value="5">5. PNS / TNI / Polri / BUMN / BUMD / Anggota Legislatif</option>
-                    <option value="6">6. Pekerja Bebas Pertanian</option>
-                    <option value="7">7. Pekerja Bebas Non-Pertanian</option>
-                    <option value="8">8. Pekerja Keluarga / Tidak Dibayar</option>
+                    <?php foreach($jabatan_pekerjaan as $data) { ?>
+                      <option value="<?php echo $data['id'] ?>"><?php echo $data['id'].". ".$data['desc'] ?></option>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
@@ -948,7 +811,7 @@
         })
 
         setInterval(() => {
-          window.location = "<?= base_url() ?>input/quest/4/" + data.main_id;
+          window.location = "<?= base_url() ?>edit/quest/4/" + data.main_id;
         }, 1200);
       } else {
         $.each(data.errors, function(index, value) {

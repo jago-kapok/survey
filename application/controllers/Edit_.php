@@ -2,7 +2,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 date_default_timezone_set("Asia/Jakarta");
 
-class Input extends CI_Controller
+class Edit extends CI_Controller
 {
     public function __construct()
     {
@@ -19,6 +19,36 @@ class Input extends CI_Controller
 
         $data['title'] = 'Survey Pemutakhiran DTKS - Kab. Bojonegoro';
 
+        $data['hasil_pencacahan'] = $this->db->get('hasil_pencacahan')->result_array();
+        $data['status_bangunan'] = $this->db->get('status_bangunan')->result_array();
+        $data['status_lahan'] = $this->db->get('status_lahan')->result_array();
+        $data['jenis_lantai'] = $this->db->get('jenis_lantai')->result_array();
+        $data['jenis_dinding'] = $this->db->get('jenis_dinding')->result_array();
+        $data['kondisi_dinding'] = $this->db->get('kondisi_dinding')->result_array();
+        $data['jenis_atap'] = $this->db->get('jenis_atap')->result_array();
+        $data['kondisi_atap'] = $this->db->get('kondisi_atap')->result_array();
+        $data['sumber_airminum'] = $this->db->get('sumber_airminum')->result_array();
+        $data['cara_memperoleh_airminum'] = $this->db->get('cara_memperoleh_airminum')->result_array();
+        $data['sumber_listrik'] = $this->db->get('sumber_listrik')->result_array();
+        $data['daya_listrik'] = $this->db->get('daya_listrik')->result_array();
+        $data['energi_untuk_memasak'] = $this->db->get('energi_untuk_memasak')->result_array();
+        $data['status_toilet'] = $this->db->get('status_toilet')->result_array();
+        $data['jenis_toilet'] = $this->db->get('jenis_toilet')->result_array();
+        $data['tpa'] = $this->db->get('tpa')->result_array();
+
+        $data['hubungan_rumah_tangga'] = $this->db->get('hubungan_rumah_tangga')->result_array();
+        $data['hubungan_keluarga'] = $this->db->get('hubungan_keluarga')->result_array();
+        $data['status_perkawinan'] = $this->db->get('status_perkawinan')->result_array();
+        $data['penyakit_kronis'] = $this->db->get('penyakit_kronis')->result_array();
+        $data['jenis_disabilitas'] = $this->db->get('jenis_disabilitas')->result_array();
+        $data['apakah_perokok'] = $this->db->get('apakah_perokok')->result_array();
+        $data['partisipasi_sekolah'] = $this->db->get('partisipasi_sekolah')->result_array();
+        $data['jenjang_pendidikan'] = $this->db->get('jenjang_pendidikan')->result_array();
+        $data['ijazah_terakhir'] = $this->db->get('ijazah_terakhir')->result_array();
+        $data['lapangan_usaha'] = $this->db->get('lapangan_usaha')->result_array();
+        $data['jabatan_pekerjaan'] = $this->db->get('jabatan_pekerjaan')->result_array();
+        $data['status_anggota_ruta'] = $this->db->get('status_anggota_ruta')->result_array();
+
         if($this->session->userdata('user_level') == 1) {
             $data['ref_kecamatan'] = $this->db->where('id', $this->session->userdata('user_manager'))->get('ref_kecamatan')->result_array();
             $data['ref_desa'] = $this->db->where('id', $this->session->userdata('user_name'))->get('ref_desa')->result_array();
@@ -26,19 +56,37 @@ class Input extends CI_Controller
             $data['ref_kecamatan'] = $this->db->get('ref_kecamatan')->result_array();
             $data['ref_desa'] = $this->db->get('ref_desa')->result_array();
         }
-
-        $data['anggota_keluarga'] = $this->db->where('main_id', $main_id)->get('view_anggota_keluarga')->result_array();
         
-        $data['anggota_keluarga_memiliki_usaha'] = $this->db->select("mkse.*, lu.desc as lapangan_usaha")
+        $data['estimasi_pengeluaran'] = $this->db->get('estimasi_pengeluaran')->result_array();
+        $data['jenis_bantuan'] = $this->db->get('jenis_bantuan')->result_array();
+
+        $data['anggota_keluarga'] = $this->db->select("mkse.*, hk.desc as hubungan_keluarga, sp.desc as status_perkawinan")
         ->where("main_id", $main_id)
+        ->join("hubungan_keluarga hk", "mkse.hubungan_keluarga_id = hk.id")
+        ->join("status_perkawinan sp", "mkse.status_perkawinan_id = sp.id")
+        ->order_by("no_urut_keluarga")
+        ->get('main_keterangan_sosial_ekonomi mkse')->result_array();
+
+        $data['anggota_keluarga_memiliki_usaha'] = $this->db->select("mkse.*, md.pegawai_dibayar, md.pegawai_tidak_dibayar, md.registrasi_usaha, md.omset_perbulan, lu.desc as lapangan_usaha")
+        ->where("mkse.main_id", $main_id)
+        ->join("main_usaha_dimiliki md", "mkse.main_id = md.main_id")
         ->join("lapangan_usaha lu", "mkse.lapangan_usaha_id = lu.id")
         ->get('main_keterangan_sosial_ekonomi mkse')->result_array();
 
+        $data['main_pengenalan_tempat'] = $this->db->where('main_id', $main_id)->get('main_pengenalan_tempat')->row();
+        $data['main_keterangan_petugas_dan_responden'] = $this->db->where('main_id', $main_id)->get('main_keterangan_petugas_dan_responden')->row();
+        $data['main_keterangan_perumahan'] = $this->db->where('main_id', $main_id)->get('main_keterangan_perumahan')->row();
+        $data['main_aset'] = $this->db->where('main_id', $main_id)->get('main_aset')->row();
+        $data['main_foto_lokasi'] = $this->db->where('main_id', $main_id)->get('main_foto_lokasi')->row();
+
+        $data['main_jenis_bantuan'] = $this->db->join('jenis_bantuan', 'main_jenis_bantuan.jenis_bantuan_id = jenis_bantuan.id AND main_jenis_bantuan.main_id = '.$main_id, 'right')->order_by('id')->get('main_jenis_bantuan')->result_array();
+
         $data["main_id"] = $this->key->crypts($main_id, 'e');
+        $data["main_id_origin"] = $main_id;
 
         if($main_id != "") {
             $this->load->view('templates/header', $data);
-            $this->load->view('input/input-'.$id, $data);
+            $this->load->view('edit/input-'.$id, $data);
             $this->load->view('templates/footer');
         } else {
             $this->load->view('templates/header', $data);
@@ -51,6 +99,9 @@ class Input extends CI_Controller
     {
         $errors = [];
         $data = [];
+
+        $main_id = $this->input->post('main_id');
+        $main_id = $this->key->crypts($main_id, 'd');
 
         $data_post = array(
             'provinsi_id'       => $this->input->post('provinsi_id'),
@@ -67,7 +118,8 @@ class Input extends CI_Controller
             'jumlah_art'        => $this->input->post('jumlah_art'),
             'jumlah_keluarga'   => $this->input->post('jumlah_keluarga'),
             'relasi_no_kk'      => $this->input->post('relasi_no_kk'),
-            'created_by'        => $this->session->userdata('user_id'),
+            'updated_by'        => $this->session->userdata('user_id'),
+            'updated_at'        => date('Y-m-d H:i:s'),
         );
 
         $data_post = $this->security->xss_clean($data_post);
@@ -100,22 +152,34 @@ class Input extends CI_Controller
             $errors['relasi_no_kk'] = 'Relasi KK harus berisi 16 digit angka';
         }
 
-        $query = $this->db->where('no_kk_krt', $this->input->post('no_kk_krt'))->where('status IS NULL', NULL)->get('main_pengenalan_tempat')->result_array();
+        $query = $this->db->where('no_kk_krt', $this->input->post('no_kk_krt'))->get('main_pengenalan_tempat')->result_array();
 
         if(count($query) > 0) {
-            $errors['no_kk_krt_exist'] = 'No. KK sudah terdaftar';
+            foreach($query as $data) {
+                if($data['no_kk_krt'] != $this->input->post('no_kk_krt')) {
+                    $errors['no_kk_krt_exist'] = 'No. KK sudah terdaftar';
+                }
+            }
         }
         
         if (!empty($errors)) {
             $data['success'] = false;
             $data['errors'] = $errors;
         } else {
-            $this->db->insert('main_pengenalan_tempat', $data_post);
-            $main_id = $this->db->insert_id();
+            $this->db->where('main_id', $main_id);
+            $this->db->update('main_pengenalan_tempat', $data_post);
+
+            $data_log = array(
+                'main_id'       => $main_id,
+                'log_activity'  => 'Update Data - I. Pengenalan Tempat',
+                'user_id'       => $this->session->userdata('user_id')
+            );
+
+            $this->db->insert('log_activity', $data_log);
 
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $this->key->crypts($main_id, 'e');
+            $data['main_id'] = $main_id;
         }
         
         echo json_encode($data);
@@ -165,11 +229,20 @@ class Input extends CI_Controller
             $data['success'] = false;
             $data['errors'] = $errors;
         } else {
-            $insert = $this->db->insert('main_keterangan_petugas_dan_responden', $data_post);
+            $this->db->where('main_id', $main_id);
+            $this->db->update('main_keterangan_petugas_dan_responden', $data_post);
+
+            $data_log = array(
+                'main_id'       => $main_id,
+                'log_activity'  => 'Update Data - II. Keterangan Petugas dan Responden',
+                'user_id'       => $this->session->userdata('user_id')
+            );
+
+            $this->db->insert('log_activity', $data_log);
 
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $this->key->crypts($main_id, 'e');
+            $data['main_id'] = $main_id;
         }
         
         echo json_encode($data);
@@ -213,11 +286,20 @@ class Input extends CI_Controller
             $data['success'] = false;
             $data['errors'] = $errors;
         } else {
-            $insert = $this->db->insert('main_keterangan_perumahan', $data_post);
+            $this->db->where('main_id', $main_id);
+            $this->db->update('main_keterangan_perumahan', $data_post);
+
+            $data_log = array(
+                'main_id'       => $main_id,
+                'log_activity'  => 'Update Data - III. Keterangan Perumahan',
+                'user_id'       => $this->session->userdata('user_id')
+            );
+
+            $this->db->insert('log_activity', $data_log);
 
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
+            $data['main_id'] = $main_id;
         }
         
         echo json_encode($data);
@@ -256,8 +338,6 @@ class Input extends CI_Controller
             'status_anggota_ruta_id'    => $this->input->post('status_anggota_ruta_id'),
         );
 
-        // $query = $this->db->where("nik_anggota", $this->input->post("nik_anggota"))->get("main_keterangan_sosial_ekonomi")->result_array();
-
         $query = $this->db->where("nik_anggota", $this->input->post("nik_anggota"))->where('main_pengenalan_tempat.status IS NULL')
                     ->join('main_pengenalan_tempat', 'main_pengenalan_tempat.main_id = main_keterangan_sosial_ekonomi.main_id')
                     ->get("main_keterangan_sosial_ekonomi")->result_array();
@@ -287,6 +367,88 @@ class Input extends CI_Controller
             $data['errors'] = $errors;
         } else {
             $insert = $this->db->insert('main_keterangan_sosial_ekonomi', $data_post);
+
+            $data['success'] = true;
+            $data['message'] = 'Success!';
+            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
+        }
+        
+        echo json_encode($data);
+    }
+
+    public function input4_edit()
+    {
+        $errors = [];
+        $data = [];
+
+        $main_id = $this->input->post('main_id');
+        $main_id = $this->key->crypts($main_id, 'd');
+        $id = $this->input->post('id');
+
+        $data_post = array(
+            'no_urut_keluarga'          => $this->input->post('no_urut_keluarga'),
+            'nik_anggota'               => $this->input->post('nik_anggota'),
+            'nama_anggota'              => $this->input->post('nama_anggota'),
+            'hubungan_rumah_tangga_id'  => $this->input->post('hubungan_rumah_tangga_id'),
+            'hubungan_keluarga_id'      => $this->input->post('hubungan_keluarga_id'),
+            'jenis_kelamin'             => $this->input->post('jenis_kelamin'),
+            'tanggal_lahir'             => $this->input->post('tanggal_lahir'),
+            'umur'                      => $this->input->post('umur'),
+            'status_perkawinan_id'      => $this->input->post('status_perkawinan_id'),
+            'status_kehamilan'          => $this->input->post('status_kehamilan'),
+            'penyakit_kronis_id'        => $this->input->post('penyakit_kronis_id'),
+            'jenis_disabilitas_id'      => $this->input->post('jenis_disabilitas_id'),
+            'apakah_perokok_id'         => $this->input->post('apakah_perokok_id'),
+            'partisipasi_sekolah_id'    => $this->input->post('partisipasi_sekolah_id'),
+            'jenjang_pendidikan_id'     => $this->input->post('jenjang_pendidikan_id'),
+            'kelas_tertinggi'           => $this->input->post('kelas_tertinggi'),
+            'ijazah_terakhir_id'        => $this->input->post('ijazah_terakhir_id'),
+            'status_bekerja'            => $this->input->post('status_bekerja'),
+            'lapangan_usaha_id'         => $this->input->post('lapangan_usaha_id'),
+            'jabatan_pekerjaan_id'      => $this->input->post('jabatan_pekerjaan_id'),
+            'status_anggota_ruta_id'    => $this->input->post('status_anggota_ruta_id'),
+        );
+
+        $query = $this->db->where("nik_anggota", $this->input->post("nik_anggota"))->get("main_keterangan_sosial_ekonomi")->result_array();
+
+        if(count($query) >= 1) {
+            foreach($query as $data) {
+                if($data['nik_anggota'] != $this->input->post('nik_anggota')) {
+                    $errors['nik_anggota_exist'] = 'Maaf, NIK sudah terdaftar';
+                }
+            }
+        }
+
+        if(empty($main_id)) {
+            $errors['main_id'] = 'Server sibuk ! Mohon refresh browser anda terlebih dahulu !';
+        }
+
+        if(strlen($this->input->post('nik_anggota')) < 16) {
+            $errors['nik_anggota'] = 'NIK harus berisi 16 digit angka';
+        }
+
+        if(empty($this->input->post('nama_anggota'))) {
+            $errors['nama_anggota'] = 'Nama anggota keluarga tidak boleh kosong';
+        }
+
+        if(empty($this->input->post('hubungan_keluarga_id')) || empty($this->input->post('jenis_kelamin')) || empty($this->input->post('tanggal_lahir')) || empty($this->input->post('status_perkawinan_id')) || empty($this->input->post('partisipasi_sekolah_id')) || empty($this->input->post('status_bekerja')) || empty($this->input->post('status_anggota_ruta_id'))) {
+            $errors['empty_message'] = 'Kolom input dengan tanda * tidak boleh kosong';
+        }
+        
+        if (!empty($errors)) {
+            $data['success'] = false;
+            $data['errors'] = $errors;
+        } else {
+            $this->db->where('id', $id);
+            $this->db->update('main_keterangan_sosial_ekonomi', $data_post);
+
+            $data_log = array(
+                'main_id'       => $main_id,
+                'log_activity'  => 'Update Data - IV. Main Keterangan Sosial Ekonomi Anggota Keluarga',
+                'user_id'       => $this->session->userdata('user_id')
+            );
+
+            $this->db->insert('log_activity', $data_log);
 
             $data['success'] = true;
             $data['message'] = 'Success!';
@@ -347,7 +509,14 @@ class Input extends CI_Controller
             $data['success'] = false;
             $data['errors'] = $errors;
         } else {
-            $insert = $this->db->insert('main_aset', $data_post);
+            $this->db->where('main_id', $main_id);
+            $this->db->update('main_aset', $data_post);
+
+            $this->db->where('main_id', $main_id);
+            $this->db->delete('main_jenis_bantuan');
+
+            $this->db->where('main_id', $main_id);
+            $this->db->delete('main_usaha_dimiliki');
 
             if(isset($_POST['jenis_bantuan_id']) && $_POST['jenis_bantuan_id'] != "") {
                 foreach($_POST['jenis_bantuan_id'] as $key => $value) {
@@ -360,7 +529,7 @@ class Input extends CI_Controller
                 $insert_batch = $this->db->insert_batch('main_jenis_bantuan', $data_batch);
             }
 
-            if(isset($_POST['nama_id']) && $_POST['main_id'] != "") {
+            if(isset($_POST['nama_id']) && $_POST['nama_id'] != "") {
                 foreach($_POST['nama_id'] as $key => $value) {
                     $data_batch_usaha[] = array(
                         'main_id'           => $main_id,
@@ -376,9 +545,17 @@ class Input extends CI_Controller
                 $this->db->insert_batch('main_usaha_dimiliki', $data_batch_usaha);
             }
 
+            $data_log = array(
+                'main_id'       => $main_id,
+                'log_activity'  => 'Update Data - V. Kepemilikan Aset dan Pengeluaran',
+                'user_id'       => $this->session->userdata('user_id')
+            );
+
+            $this->db->insert('log_activity', $data_log);
+
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
+            $data['main_id'] = $main_id;
         }
         
         echo json_encode($data);
@@ -398,28 +575,30 @@ class Input extends CI_Controller
             mkdir($location, 0777);
         }
 
+        $foto_exist = $this->db->where('main_id', $main_id)->get('main_foto_lokasi')->row();
+
         if(!$_FILES['files1']['error'] > 0) { 
             $foto1 = $this->upload_file($location, "files1");
         } else {
-            $foto1 = "";
+            $foto1 = $foto_exist->foto1;
         }
 
         if(!$_FILES['files2']['error'] > 0) { 
             $foto2 = $this->upload_file($location, "files2");
         } else {
-            $foto2 = "";
+            $foto2 = $foto_exist->foto2;
         }
 
         if(!$_FILES['files3']['error'] > 0) { 
             $foto3 = $this->upload_file($location, "files3");
         } else {
-            $foto3 = "";
+            $foto3 = $foto_exist->foto3;
         }
 
         if(!$_FILES['files4']['error'] > 0) { 
             $foto4 = $this->upload_file($location, "files4");
         } else {
-            $foto4 = "";
+            $foto4 = $foto_exist->foto4;
         }
 
         $data_post = array(
@@ -440,11 +619,20 @@ class Input extends CI_Controller
             $data['success'] = false;
             $data['errors'] = $errors;
         } else {
-            $insert = $this->db->insert('main_foto_lokasi', $data_post);
+            $this->db->where('main_id', $main_id);
+            $this->db->update('main_foto_lokasi', $data_post);
+
+            $data_log = array(
+                'main_id'       => $main_id,
+                'log_activity'  => 'Update Data - VI. Koordinat Lokasi dan Foto Rumah',
+                'user_id'       => $this->session->userdata('user_id')
+            );
+
+            $this->db->insert('log_activity', $data_log);
 
             $data['success'] = true;
             $data['message'] = 'Success!';
-            $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
+            $data['main_id'] = $main_id;
         }
         
         echo json_encode($data);
@@ -473,6 +661,14 @@ class Input extends CI_Controller
 
         $this->db->delete("main_keterangan_sosial_ekonomi", ["id" => $id]);
         $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
+
+        $data_log = array(
+            'main_id'       => $main_id,
+            'log_activity'  => 'Delete Data - IV. Keterangan Sosial Ekonomi',
+            'user_id'       => $this->session->userdata('user_id')
+        );
+
+        $this->db->insert('log_activity', $data_log);
         
         echo json_encode($data);
     }

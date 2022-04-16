@@ -48,13 +48,13 @@
                   <label class="col-form-label">Hasil Pencacahan Rumah Tangga :</label>
                   <div class="col-lg-11">
                     <select id="hasil_pencacahan" name="hasil_pencacahan" class="form-select form-select-sm">
-                      <option disabled selected>--- Pilih status hasil pencacahan rumah tangga ---</option>
-                      <?php
-                        foreach($hasil_pencacahan as $data) {
-                          $selected = $data['id'] == $main_keterangan_petugas_dan_responden->hasil_pencacahan ? 'selected' : '';
-                      ?>
-                        <option value="<?php echo $data['id'] ?>" <?php echo $selected ?>><?php echo $data['id'].". ".$data['desc'] ?></option>
-                      <?php } ?>
+                      <option disabled>--- Pilih status hasil pencacahan rumah tangga ---</option>
+                      <option value="1" <?php echo $selected = $main_keterangan_petugas_dan_responden->hasil_pencacahan == 1 ? 'selected' : '' ?>>1. Terisi lengkap</option>
+                      <option value="2" <?php echo $selected = $main_keterangan_petugas_dan_responden->hasil_pencacahan == 2 ? 'selected' : '' ?>>2. Tidak ada ART / responden yang dapat memberi jawaban sampai akhir masa pencacahan</option>
+                      <option value="3" <?php echo $selected = $main_keterangan_petugas_dan_responden->hasil_pencacahan == 3 ? 'selected' : '' ?>>3. Keluarga tidak ditemukan</option>
+                      <option value="4" <?php echo $selected = $main_keterangan_petugas_dan_responden->hasil_pencacahan == 4 ? 'selected' : '' ?>>4. Responden menolak</option>
+                      <option value="5" <?php echo $selected = $main_keterangan_petugas_dan_responden->hasil_pencacahan == 5 ? 'selected' : '' ?>>5. Rumah tangga pindah / bangunan sudah tidak ada</option>
+                      <option value="6" <?php echo $selected = $main_keterangan_petugas_dan_responden->hasil_pencacahan == 6 ? 'selected' : '' ?>>6. Bagian dari keluarga di dokumen lain</option>
                     </select>
                   </div>
                 </div>

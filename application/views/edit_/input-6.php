@@ -36,7 +36,7 @@
                 <div class="card-body">
                   <h6 class="card-title">Foto Rumah : Tampak Depan</h6>
                   <div class="input-group input-group-sm">
-                    <input id="upload1" type="file" name="files1" class="form-control form-control-sm file1" onchange="previewFile(this, 1)">
+                    <input id="1" type="file" name="files1" class="form-control form-control-sm file1" onchange="previewFile(this, 1)">
                     <button type="button" class="btn btn-danger" onclick="resetFile(1)"><i class="bi-x-circle"></i></button>
                   </div>
                 </div>
@@ -51,7 +51,7 @@
                 <div class="card-body">
                   <h6 class="card-title">Foto Rumah : Tampak Dalam</h6>
                   <div class="input-group input-group-sm">
-                    <input id="upload2" type="file" name="files2" class="form-control form-control-sm file2" onchange="previewFile(this, 2)">
+                    <input id="2" type="file" name="files2" class="form-control form-control-sm file2" onchange="previewFile(this, 2)">
                     <button type="button" class="btn btn-danger" onclick="resetFile(2)"><i class="bi-x-circle"></i></button>
                   </div>
                 </div>
@@ -68,7 +68,7 @@
                 <div class="card-body">
                   <h6 class="card-title">Foto Rumah : Tampak Samping (Opsional)</h6>
                   <div class="input-group input-group-sm">
-                    <input id="upload3" type="file" name="files3" class="form-control form-control-sm file3" onchange="previewFile(this, 3)">
+                    <input id="3" type="file" name="files3" class="form-control form-control-sm file3" onchange="previewFile(this, 3)">
                     <button type="button" class="btn btn-danger" onclick="resetFile(3)"><i class="bi-x-circle"></i></button>
                   </div>
                 </div>
@@ -83,7 +83,7 @@
                 <div class="card-body">
                   <h6 class="card-title">Foto Rumah : Tampak Samping / Belakang (Opsional)</h6>
                   <div class="input-group input-group-sm">
-                    <input id="upload4" type="file" name="files4" class="form-control form-control-sm file4" onchange="previewFile(this, 4)">
+                    <input id="4" type="file" name="files4" class="form-control form-control-sm file4" onchange="previewFile(this, 4)">
                     <button type="button" class="btn btn-danger" onclick="resetFile(4)"><i class="bi-x-circle"></i></button>
                   </div>
                 </div>
@@ -106,12 +106,12 @@
 <div class="col-lg-2" data-aos="fade-up">
   <div class="list-group">
     <li class="list-group-item list-group-item-secondary">TAHAP PENGISIAN</li>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 1</a>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 2</a>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 3</a>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 4</a>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action disabled">KUISIONER 5</a>
-    <a href="javascript:void(0)" class="list-group-item list-group-item-action active">KUISIONER 6</a>
+    <a href="<?= base_url() ?>input/quest/1" class="list-group-item list-group-item-action disabled">KUISIONER 1</a>
+    <a href="<?= base_url() ?>input/quest/2" class="list-group-item list-group-item-action disabled">KUISIONER 2</a>
+    <a href="<?= base_url() ?>input/quest/3" class="list-group-item list-group-item-action disabled">KUISIONER 3</a>
+    <a href="<?= base_url() ?>input/quest/4" class="list-group-item list-group-item-action disabled">KUISIONER 4</a>
+    <a href="<?= base_url() ?>input/quest/5" class="list-group-item list-group-item-action disabled">KUISIONER 5</a>
+    <a href="<?= base_url() ?>input/quest/6" class="list-group-item list-group-item-action active">KUISIONER 6</a>
   </div>
 
   <div class="card mt-2">
@@ -121,7 +121,7 @@
 
 <script>
   function previewFile(input, id){
-    var file = $("#upload" + id).get(0).files[0];
+    var file = $("#" + id).get(0).files[0];
     $("#previewImg" + id).show();
 
     if(file){
@@ -142,64 +142,6 @@
     $("#previewImg" + id).attr("src", "").hide();
   }
 
-  /* Check File Size */
-  $('#upload1').on('change', function() {
-    if (this.files[0].size > 2097152) {
-      const file = document.querySelector('.file1');
-      file.value = '';
-      $("#previewImg1").attr("src", "").hide();
-      Swal.fire({
-        title: 'WARNING !',
-        text: "Ukuran file tidak boleh lebih dari 2 MB",
-        icon: 'warning',
-        showConfirmButton: true
-      });
-    }
-  });
-
-  $('#upload2').on('change', function() {
-    if (this.files[0].size > 2097152) {
-      const file = document.querySelector('.file2');
-      file.value = '';
-      $("#previewImg2").attr("src", "").hide();
-      Swal.fire({
-        title: 'WARNING !',
-        text: "Ukuran file tidak boleh lebih dari 2 MB",
-        icon: 'warning',
-        showConfirmButton: true
-      });
-    }
-  });
-
-  $('#upload3').on('change', function() {
-    if (this.files[0].size > 2097152) {
-      const file = document.querySelector('.file3');
-      file.value = '';
-      $("#previewImg3").attr("src", "").hide();
-      Swal.fire({
-        title: 'WARNING !',
-        text: "Ukuran file tidak boleh lebih dari 2 MB",
-        icon: 'warning',
-        showConfirmButton: true
-      });
-    }
-  });
-
-  $('#upload4').on('change', function() {
-    if (this.files[0].size > 2097152) {
-      const file = document.querySelector('.file4');
-      file.value = '';
-      $("#previewImg4").attr("src", "").hide();
-      Swal.fire({
-        title: 'WARNING !',
-        text: "Ukuran file tidak boleh lebih dari 2 MB",
-        icon: 'warning',
-        showConfirmButton: true
-      });
-    }
-  });
-
-  /* Submit Form */
   $("form").submit(function (event) {
     event.preventDefault();
     var data = new FormData($("#form_data")[0]);

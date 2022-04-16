@@ -353,7 +353,7 @@
               </div>
             </div>
 
-            <div id="detail_usaha" class="row m-0">
+            <div id="detail_usaha" class="row table-responsive m-0">
               <table class="table table-bordered table-striped" width="100%">
                 <thead>
                   <tr>
@@ -373,7 +373,7 @@
                   <?php foreach($anggota_keluarga_memiliki_usaha as $key => $data) { ?>
                     <tr id="row_<?php echo $key ?>">
                       <td>
-                        <input type="hidden" name="nama_id[]" value="<?php echo $data['id'] ?>">
+                        <input type="hidden" name="nama_id[]" value="<?php echo $data['nama_id'] ?>">
                         <input type="text" class="form-control form-control-sm" value="<?php echo $data['nama_anggota'] ?>" readonly>
                       </td>
                       <td>
@@ -407,9 +407,9 @@
                   <?php for($i = 10 ; $i < 12 ; $i++) { ?>
                     <tr id="row_<?php echo $i ?>">
                       <td>
-                        <select id="name_id<?php echo $key ?>" name="nama_id[]" class="form-select form-select-sm">
+                        <select id="nama_id<?php echo $i ?>" name="nama_id[]" class="form-select form-select-sm">
                           <option disabled selected></option>
-                          <?php foreach($anggota_keluarga_memiliki_usaha as $value) { ?>
+                          <?php foreach($anggota_keluarga as $value) { ?>
                             <option value="<?php echo $value['id'] ?>"><?php echo $value['nama_anggota'] ?></option>
                           <?php } ?>
                         </select>
@@ -417,9 +417,28 @@
                       <td>
                         <select name="lapangan_usaha_id[]" class="form-select form-select-sm">
                           <option disabled selected></option>
-                          <?php foreach($lapangan_usaha as $value) { ?>
-                            <option value="<?php echo $value['id'] ?>"><?php echo $value['desc'] ?></option>
-                          <?php } ?>
+                          <option value="1">1. Pertanian Tanaman Padi dan Palawija</option>
+                          <option value="2">2. Hortikultura</option>
+                          <option value="3">3. Perkebunan</option>
+                          <option value="4">4. Perikanan Tangkap</option>
+                          <option value="5">5. Perikanan Budidaya</option>
+                          <option value="6">6. Peternakan</option>
+                          <option value="7">7. Kehutanan dan Pertanian Lainnya</option>
+                          <option value="8">8. Pertambangan / Penggalian</option>
+                          <option value="9">9. Industri Pengolahan</option>
+                          <option value="10">10. Ketenagalistrikan</option>
+                          <option value="11">11. Bangunan / Konstruksi</option>
+                          <option value="12">12. Perdagangan</option>
+                          <option value="13">13. Hotel dan Rumah Makan</option>
+                          <option value="14">14. Transportasi dan Pergudangan</option>
+                          <option value="15">15. Angkutan Ojek Motor / Online</option>
+                          <option value="16">16. Informasi dan Komunikasi</option>
+                          <option value="17">17. Keuangan dan Asuransi</option>
+                          <option value="18">18. Jasa Pendidikan</option>
+                          <option value="19">19. Jasa Kesehatan</option>
+                          <option value="20">20. Jasa Kemasyarakatan, Pemerintahan dan Perorangan</option>
+                          <option value="21">21. Pemulung</option>
+                          <option value="22">22. Lainnya</option>
                         </select>
                       </td>
                       <td><input type="number" name="pegawai_dibayar[]" class="form-control form-control-sm"></td>
@@ -453,7 +472,7 @@
               <div class="col-md-6">
                 <div class="row mb-3">
                   <label class="col-md-7 col-form-label">Makanan (Bahan Makanan / Minuman, Makanan Jadi, Rokok, dll.)</label>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <div class="input-group input-group-sm">
                       <span class="input-group-text">Rp</span>
                       <input type="number" name="estimasi_pengeluaran" class="form-control form-control-sm" value="<?php echo $main_aset->estimasi_pengeluaran ?>">
@@ -468,7 +487,7 @@
               <div class="col-md-6">
                 <div class="row mb-3">
                   <label class="col-md-7 col-form-label">Non Makanan (Listrik, Air, BBM, Pulsa, Pemeliharaan, Pakaian, Pendidikan, Kesehatan, dll.)</label>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <div class="input-group input-group-sm">
                       <span class="input-group-text">Rp</span>
                       <input type="number" name="estimasi_pengeluaran_non_makanan" class="form-control form-control-sm" value="<?php echo $main_aset->estimasi_pengeluaran_non_makanan ?>">
