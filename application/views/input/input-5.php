@@ -422,7 +422,7 @@
               <div class="col-md-6">
                 <div class="row mb-3">
                   <label class="col-md-7 col-form-label">Makanan (Bahan Makanan / Minuman, Makanan Jadi, Rokok, dll.)</label>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <div class="input-group input-group-sm">
                       <span class="input-group-text">Rp</span>
                       <input type="number" name="estimasi_pengeluaran" class="form-control form-control-sm">
@@ -437,7 +437,7 @@
               <div class="col-md-6">
                 <div class="row mb-3">
                   <label class="col-md-7 col-form-label">Non Makanan (Listrik, Air, BBM, Pulsa, Pemeliharaan, Pakaian, Pendidikan, Kesehatan, dll.)</label>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <div class="input-group input-group-sm">
                       <span class="input-group-text">Rp</span>
                       <input type="number" name="estimasi_pengeluaran_non_makanan" class="form-control form-control-sm">

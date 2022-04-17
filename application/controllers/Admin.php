@@ -21,22 +21,22 @@ class Admin extends CI_Controller
         $data['pass'] = $this->db->where('id', 1)->get('default_password')->row();
 
         if($this->session->userdata('user_level') == 1) {
-        	$survey_hari_ini = $this->db->where('desa_id', $user_name)->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
-        	$survey_kemarin = $this->db->where('desa_id', $user_name)->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
-        	$total_survey = $this->db->where('status IS NULL')->where('desa_id', $user_name)->get('main_pengenalan_tempat')->result_array();
+        	$survey_hari_ini = $this->db->select('main_id')->where('desa_id', $user_name)->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
+        	$survey_kemarin = $this->db->select('main_id')->where('desa_id', $user_name)->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
+        	$total_survey = $this->db->select('main_id')->where('status IS NULL')->where('desa_id', $user_name)->get('main_pengenalan_tempat')->result_array();
 
         	$data['grafik_survey'] = $this->db->where('kecamatan', $user_manager)->get('view_chart_desa')->result_array();
 
         } else if($this->session->userdata('user_level') == 2) {
-        	$survey_hari_ini = $this->db->where('kecamatan_id', $user_name)->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
-        	$survey_kemarin = $this->db->where('kecamatan_id', $user_name)->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
-        	$total_survey = $this->db->where('status IS NULL')->where('kecamatan_id', $user_name)->get('main_pengenalan_tempat')->result_array();
+        	$survey_hari_ini = $this->db->select('main_id')->where('kecamatan_id', $user_name)->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
+        	$survey_kemarin = $this->db->select('main_id')->where('kecamatan_id', $user_name)->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
+        	$total_survey = $this->db->select('main_id')->where('status IS NULL')->where('kecamatan_id', $user_name)->get('main_pengenalan_tempat')->result_array();
 
         	$data['grafik_survey'] = $this->db->where('kecamatan', $user_name)->get('view_chart_desa')->result_array();
         } else {
-        	$survey_hari_ini = $this->db->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
-        	$survey_kemarin = $this->db->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
-        	$total_survey = $this->db->where('status IS NULL')->get('main_pengenalan_tempat')->result_array();
+        	$survey_hari_ini = $this->db->select('main_id')->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
+        	$survey_kemarin = $this->db->select('main_id')->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
+        	$total_survey = $this->db->select('main_id')->where('status IS NULL')->get('main_pengenalan_tempat')->result_array();
 
         	$data['grafik_survey'] = $this->db->get('view_chart_kecamatan')->result_array();
         }
@@ -51,12 +51,6 @@ class Admin extends CI_Controller
         } else {
         	$data['total_survey_persen'] = 0;
         }
-
-        // $data['survey_hari_ini'] = "TEST";
-        // $data['perbandingan_sekarang_kemarin'] = "TEST";
-        // $data['perbandingan_color'] = "green";
-        // $data['total_survey'] = "TEST";
-        // $data['total_survey_persen'] = 0;
 
         $this->load->view('templates/header', $data);
         $this->load->view('admin/index', $data);
@@ -135,12 +129,12 @@ class Admin extends CI_Controller
         $data['tahap_lima_detail_bantuan'] = $this->db->where('main_id', $main_id)->get('view_tahap_lima_bantuan')->result_array();
         $data['tahap_enam'] = $this->db->select('main_foto_lokasi.*')->where('main_id', $main_id)->get('main_foto_lokasi')->row();
 
-		$tahap1 = $this->db->where('main_id', $main_id)->get('main_pengenalan_tempat')->result_array();
-		$tahap2 = $this->db->where('main_id', $main_id)->get('main_keterangan_petugas_dan_responden')->result_array();
-		$tahap3 = $this->db->where('main_id', $main_id)->get('main_keterangan_perumahan')->result_array();
-		$tahap4 = $this->db->where('main_id', $main_id)->get('main_keterangan_sosial_ekonomi')->result_array();
-		$tahap5 = $this->db->where('main_id', $main_id)->get('main_aset')->result_array();
-		$tahap6 = $this->db->where('main_id', $main_id)->get('main_foto_lokasi')->result_array();
+		$tahap1 = $this->db->select('main_id')->where('main_id', $main_id)->get('main_pengenalan_tempat')->result_array();
+		$tahap2 = $this->db->select('main_id')->where('main_id', $main_id)->get('main_keterangan_petugas_dan_responden')->result_array();
+		$tahap3 = $this->db->select('main_id')->where('main_id', $main_id)->get('main_keterangan_perumahan')->result_array();
+		$tahap4 = $this->db->select('main_id')->where('main_id', $main_id)->get('main_keterangan_sosial_ekonomi')->result_array();
+		$tahap5 = $this->db->select('main_id')->where('main_id', $main_id)->get('main_aset')->result_array();
+		$tahap6 = $this->db->select('main_id')->where('main_id', $main_id)->get('main_foto_lokasi')->result_array();
 
 		if(count($tahap1) < 1) {
 			$data['button_lanjut'] = 1;

@@ -19,25 +19,30 @@ class Edit extends CI_Controller
 
         $data['title'] = 'Survey Pemutakhiran DTKS - Kab. Bojonegoro';
 
-        if($this->session->userdata('user_level') == 1) {
-            $data['ref_kecamatan'] = $this->db->where('id', $this->session->userdata('user_manager'))->get('ref_kecamatan')->result_array();
-            $data['ref_desa'] = $this->db->where('id', $this->session->userdata('user_name'))->get('ref_desa')->result_array();
-        } else {
-            $data['ref_kecamatan'] = $this->db->get('ref_kecamatan')->result_array();
-            $data['ref_desa'] = $this->db->get('ref_desa')->result_array();
+        if($id == 1) {
+            $data['main_pengenalan_tempat'] = $this->db->where('main_id', $main_id)->get('main_pengenalan_tempat')->row();
+
+            if($this->session->userdata('user_level') == 1) {
+                $data['ref_kecamatan'] = $this->db->where('id', $this->session->userdata('user_manager'))->get('ref_kecamatan')->result_array();
+                $data['ref_desa'] = $this->db->where('id', $this->session->userdata('user_name'))->get('ref_desa')->result_array();
+            } else {
+                $data['ref_kecamatan'] = $this->db->get('ref_kecamatan')->result_array();
+                $data['ref_desa'] = $this->db->get('ref_desa')->result_array();
+            }
+        } else if($id == 2) {
+            $data['main_keterangan_petugas_dan_responden'] = $this->db->where('main_id', $main_id)->get('main_keterangan_petugas_dan_responden')->row();
+        } else if($id == 3) {
+            $data['main_keterangan_perumahan'] = $this->db->where('main_id', $main_id)->get('main_keterangan_perumahan')->row();
+        } else if($id == 4) {
+            $data['anggota_keluarga'] = $this->db->where('main_id', $main_id)->get('view_anggota_keluarga')->result_array();
+        } else if($id == 5) {
+            $data['main_aset'] = $this->db->where('main_id', $main_id)->get('main_aset')->row();
+            $data['main_jenis_bantuan'] = $this->db->join('jenis_bantuan', 'main_jenis_bantuan.jenis_bantuan_id = jenis_bantuan.id AND main_jenis_bantuan.main_id = '.$main_id, 'right')->order_by('id')->get('main_jenis_bantuan')->result_array();
+
+            $data['anggota_keluarga_memiliki_usaha'] = $this->db->where("main_id", $main_id)->get('view_anggota_keluarga_memiliki_usaha')->result_array();
+        } else if($id == 6) {
+            $data['main_foto_lokasi'] = $this->db->where('main_id', $main_id)->get('main_foto_lokasi')->row();
         }
-        
-        $data['anggota_keluarga'] = $this->db->where('main_id', $main_id)->get('view_anggota_keluarga')->result_array();
-        
-        $data['anggota_keluarga_memiliki_usaha'] = $this->db->where("main_id", $main_id)->get('view_anggota_keluarga_memiliki_usaha')->result_array();
-
-        $data['main_pengenalan_tempat'] = $this->db->where('main_id', $main_id)->get('main_pengenalan_tempat')->row();
-        $data['main_keterangan_petugas_dan_responden'] = $this->db->where('main_id', $main_id)->get('main_keterangan_petugas_dan_responden')->row();
-        $data['main_keterangan_perumahan'] = $this->db->where('main_id', $main_id)->get('main_keterangan_perumahan')->row();
-        $data['main_aset'] = $this->db->where('main_id', $main_id)->get('main_aset')->row();
-        $data['main_foto_lokasi'] = $this->db->where('main_id', $main_id)->get('main_foto_lokasi')->row();
-
-        $data['main_jenis_bantuan'] = $this->db->join('jenis_bantuan', 'main_jenis_bantuan.jenis_bantuan_id = jenis_bantuan.id AND main_jenis_bantuan.main_id = '.$main_id, 'right')->order_by('id')->get('main_jenis_bantuan')->result_array();
 
         $data["main_id"] = $this->key->crypts($main_id, 'e');
         $data["main_id_origin"] = $main_id;

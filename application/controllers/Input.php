@@ -19,20 +19,22 @@ class Input extends CI_Controller
 
         $data['title'] = 'Survey Pemutakhiran DTKS - Kab. Bojonegoro';
 
-        if($this->session->userdata('user_level') == 1) {
-            $data['ref_kecamatan'] = $this->db->where('id', $this->session->userdata('user_manager'))->get('ref_kecamatan')->result_array();
-            $data['ref_desa'] = $this->db->where('id', $this->session->userdata('user_name'))->get('ref_desa')->result_array();
-        } else {
-            $data['ref_kecamatan'] = $this->db->get('ref_kecamatan')->result_array();
-            $data['ref_desa'] = $this->db->get('ref_desa')->result_array();
+        if($id == 1) {
+            if($this->session->userdata('user_level') == 1) {
+                $data['ref_kecamatan'] = $this->db->where('id', $this->session->userdata('user_manager'))->get('ref_kecamatan')->result_array();
+                $data['ref_desa'] = $this->db->where('id', $this->session->userdata('user_name'))->get('ref_desa')->result_array();
+            } else {
+                $data['ref_kecamatan'] = $this->db->get('ref_kecamatan')->result_array();
+                $data['ref_desa'] = $this->db->get('ref_desa')->result_array();
+            }
+        } else if($id == 4) {
+            $data['anggota_keluarga'] = $this->db->where('main_id', $main_id)->get('view_anggota_keluarga')->result_array();
+        } else if($id == 5) {
+            $data['anggota_keluarga_memiliki_usaha'] = $this->db->select("mkse.id, mkse.nama_anggota, mkse.lapangan_usaha_id, lu.desc as lapangan_usaha")
+                                                        ->where("main_id", $main_id)
+                                                        ->join("lapangan_usaha lu", "mkse.lapangan_usaha_id = lu.id")
+                                                        ->get('main_keterangan_sosial_ekonomi mkse')->result_array();
         }
-
-        $data['anggota_keluarga'] = $this->db->where('main_id', $main_id)->get('view_anggota_keluarga')->result_array();
-        
-        $data['anggota_keluarga_memiliki_usaha'] = $this->db->select("mkse.*, lu.desc as lapangan_usaha")
-        ->where("main_id", $main_id)
-        ->join("lapangan_usaha lu", "mkse.lapangan_usaha_id = lu.id")
-        ->get('main_keterangan_sosial_ekonomi mkse')->result_array();
 
         $data["main_id"] = $this->key->crypts($main_id, 'e');
 
