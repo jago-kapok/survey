@@ -60,11 +60,21 @@ class Admin extends CI_Controller
     public function report()
     {
         $data['title'] = 'Survey Pemutakhiran DTKS - Kab. Bojonegoro';
+        $user_level = $this->session->userdata('user_level');
+
+        if($user_level == 1) {
+            $data['data_export'] = $this->db->where('user_name', $this->session->userdata('user_name'))->get('user')->result_array();
+        } else if($user_level == 2) {
+            $data['data_export'] = $this->db->where('user_manager', $this->session->userdata('user_name'))->get('user')->result_array();
+        } else {
+            $data['data_export'] = $this->db->order_by('user_manager')->get('user')->result_array();
+        }
 
         $this->load->view('templates/header', $data);
         $this->load->view('admin/report', $data);
         $this->load->view('templates/footer');
         $this->load->view('templates/js/main');
+        $this->load->view('templates/js/export');
     }
 
     public function getData()
