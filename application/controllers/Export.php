@@ -19,7 +19,7 @@ class Export extends CI_Controller
     	$desa = $this->db->where('id', $desa_id)->get('ref_desa')->row();
 
     	$data_kk = $this->db->select('no_kk_krt, nik_anggota, nama_krt, nama_desa, kecamatan')
-    				->where('desa_id', $desa_id)
+    				->where('desa_id', $desa_id)->where('main_pengenalan_tempat.status IS NULL')
     				->join('ref_desa', 'ref_desa.id = main_pengenalan_tempat.desa_id')
     				->join('ref_kecamatan', 'ref_kecamatan.id = main_pengenalan_tempat.kecamatan_id')
     				->join('main_keterangan_sosial_ekonomi', 'main_keterangan_sosial_ekonomi.main_id = main_pengenalan_tempat.main_id AND main_keterangan_sosial_ekonomi.hubungan_keluarga_id = 1', 'left')
@@ -117,7 +117,7 @@ class Export extends CI_Controller
     	$desa = $this->db->where('id', $desa_id)->get('ref_desa')->row();
 
     	$data_kk = $this->db->select('no_kk_krt, nik_anggota, nama_anggota, nama_desa, kecamatan')
-    				->where('desa_id', $desa_id)
+    				->where('desa_id', $desa_id)->where('main_pengenalan_tempat.status IS NULL')
     				->join('main_pengenalan_tempat', 'main_pengenalan_tempat.main_id = main_keterangan_sosial_ekonomi.main_id', 'right')
     				->join('ref_desa', 'ref_desa.id = main_pengenalan_tempat.desa_id')
     				->join('ref_kecamatan', 'ref_kecamatan.id = main_pengenalan_tempat.kecamatan_id')
