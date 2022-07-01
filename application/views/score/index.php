@@ -2,14 +2,8 @@
 	<div class="card" data-aos="fade-in">
 	  <div class="row mb-1">
 		<div class="col-md-8">
-		  <!-- <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#form_create" onclick="alert('Tahap Pengembangan ! Gunakan pencarian melalui input box')"><i class="bi-filter-square"></i>
-		    &nbsp;&nbsp;Filter Data
-		  </button> -->
-		  <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#export_data"><i class="bi-file-earmark-excel"></i>
+		  <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#export_data"><i class="bi-file-earmark-excel"></i>
 		    &nbsp;&nbsp;Export Data
-		  </button>
-		  <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#skoring_data"><i class="bi-bar-chart-line-fill"></i>
-		    &nbsp;&nbsp;Perangkingan
 		  </button>
 		</div>
 		<div class="col-md-4 pull-right">
@@ -32,12 +26,17 @@
 			<thead class="bg-secondary text-light" style="background-color: #8b8b8b">
 	    	<tr>
 					<th width="20">#</th>
-	        <th width="100">Tanggal Input</th>
 	        <th width="200">Kecamatan</th>
 	        <th width="200">Desa</th>
 	        <th width="200">Nomor KK</th>
 	        <th width="200">Nama Kepala Keluarga</th>
-	        <th width="200">Jumlah Anggota Keluarga</th>
+	        <th width="100">Total Skor</th>
+	        <th width="100">Keterangan</th>
+	        <th width="100">Status Lahan</th>
+	        <th width="100">Luas Lantai</th>
+	        <th width="100">Kondisi Dinding</th>
+	        <th width="100">Kondisi Atap</th>
+	        <th width="100">Jumlah Kamar</th>
 	        <th width="100">Pilihan</th>
 	      </tr>
 	    </thead>
@@ -92,19 +91,36 @@
   <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Proses Prangkingan</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Proses Perangkingan</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
       <form id="form_skoring">
-      	<input type="hidden" name="user_level" value="<?php echo $this->session->userdata('user_level') ?>">
 	      <div class="modal-body">
-	      	<center>
-	      		<h6>Apakah anda ingin men-generate perangkingan pada level Kabupaten ?</h6>
-	      	</center>
+	      	<div class="mb-3">
+				    <label class="form-label">Kecamatan</label>
+				    <select id="kecamatan_id" name="kecamatan_id" class="form-select form-select-sm">
+	            <?php if($this->session->userdata('user_level') != 1) { ?>
+	              <option disabled selected>--- Pilih Kecataman --</option>
+		            <?php foreach($ref_kecamatan as $data) { ?>
+		              <option value="<?php echo $data['id']; ?>"><?php echo $data['kecamatan'] ?></option>
+		            <?php } ?>
+		          <?php } ?>
+	          </select>
+				  </div>
+				  <div class="mb-3">
+				    <label class="form-label">Nama Desa</label>
+				    <select id="desa_id" name="desa_id" class="form-select form-select-sm">
+	            <?php foreach($ref_desa as $data) { ?>
+	              <option value="<?php echo $data['id']; ?>" data-chained="<?php echo $data['id_kecamatan']; ?>">
+	                <?php echo $data['nama_desa'] ?>
+	              </option>
+	            <?php } ?>
+	          </select>
+				  </div>
 	      </div>
 	      <div class="modal-footer">
-	        <a href="<?= base_url() ?>score" class="btn btn-primary">Proses</a>
+	        <button type="submit" class="btn btn-primary">Proses</button>
 	        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
 	      </div>
 	    </form>
@@ -113,6 +129,8 @@
 </div>
 
 <script>
+	$("#desa_id").chained("#kecamatan_id");
+
 	$("form").submit(function (event) {
     event.preventDefault();
     var data = new FormData($("#form_perangkingan")[0]);

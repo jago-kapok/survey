@@ -64,10 +64,16 @@ class Admin extends CI_Controller
 
         if($user_level == 1) {
             $data['data_export'] = $this->db->where('user_name', $this->session->userdata('user_name'))->get('user')->result_array();
+            $data['ref_kecamatan'] = $this->db->where('id', $this->session->userdata('user_manager'))->get('ref_kecamatan')->result_array();
+            $data['ref_desa'] = $this->db->where('id', $this->session->userdata('user_name'))->get('ref_desa')->result_array();
         } else if($user_level == 2) {
             $data['data_export'] = $this->db->where('user_manager', $this->session->userdata('user_name'))->get('user')->result_array();
+            $data['ref_kecamatan'] = $this->db->get('ref_kecamatan')->result_array();
+            $data['ref_desa'] = $this->db->get('ref_desa')->result_array();
         } else {
             $data['data_export'] = $this->db->order_by('user_manager')->get('user')->result_array();
+            $data['ref_kecamatan'] = $this->db->get('ref_kecamatan')->result_array();
+            $data['ref_desa'] = $this->db->get('ref_desa')->result_array();
         }
 
         $this->load->view('templates/header', $data);
