@@ -34,6 +34,8 @@ class Input extends CI_Controller
                                                         ->where("main_id", $main_id)
                                                         ->join("lapangan_usaha lu", "mkse.lapangan_usaha_id = lu.id")
                                                         ->get('main_keterangan_sosial_ekonomi mkse')->result_array();
+        } else if($id = 6) {
+
         }
 
         $data["main_id"] = $this->key->crypts($main_id, 'e');
@@ -444,6 +446,9 @@ class Input extends CI_Controller
         } else {
             $insert = $this->db->insert('main_foto_lokasi', $data_post);
 
+            /* Input skoring */
+            $this->skoring($main_id);
+
             $data['success'] = true;
             $data['message'] = 'Success!';
             $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
@@ -477,5 +482,105 @@ class Input extends CI_Controller
         $data['main_id'] = $data["main_id"] = $this->key->crypts($main_id, 'e');
         
         echo json_encode($data);
+    }
+
+    public function skoring($main_id)
+    {
+        /* Input skoring */
+        $tahap_satu = $this->db->select('main_id, kecamatan_id, desa_id, rt, rw, no_kk_krt, nama_krt')->where('main_id', $main_id)->get('main_pengenalan_tempat')->row();
+
+        $sum_omset_perbulan = $this->db->select_sum('omset_perbulan')->where('main_id', $main_id)->get('main_usaha_dimiliki')->row();
+
+        if($sum_omset_perbulan) {
+            if($sum_omset_perbulan->omset_perbulan > 25000000) {
+                $omset_perbulan_skor = 1;
+            } else if($sum_omset_perbulan->omset_perbulan > 15000000 && $sum_omset_perbulan->omset_perbulan <= 25000000) {
+                $omset_perbulan_skor = 2;
+            } else if($sum_omset_perbulan->omset_perbulan >=5000000 && $sum_omset_perbulan->omset_perbulan <= 15000000) {
+                $omset_perbulan_skor = 3;
+            } else if($sum_omset_perbulan->omset_perbulan < 5000000 && $sum_omset_perbulan->omset_perbulan > 0) {
+                $omset_perbulan_skor = 4;
+            } else {
+                $omset_perbulan_skor = 5;
+            }
+        } else {
+            $omset_perbulan_skor = 5;
+        }
+
+        $pengeluaran_perbulan = $this->db->select('estimasi_pengeluaran, estimasi_pengeluaran_non_makanan')->where('main_id', $main_id)->get('main_aset')->row();
+        $sum_pengeluaran_perbulan = $pengeluaran_perbulan->estimasi_pengeluaran + $pengeluaran_perbulan->estimasi_pengeluaran_non_makanan;
+
+        if($sum_pengeluaran_perbulan > 400000) {
+            $pengeluaran_perbulan_skor = 1;
+        } else if($sum_pengeluaran_perbulan <= 400000) {
+            $pengeluaran_perbulan_skor = 2;
+        } else {
+            $pengeluaran_perbulan_skor = 2;
+        }
+
+        $sum_bantuan_diterima = $this->db->where('main_id', $main_id)->get('main_jenis_bantuan')->num_rows();
+
+        if($sum_bantuan_diterima < 5){
+            $bantuan_diterima_skor = 1;
+        } else {
+            $bantuan_diterima_skor = 2;
+        }
+
+        $tahap_tiga = $this->db->select('
+            sb.score AS status_bangunan_skor,
+            jl.score AS jenis_lantai_skor,
+            jd.score AS jenis_dinding_skor,
+            ja.score AS jenis_atap_skor,
+            sa.score AS sumber_airminum_skor,
+            cm.score AS cara_memperoleh_airminum_skor,
+            sl.score AS sumber_listrik_skor,
+            em.score AS energi_untuk_memasak_skor,
+            st.score AS status_toilet_skor,
+            tpa.score AS tpa_skor'
+        )->join('status_bangunan sb', 'sb.id = mkp.status_bangunan_1a', 'left')
+        ->join('jenis_lantai jl', 'jl.id = mkp.jenis_lantai_3', 'left')
+        ->join('jenis_dinding jd', ' jd.id = mkp.jenis_dinding_4a', 'left')
+        ->join('jenis_atap ja', 'ja.id = mkp.jenis_atap_5a', 'left')
+        ->join('sumber_airminum sa', 'sa.id = mkp.sumber_airminum_7', 'left')
+        ->join('cara_memperoleh_airminum cm', 'cm.id = mkp.cara_memperoleh_airminum_8', 'left')
+        ->join('sumber_listrik sl', 'sl.id = mkp.sumber_listrik_9a', 'left')
+        ->join('energi_untuk_memasak em', 'em.id = mkp.energi_untuk_memasak_10', 'left')
+        ->join('status_toilet st', 'st.id = mkp.status_toilet_11a', 'left')
+        ->join('tpa', 'tpa.id = mkp.tpa_12', 'left')
+        ->where('mkp.main_id', $main_id)
+        ->get('main_keterangan_perumahan mkp')->row();
+
+        $skor_lain = $this->db->select('
+            mkp.status_lahan_1b AS status_lahan,
+            mkp.luas_lantai_2 AS luas_lantai,
+            mkp.kondisi_dinding_4b AS kondisi_dinding,
+            mkp.kondisi_atap_5b AS kondisi_atap,
+            mkp.jumlah_kamar_6 AS jumlah_kamar'
+        )->where('main_id', $main_id)->get('main_keterangan_perumahan mkp')->row();
+
+        $skor_40 = $tahap_tiga->status_bangunan_skor + $omset_perbulan_skor + $pengeluaran_perbulan_skor;
+        $skor_60 = $tahap_tiga->jenis_lantai_skor + $tahap_tiga->jenis_dinding_skor + $tahap_tiga->jenis_atap_skor + $tahap_tiga->sumber_airminum_skor + $tahap_tiga->cara_memperoleh_airminum_skor + $tahap_tiga->sumber_listrik_skor + $tahap_tiga->energi_untuk_memasak_skor + $tahap_tiga->status_toilet_skor + $tahap_tiga->tpa_skor + $bantuan_diterima_skor;
+
+        $total_skor_40 = ($skor_40 / 12) * 40;
+        $total_skor_60 = ($skor_60 / 68) * 60;
+
+        $data_skor = array(
+            'main_id'       => $main_id,
+            'kecamatan_id'  => $tahap_satu->kecamatan_id,
+            'desa_id'       => $tahap_satu->desa_id,
+            'rt'            => $tahap_satu->rt,
+            'rw'            => $tahap_satu->rw,
+            'no_kk_krt'     => $tahap_satu->no_kk_krt,
+            'nama_krt'      => $tahap_satu->nama_krt,
+            'total_skor'    => $total_skor_40 + $total_skor_60,
+            'status_lahan'  => $skor_lain->status_lahan,
+            'luas_lantai'   => $skor_lain->luas_lantai,
+            'kondisi_dinding'  => $skor_lain->kondisi_dinding,
+            'kondisi_atap'  => $skor_lain->kondisi_atap,
+            'jumlah_kamar'  => $skor_lain->jumlah_kamar
+        );
+
+        $this->db->insert('view_total_skor_fix', $data_skor);
+        /* Input Skoring */
     }
 }

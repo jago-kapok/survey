@@ -5,11 +5,11 @@
 		  <!-- <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#form_create" onclick="alert('Tahap Pengembangan ! Gunakan pencarian melalui input box')"><i class="bi-filter-square"></i>
 		    &nbsp;&nbsp;Filter Data
 		  </button> -->
-		  <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#export_data"><i class="bi-file-earmark-excel"></i>
-		    &nbsp;&nbsp;Export Data
+		  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#export_data"><i class="bi-file-arrow-down"></i>
+		    &nbsp;Export Data
 		  </button>
-		  <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#skoring_data"><i class="bi-bar-chart-line-fill"></i>
-		    &nbsp;&nbsp;Perangkingan
+		  <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#skoring_data"><i class="bi-bar-chart-line-fill"></i>
+		    &nbsp;Perangkingan
 		  </button>
 		</div>
 		<div class="col-md-4 pull-right">
@@ -17,7 +17,7 @@
 			<input id="searching" class="form-control form-control-sm" placeholder="Cari Data ...">
 			<div class="input-group-prepend">
 			  <div class="">
-				<select id="pagelength" class="form-control form-control-sm" readonly>
+				<select id="pagelength" class="input-group-text" readonly>
 				  <option value="10">10</option>
 				  <option value="25">25</option>
 				  <option value="50">50</option>
@@ -91,21 +91,19 @@
 <div class="modal fade" id="skoring_data" data-bs-backdrop="static" data-bs-keyboard="false">
   <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Proses Prangkingan</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-
       <form id="form_skoring">
-      	<input type="hidden" name="user_level" value="<?php echo $this->session->userdata('user_level') ?>">
+      	<input type="hidden" name="batas_skor" value="0">
 	      <div class="modal-body">
 	      	<center>
-	      		<h6>Apakah anda ingin men-generate perangkingan pada level Kabupaten ?</h6>
+	      		<br>
+	      		<span class="text-info" style="font-size: 5rem"><i class="bi-question-circle"></i></span>
+	      		<br>
+	      		<h6>Jalankan proses generate perangkingan ?</h6>
 	      	</center>
 	      </div>
 	      <div class="modal-footer">
-	        <a href="<?= base_url() ?>score" class="btn btn-primary">Proses</a>
-	        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
+	        <button type="submit" class="btn btn-primary">Proses</button>
+	        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
 	      </div>
 	    </form>
     </div>
@@ -113,13 +111,13 @@
 </div>
 
 <script>
-	$("form").submit(function (event) {
+	$("#form_skoring").submit(function (event) {
     event.preventDefault();
-    var data = new FormData($("#form_perangkingan")[0]);
+    var data = new FormData($("#form_skoring")[0]);
 
     $.ajax({
       type: "POST",
-      url: "<?= base_url() ?>score/process",
+      url: "<?= base_url() ?>score/setBatasSkor",
       data: data,
       dataType: "json",
       cache		: false,
@@ -129,12 +127,7 @@
     })
     .done(function (data) {
       if(data.success == true) {
-        $("#simpanData").attr("disabled", true);
-        $.notify("Data berhasil disimpan !", "success");
-
-        setInterval(() => {
-          window.location = "<?= base_url() ?>input/quest/2/" + data.main_id;
-        }, 1000);
+        window.location = "<?= base_url() ?>admin/score";
       } else {
         $.each(data.errors, function(index, value) {
           $.notify(value, "error");

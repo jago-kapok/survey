@@ -5,7 +5,7 @@
           <div class="card mb-2" style="padding: 8px 15px">
           <h6 class="mb-0"><strong>VI. KOORDINAT LOKASI DAN FOTO RUMAH</strong></h6>
         </div>
-                
+        
         <div class="card">
           <form id="form_data" method="POST" enctype="multipart/form-data">
           <input type="hidden" name="main_id" value="<?php echo $main_id ?>">

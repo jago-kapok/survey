@@ -13,14 +13,21 @@ class Score extends CI_Controller
         parent::__construct();
     }
 
-    public function index()
+    public function setBatasSkor()
     {
-    	$user_level = $this->input->post('user_level');
+    	$batas_skor = $this->input->post('batas_skor');
 
-    	$this->load->view('templates/header');
-        $this->load->view('score/index');
-        $this->load->view('templates/footer');
-        $this->load->view('templates/js/score');
+		if (!empty($errors)) {
+            $data['success'] = false;
+            $data['errors'] = $errors;
+        } else {
+        	$this->session->set_userdata('batas_skor', $batas_skor);
+
+            $data['success'] = true;
+            $data['message'] = 'Success!';
+        }
+        
+        echo json_encode($data);
     }
 
     public function getData()
@@ -51,7 +58,7 @@ class Score extends CI_Controller
 			],
 			["db" => "total_skor",	"dt" => "keterangan",
 				"formatter" => function($data, $row) {
-					if($data < 20) {
+					if($data < 15) {
 						return "<span class='text-danger'>Tidak Terisi Lengkap</span>";
 					} else {
 						return "";
@@ -68,14 +75,15 @@ class Score extends CI_Controller
 		];
 		
 		if($this->session->userdata('user_level') == 1) {
-			$_where	= "desa_id = ".$this->session->userdata('user_name');
+			$_where	= "desa_id = ".$this->session->userdata('user_name')." AND IFNULL(total_skor, 0) >= ".$this->session->userdata('batas_skor');
 		} else if($this->session->userdata('user_level') == 2) {
-			$_where	= "kecamatan_id = ".$this->session->userdata('user_name');
+			$_where	= "kecamatan_id = ".$this->session->userdata('user_name')." AND IFNULL(total_skor, 0) >= ".$this->session->userdata('batas_skor');
 		} else {
-			$_where = NULL;
+			$_where = "IFNULL(total_skor, 0) >= ".$this->session->userdata('batas_skor');
 		}
 		
-		$_join	= NULL;
+		$_join	= 'JOIN ref_kecamatan ON view_total_skor_fix.kecamatan_id = ref_kecamatan.id
+				  JOIN ref_desa ON view_total_skor_fix.desa_id = ref_desa.id';
 
 		echo json_encode(
 			Datatables_ssp::complex($_GET, $_conn, $_table, $_key, $_coll, $_where, NULL, $_join)
@@ -84,15 +92,23 @@ class Score extends CI_Controller
 
     public function export()
     {
-    	$desa_id = $this->uri->segment(3);
-    	$desa = $this->db->where('id', $desa_id)->get('ref_desa')->row();
+    	$level = $this->session->userdata('user_level');
+    	$user_name = $this->session->userdata('user_name');
 
-    	$data_kk = $this->db->select('no_kk_krt, nik_anggota, nama_krt, nama_desa, kecamatan')
-    				->where('desa_id', $desa_id)->where('main_pengenalan_tempat.status IS NULL')
-    				->join('ref_desa', 'ref_desa.id = main_pengenalan_tempat.desa_id')
-    				->join('ref_kecamatan', 'ref_kecamatan.id = main_pengenalan_tempat.kecamatan_id')
-    				->join('main_keterangan_sosial_ekonomi', 'main_keterangan_sosial_ekonomi.main_id = main_pengenalan_tempat.main_id AND main_keterangan_sosial_ekonomi.hubungan_keluarga_id = 1', 'left')
-    				->get('main_pengenalan_tempat')->result_array();
+    	if($level == 1) {
+    		$where = array('desa_id' => $user_name);
+    	} else if($level == 2) {
+    		$where = array('kecamatan_id' => $user_name);
+    	} else {
+    		$where = NULL;
+    	}
+
+    	$this->db->select('no_kk_krt, nama_krt, nama_desa, kecamatan, total_skor');
+    	$this->db->where($where);
+    	$this->db->join('ref_desa', 'ref_desa.id = view_total_skor_fix.desa_id', 'left');
+    	$this->db->join('ref_kecamatan', 'ref_kecamatan.id = view_total_skor_fix.kecamatan_id', 'left');
+    	$this->db->order_by('total_skor', 'desc');
+    	$data_skor = $this->db->get('view_total_skor_fix')->result_array();
 
     	$spreadsheet = new Spreadsheet;
     	$excel = $spreadsheet->getActiveSheet();
@@ -122,23 +138,23 @@ class Score extends CI_Controller
 		    ]
 		];
 
-    	$excel->setCellValue('A1', 'FORM REKAPITULASI DATA DAMISDA BERDASARKAN KK');
+    	$excel->setCellValue('A1', 'FORM REKAPITULASI DATA DAMISDA HASIL PERANGKINGAN');
     	$excel->mergeCells('A1:F1');
     	$excel->getStyle('A1')->getFont()->setBold(true);
 
     	$excel->getColumnDimension('A')->setWidth(5);
     	$excel->getColumnDimension('B')->setWidth(18);
-    	$excel->getColumnDimension('C')->setWidth(20);
-    	$excel->getColumnDimension('D')->setWidth(35);
+    	$excel->getColumnDimension('C')->setWidth(35);
+    	$excel->getColumnDimension('D')->setWidth(18);
     	$excel->getColumnDimension('E')->setWidth(18);
     	$excel->getColumnDimension('F')->setWidth(18);
 
         $excel->setCellValue('A3', 'No.');
         $excel->setCellValue('B3', 'Nomor KK');
-        $excel->setCellValue('C3', 'NIK Kepala Keluarga');
-        $excel->setCellValue('D3', 'Nama Kepala Keluarga');
-        $excel->setCellValue('E3', 'Desa');
-        $excel->setCellValue('F3', 'Kecamatan');
+        $excel->setCellValue('C3', 'Nama Kepala Keluarga');
+        $excel->setCellValue('D3', 'Desa');
+        $excel->setCellValue('E3', 'Kecamatan');
+        $excel->setCellValue('F3', 'Total Skor');
 
         $excel->getStyle('A3')->applyFromArray($styleHead);
 		$excel->getStyle('B3')->applyFromArray($styleHead);
@@ -150,13 +166,13 @@ class Score extends CI_Controller
       	$col = 4;
       	$no = 1;
       	
-      	foreach($data_kk as $value) {
+      	foreach($data_skor as $value) {
         	$excel->setCellValue('A' . $col, $no);
             $excel->setCellValue('B' . $col, "'".$value['no_kk_krt']);
-            $excel->setCellValue('C' . $col, "'".$value['nik_anggota']);
-            $excel->setCellValue('D' . $col, strtoupper($value['nama_krt']));
-            $excel->setCellValue('E' . $col, $value['nama_desa']);
-           	$excel->setCellValue('F' . $col, $value['kecamatan']);
+            $excel->setCellValue('C' . $col, strtoupper($value['nama_krt']));
+            $excel->setCellValue('D' . $col, $value['nama_desa']);
+           	$excel->setCellValue('E' . $col, $value['kecamatan']);
+           	$excel->setCellValue('F' . $col, $value['total_skor']);
 
            	$excel->getStyle('A' . $col)->applyFromArray($styleBody);
 			$excel->getStyle('B' . $col)->applyFromArray($styleBody);
@@ -169,12 +185,12 @@ class Score extends CI_Controller
            	$no++;
       	}
 
-      	$excel->setTitle(strtoupper($desa->nama_desa));
+      	$excel->setTitle("Data Hasil Perangkingan");
 
 	    $writer = new Xlsx($spreadsheet);
 
 	    header('Content-Type: application/vnd.ms-excel');
-		header('Content-Disposition: attachment;filename="'.$desa->nama_desa.'_KK.xlsx"');
+		header('Content-Disposition: attachment;filename="Export_Hasil_Perangkingan.xlsx"');
 		header('Cache-Control: max-age=0');
 
 		$writer->save('php://output');

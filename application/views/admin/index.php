@@ -1,4 +1,4 @@
-<div class="container-fluid mt-2">
+<div class="container-fluid">
 <div class="row" data-aos="zoom-in">
 	<?php if($this->session->userdata('user_password') == $pass->default_password) { ?>
 		<div class="col-md-12">
@@ -74,7 +74,7 @@
 	</div>
 </div>
 
-<div class="card mt-3" data-aos="fade-up">
+<div class="card mt-2" data-aos="fade-up">
 	<?php if($this->session->userdata('user_level') == 3) { ?>
 		<div class="row">
 			<div class="dropdown col-md-5">

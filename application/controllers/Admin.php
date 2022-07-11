@@ -256,4 +256,35 @@ class Admin extends CI_Controller
         header('Content-Type: application/json');
         echo json_encode($result, true);
     }
+
+    public function score()
+    {
+    	$batas_skor = $this->session->userdata('batas_skor');
+    	$user_name = $this->session->userdata('user_name');
+
+    	if($this->session->userdata('user_level') == 1) {
+			$data['total_survey'] = $this->db->where('desa_id', $user_name)->where('IFNULL(total_skor, 0) >=', $batas_skor)->get('view_total_skor_fix')->num_rows();
+	    	$data['terisi_lengkap'] = $this->db->where('total_skor >', $batas_skor)->where('desa_id', $user_name)->get('view_total_skor_fix')->num_rows();
+	    	$data['tidak_terisi_lengkap'] = $this->db->query('SELECT * FROM view_total_skor_fix WHERE (IFNULL(total_skor, 0) >= '.$batas_skor.' AND IFNULL(total_skor, 0) BETWEEN 0 AND 15) AND desa_id = '.$user_name)->num_rows();
+		} else if($this->session->userdata('user_level') == 2) {
+			$data['total_survey'] = $this->db->where('kecamatan_id', $user_name)->where('IFNULL(total_skor, 0) >=', $batas_skor)->get('view_total_skor_fix')->num_rows();
+	    	$data['terisi_lengkap'] = $this->db->where('total_skor >', $batas_skor)->where('kecamatan_id', $user_name)->get('view_total_skor_fix')->num_rows();
+	    	$data['tidak_terisi_lengkap'] = $this->db->query('SELECT * FROM view_total_skor_fix WHERE (IFNULL(total_skor, 0) >= '.$batas_skor.' AND IFNULL(total_skor, 0) BETWEEN 0 AND 15) AND kecamatan_id = '.$user_name)->num_rows();
+		} else {
+			$data['total_survey'] = $this->db->where('IFNULL(total_skor, 0) >=', $batas_skor)->get('view_total_skor_fix')->num_rows();
+	    	$data['terisi_lengkap'] = $this->db->where('total_skor >', $batas_skor)->get('view_total_skor_fix')->num_rows();
+	    	$data['tidak_terisi_lengkap'] = $this->db->query('SELECT * FROM view_total_skor_fix WHERE IFNULL(total_skor, 0) >= '.$batas_skor.' AND IFNULL(total_skor, 0) BETWEEN 0 AND 15')->num_rows();
+		}
+
+		$data['rekapitulasi_kecamatan'] = $this->db->select('k.kecamatan, COUNT(v.kecamatan_id) AS count_kecamatan')
+				->where('IFNULL(v.total_skor, 0) >=', $batas_skor)
+				->join('view_total_skor_fix v', 'k.id = v.kecamatan_id', 'left')
+				->group_by('v.kecamatan_id')->order_by('count_kecamatan', 'desc')
+				->get('ref_kecamatan k')->result_array();
+		
+    	$this->load->view('templates/header', $data);
+        $this->load->view('score/index', $data);
+        $this->load->view('templates/footer');
+        $this->load->view('templates/js/score');
+    }
 }

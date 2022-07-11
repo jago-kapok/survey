@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>DAMISDA - Kabupaten Bojonegoro</title>
-  <!-- <title><?php echo $title ?></title> -->
+  
   <!-- Mobile Specific Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -54,6 +54,7 @@
     }
     .nav-icon { color: #4a4b4c; font-size: 1.5rem; }
     .card-icon { width:2.5rem; height:2.5rem; border-radius: 6px; font-size: 1.2rem; font-weight: bold; padding: 0.2rem; }
+    .card-icon-score { width:4.5rem; height:4.5rem; border-radius: 6px; font-size: 2.6rem; font-weight: bold; padding: 0.2rem; }
   </style>
 </head>
 <body>
