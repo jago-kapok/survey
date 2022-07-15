@@ -21,7 +21,27 @@ class Score extends CI_Controller
             $data['success'] = false;
             $data['errors'] = $errors;
         } else {
+        	$jumlah_hasil_skor = $this->db->get('view_total_skor_fix')->num_rows();
+
         	$this->session->set_userdata('batas_skor', $batas_skor);
+        	$this->session->set_userdata('jumlah_hasil_skor', $jumlah_hasil_skor);
+
+            $data['success'] = true;
+            $data['message'] = 'Success!';
+        }
+        
+        echo json_encode($data);
+    }
+
+    public function setJumlahData()
+    {
+    	$jumlah_hasil_skor = $this->input->post('jumlah_hasil_skor');
+
+		if (!empty($errors)) {
+            $data['success'] = false;
+            $data['errors'] = $errors;
+        } else {
+        	$this->session->set_userdata('jumlah_hasil_skor', $jumlah_hasil_skor);
 
             $data['success'] = true;
             $data['message'] = 'Success!';
@@ -33,7 +53,23 @@ class Score extends CI_Controller
     public function getData()
 	{
 		$this->load->library("datatables_ssp");
-		$_table = "view_total_skor_fix";
+
+		$total_data = $this->db->get('view_total_skor_fix')->num_rows();
+
+		// $_table = "view_total_skor_fix";
+		$_limit = $this->session->userdata('jumlah_hasil_skor') != "" ? $this->session->userdata('jumlah_hasil_skor') : $total_data;
+		$_limit = (int)$_limit;
+
+		$_table = <<<EOT
+			(
+			   	SELECT k.kecamatan, d.nama_desa, v.no_kk_krt, v.nama_krt, v.total_skor, v.main_id, v.status_lahan, v.luas_lantai, v.kondisi_dinding, v.kondisi_atap, v.jumlah_kamar
+			   	FROM view_total_skor_fix v
+			   	JOIN ref_kecamatan k ON v.kecamatan_id = k.id
+				JOIN ref_desa d ON v.desa_id = d.id
+				LIMIT {$_limit}
+			) temp
+		EOT;
+
 		$_conn 	= [
 			"user" 	=> $this->db->username,
 			"pass" 	=> $this->db->password,
@@ -86,7 +122,7 @@ class Score extends CI_Controller
 				  JOIN ref_desa ON view_total_skor_fix.desa_id = ref_desa.id';
 
 		echo json_encode(
-			Datatables_ssp::complex($_GET, $_conn, $_table, $_key, $_coll, $_where, NULL, $_join)
+			Datatables_ssp::complex($_GET, $_conn, $_table, $_key, $_coll, $_where, NULL, NULL)
 		);
 	}
 

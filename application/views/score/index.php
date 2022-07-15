@@ -41,9 +41,11 @@
 				<div class="col-md-4 mb-3">
 					<div class="card p-4">
 						<div class="d-flex justify-content-between">
-							<div class="btn card-icon-score" style="background-color: #feddc7; margin-right:1rem">
-								<i class="bi-file-earmark-excel text-danger"></i>
-							</div>
+							<a href="#" onclick="return alert()">
+								<div class="btn card-icon-score" style="background-color: #feddc7; margin-right:1rem">
+									<i class="bi-file-earmark-excel text-danger"></i>
+								</div>
+							</a>
 
 							<div>
 								<h6 class="text-black-50 mb-2"><strong>Tidak Terisi Lengkap</strong></h6>
@@ -65,6 +67,9 @@
 				  </button>
 				  <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#batas_skor"><i class="bi-filter-square"></i>
 				    &nbsp;Batas Skor
+				  </button>
+				  <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#jumlah_data"><i class="bi-filter-square"></i>
+				    &nbsp;Jumlah Data
 				  </button>
 				</div>
 				<div class="col-md-4 pull-right">
@@ -120,6 +125,31 @@
 		</div>
 	</div>
 
+	<div class="modal fade" id="export_data" data-bs-backdrop="static" data-bs-keyboard="false">
+	  <div class="modal-dialog modal-dialog-scrollable">
+	    <div class="modal-content">
+	    	<div class="modal-header">
+	        <h5 class="modal-title" id="staticBackdropLabel">Export Hasil Perangkingan</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      	</div>
+
+	      <form id="form_export_skoring">
+	      	<div class="modal-body">
+			      <div class="mb-2">
+					    <label class="form-label"><b>Batas Nilai Perangkingan</b></label>
+					    <input id="batas_skor_value" type="number" class="form-control" value="0">
+					    <div class="form-text">Isikan angka desimal dari 0.00 - 100</div>
+					  </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button id="export_hasil_skoring" type="button" class="btn btn-success">Export</button>
+		        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+		      </div>
+		    </form>
+	    </div>
+	  </div>
+	</div>
+
 	<div class="modal fade" id="batas_skor" data-bs-backdrop="static" data-bs-keyboard="false">
 	  <div class="modal-dialog modal-dialog-scrollable">
 	    <div class="modal-content">
@@ -145,24 +175,24 @@
 	  </div>
 	</div>
 
-	<div class="modal fade" id="export_data" data-bs-backdrop="static" data-bs-keyboard="false">
+	<div class="modal fade" id="jumlah_data" data-bs-backdrop="static" data-bs-keyboard="false">
 	  <div class="modal-dialog modal-dialog-scrollable">
 	    <div class="modal-content">
 	    	<div class="modal-header">
-	        <h5 class="modal-title" id="staticBackdropLabel">Export Hasil Perangkingan</h5>
+	        <h5 class="modal-title" id="staticBackdropLabel">Tentukan Jumlah Data</h5>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       	</div>
 
-	      <form id="form_export_skoring">
+	      <form id="form_jumlah_data">
 	      	<div class="modal-body">
 			      <div class="mb-2">
-					    <label class="form-label"><b>Batas Nilai Perangkingan</b></label>
-					    <input id="batas_skor_value" type="number" class="form-control" value="0">
-					    <div class="form-text">Isikan angka desimal dari 0.00 - 100</div>
+					    <label class="form-label"><b>Jumlah Data Hasil Perangkingan</b></label>
+					    <input type="number" class="form-control" name="jumlah_hasil_skor" required>
+					    <div class="form-text">Isikan angka (tanpa titik atau koma)</div>
 					  </div>
 		      </div>
 		      <div class="modal-footer">
-		        <button id="export_hasil_skoring" type="button" class="btn btn-success">Export</button>
+		        <button type="submit" class="btn btn-primary">Proses</button>
 		        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
 		      </div>
 		    </form>
@@ -172,6 +202,23 @@
 </div>
 
 <script>
+	/* Export Data */
+  $("#export_hasil_skoring").click(function () {
+    let batas_skor = $('#batas_skor_value').val();
+
+    if(batas_skor == "") {
+    	Swal.fire({
+        title: 'WARNING !',
+        text: "Mohon isi terlebih dahulu batas nilai skoring !",
+        icon: 'warning',
+        showConfirmButton: true
+      });
+    } else {
+    	window.open("<?= base_url() ?>score/export");
+    }
+  });
+
+  /* Batas Skor */
 	$("#form_skoring").submit(function (event) {
     event.preventDefault();
     var data = new FormData($("#form_skoring")[0]);
@@ -200,19 +247,32 @@
     });
   });
 
-	/* Export Data */
-  $("#export_hasil_skoring").click(function () {
-    let batas_skor = $('#batas_skor_value').val();
+  /* Jumlah Data */
+	$("#form_jumlah_data").submit(function (event) {
+    event.preventDefault();
+    var data = new FormData($("#form_jumlah_data")[0]);
 
-    if(batas_skor == "") {
-    	Swal.fire({
-        title: 'WARNING !',
-        text: "Mohon isi terlebih dahulu batas nilai skoring !",
-        icon: 'warning',
-        showConfirmButton: true
-      });
-    } else {
-    	window.open("<?= base_url() ?>score/export");
-    }
+    $.ajax({
+      type: "POST",
+      url: "<?= base_url() ?>score/setJumlahData",
+      data: data,
+      dataType: "json",
+      cache		: false,
+			contentType	: false,
+			processData	: false,
+      // encode: true,
+    })
+    .done(function (data) {
+      if(data.success == true) {
+        location.reload();
+      } else {
+        $.each(data.errors, function(index, value) {
+          $.notify(value, "error");
+        })
+      }
+    })
+    .fail(function () {
+      $.notify("Terjadi masalah saat koneksi ke server !");
+    });
   });
 </script>

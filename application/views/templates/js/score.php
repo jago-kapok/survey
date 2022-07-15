@@ -53,11 +53,11 @@ var table = $("table#table_data").DataTable({
     [12, 'asc'],
   ],
   rowCallback: function(row, data, iDisplayIndex){
-	var info 	= this.fnPagingInfo();
-	var page 	= info.iPage;
-	var length 	= info.iLength;
-	var index 	= page * length + (iDisplayIndex + 1);
-	$("td:eq(0)", row).html(index);
+  	var info 	= this.fnPagingInfo();
+  	var page 	= info.iPage;
+  	var length 	= info.iLength;
+  	var index 	= page * length + (iDisplayIndex + 1);
+  	$("td:eq(0)", row).html(index);
   }
 });
 

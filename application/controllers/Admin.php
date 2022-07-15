@@ -264,15 +264,15 @@ class Admin extends CI_Controller
 
     	if($this->session->userdata('user_level') == 1) {
 			$data['total_survey'] = $this->db->where('desa_id', $user_name)->where('IFNULL(total_skor, 0) >=', $batas_skor)->get('view_total_skor_fix')->num_rows();
-	    	$data['terisi_lengkap'] = $this->db->where('total_skor >', $batas_skor)->where('desa_id', $user_name)->get('view_total_skor_fix')->num_rows();
+	    	$data['terisi_lengkap'] = $this->db->where('total_skor >=', $batas_skor)->where('desa_id', $user_name)->get('view_total_skor_fix')->num_rows();
 	    	$data['tidak_terisi_lengkap'] = $this->db->query('SELECT * FROM view_total_skor_fix WHERE (IFNULL(total_skor, 0) >= '.$batas_skor.' AND IFNULL(total_skor, 0) BETWEEN 0 AND 15) AND desa_id = '.$user_name)->num_rows();
 		} else if($this->session->userdata('user_level') == 2) {
 			$data['total_survey'] = $this->db->where('kecamatan_id', $user_name)->where('IFNULL(total_skor, 0) >=', $batas_skor)->get('view_total_skor_fix')->num_rows();
-	    	$data['terisi_lengkap'] = $this->db->where('total_skor >', $batas_skor)->where('kecamatan_id', $user_name)->get('view_total_skor_fix')->num_rows();
+	    	$data['terisi_lengkap'] = $this->db->where('total_skor >=', $batas_skor)->where('kecamatan_id', $user_name)->get('view_total_skor_fix')->num_rows();
 	    	$data['tidak_terisi_lengkap'] = $this->db->query('SELECT * FROM view_total_skor_fix WHERE (IFNULL(total_skor, 0) >= '.$batas_skor.' AND IFNULL(total_skor, 0) BETWEEN 0 AND 15) AND kecamatan_id = '.$user_name)->num_rows();
 		} else {
 			$data['total_survey'] = $this->db->where('IFNULL(total_skor, 0) >=', $batas_skor)->get('view_total_skor_fix')->num_rows();
-	    	$data['terisi_lengkap'] = $this->db->where('total_skor >', $batas_skor)->get('view_total_skor_fix')->num_rows();
+	    	$data['terisi_lengkap'] = $this->db->where('total_skor >=', $batas_skor)->get('view_total_skor_fix')->num_rows();
 	    	$data['tidak_terisi_lengkap'] = $this->db->query('SELECT * FROM view_total_skor_fix WHERE IFNULL(total_skor, 0) >= '.$batas_skor.' AND IFNULL(total_skor, 0) BETWEEN 0 AND 15')->num_rows();
 		}
 
