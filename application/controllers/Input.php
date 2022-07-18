@@ -34,8 +34,6 @@ class Input extends CI_Controller
                                                         ->where("main_id", $main_id)
                                                         ->join("lapangan_usaha lu", "mkse.lapangan_usaha_id = lu.id")
                                                         ->get('main_keterangan_sosial_ekonomi mkse')->result_array();
-        } else if($id = 6) {
-
         }
 
         $data["main_id"] = $this->key->crypts($main_id, 'e');
