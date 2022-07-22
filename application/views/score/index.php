@@ -41,11 +41,9 @@
 				<div class="col-md-4 mb-3">
 					<div class="card p-4">
 						<div class="d-flex justify-content-between">
-							<a href="#" onclick="return alert()">
-								<div class="btn card-icon-score" style="background-color: #feddc7; margin-right:1rem">
-									<i class="bi-file-earmark-excel text-danger"></i>
-								</div>
-							</a>
+							<div class="btn card-icon-score" style="background-color: #feddc7; margin-right:1rem">
+								<i class="bi-file-earmark-excel text-danger"></i>
+							</div>
 
 							<div>
 								<h6 class="text-black-50 mb-2"><strong>Tidak Terisi Lengkap</strong></h6>
@@ -66,10 +64,7 @@
 				    &nbsp;Export Data
 				  </button>
 				  <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#batas_skor"><i class="bi-filter-square"></i>
-				    &nbsp;Batas Skor
-				  </button>
-				  <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#jumlah_data"><i class="bi-filter-square"></i>
-				    &nbsp;Jumlah Data
+				    &nbsp;Hitung Perangkingan
 				  </button>
 				</div>
 				<div class="col-md-4 pull-right">
@@ -160,35 +155,16 @@
 
 	      <form id="form_skoring">
 	      	<div class="modal-body">
-			      <div class="mb-2">
+			      <div class="mb-3">
 					    <label class="form-label"><b>Batas Nilai Perangkingan</b></label>
 					    <input type="number" class="form-control" name="batas_skor" value="0" required>
 					    <div class="form-text">Isikan angka desimal dari 0.00 - 100</div>
 					  </div>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="submit" class="btn btn-primary">Proses</button>
-		        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-		      </div>
-		    </form>
-	    </div>
-	  </div>
-	</div>
 
-	<div class="modal fade" id="jumlah_data" data-bs-backdrop="static" data-bs-keyboard="false">
-	  <div class="modal-dialog modal-dialog-scrollable">
-	    <div class="modal-content">
-	    	<div class="modal-header">
-	        <h5 class="modal-title" id="staticBackdropLabel">Tentukan Jumlah Data</h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      	</div>
-
-	      <form id="form_jumlah_data">
-	      	<div class="modal-body">
-			      <div class="mb-2">
-					    <label class="form-label"><b>Jumlah Data Hasil Perangkingan</b></label>
-					    <input type="number" class="form-control" name="jumlah_hasil_skor" required>
-					    <div class="form-text">Isikan angka (tanpa titik atau koma)</div>
+					  <div class="mb-2">
+					    <label class="form-label"><b>Jumlah Data Perangkingan</b></label>
+					    <input type="number" class="form-control" name="jumlah_hasil_skor" value="<?= $total_hasil_skor ?>" required>
+					    <div class="form-text">Isikan angka, tanpa titik atau koma</div>
 					  </div>
 		      </div>
 		      <div class="modal-footer">
@@ -254,7 +230,7 @@
 
     $.ajax({
       type: "POST",
-      url: "<?= base_url() ?>score/setJumlahData",
+      url: "<?= base_url() ?>score/setBatasSkor",
       data: data,
       dataType: "json",
       cache		: false,

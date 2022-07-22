@@ -25,20 +25,35 @@ class Admin extends CI_Controller
         	$survey_kemarin = $this->db->select('main_id')->where('desa_id', $user_name)->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
         	$total_survey = $this->db->select('main_id')->where('status IS NULL')->where('desa_id', $user_name)->get('main_pengenalan_tempat')->result_array();
 
-        	$data['grafik_survey'] = $this->db->where('kecamatan', $user_manager)->get('view_chart_desa')->result_array();
+        	$data['grafik_survey'] = $this->db
+        		->select('kecamatan_id, kecamatan, SUM(IF(IFNULL(total_skor, 0) > 15, 1, 0)) AS terisi_lengkap, SUM(IF(IFNULL(total_skor, 0) <= 15, 1, 0)) AS tidak_terisi_lengkap')
+        		->where('kecamatan_id', $user_manager)
+        		->join('ref_kecamatan', 'ref_kecamatan.id = view_total_skor_fix.kecamatan_id')
+        		->group_by('view_total_skor_fix.kecamatan_id')
+        		->get('view_total_skor_fix')->result_array();
 
         } else if($this->session->userdata('user_level') == 2) {
         	$survey_hari_ini = $this->db->select('main_id')->where('kecamatan_id', $user_name)->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
         	$survey_kemarin = $this->db->select('main_id')->where('kecamatan_id', $user_name)->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
         	$total_survey = $this->db->select('main_id')->where('status IS NULL')->where('kecamatan_id', $user_name)->get('main_pengenalan_tempat')->result_array();
 
-        	$data['grafik_survey'] = $this->db->where('kecamatan', $user_name)->get('view_chart_desa')->result_array();
+        	$data['grafik_survey'] = $this->db
+        		->select('kecamatan_id, kecamatan, SUM(IF(IFNULL(total_skor, 0) > 15, 1, 0)) AS terisi_lengkap, SUM(IF(IFNULL(total_skor, 0) <= 15, 1, 0)) AS tidak_terisi_lengkap')
+        		->where('kecamatan_id', $user_manager)
+        		->join('ref_kecamatan', 'ref_kecamatan.id = view_total_skor_fix.kecamatan_id')
+        		->group_by('view_total_skor_fix.kecamatan_id')
+        		->get('view_total_skor_fix')->result_array();
+
         } else {
         	$survey_hari_ini = $this->db->select('main_id')->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
         	$survey_kemarin = $this->db->select('main_id')->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
         	$total_survey = $this->db->select('main_id')->where('status IS NULL')->get('main_pengenalan_tempat')->result_array();
 
-        	$data['grafik_survey'] = $this->db->get('view_chart_kecamatan')->result_array();
+        	$data['grafik_survey'] = $this->db
+        		->select('kecamatan_id, kecamatan, SUM(IF(IFNULL(total_skor, 0) > 15, 1, 0)) AS terisi_lengkap, SUM(IF(IFNULL(total_skor, 0) <= 15, 1, 0)) AS tidak_terisi_lengkap')
+        		->join('ref_kecamatan', 'ref_kecamatan.id = view_total_skor_fix.kecamatan_id')
+        		->group_by('view_total_skor_fix.kecamatan_id')
+        		->get('view_total_skor_fix')->result_array();
         }
 
         $data['survey_hari_ini'] = count($survey_hari_ini);
@@ -75,6 +90,8 @@ class Admin extends CI_Controller
             $data['ref_kecamatan'] = $this->db->get('ref_kecamatan')->result_array();
             $data['ref_desa'] = $this->db->get('ref_desa')->result_array();
         }
+
+        $data['total_survey'] = $this->db->where('status IS NULL')->get('view_total_skor_fix')->num_rows();
 
         $this->load->view('templates/header', $data);
         $this->load->view('admin/report', $data);
@@ -227,6 +244,10 @@ class Admin extends CI_Controller
         	$this->db->where('main_id', $id);
         	$this->db->update("main_pengenalan_tempat");
 
+        	$this->db->set('status', 1);
+        	$this->db->where('main_id', $id);
+        	$this->db->update("view_total_skor_fix");
+
             $data['success'] = true;
             $data['message'] = 'Success!';
             $data['id'] = $id;
@@ -244,7 +265,13 @@ class Admin extends CI_Controller
 
     	$result = [];
 
-    	$chart = $this->db->order_by($column, $order)->get('view_chart_kecamatan')->result_array();
+    	// $chart = $this->db->order_by($column, $order)->get('view_chart_kecamatan')->result_array();
+
+    	$chart = $this->db->select('kecamatan_id, kecamatan as category, COUNT(kecamatan_id) as total, SUM(IF(IFNULL(total_skor, 0) > 15, 1, 0)) AS terisi_lengkap, SUM(IF(IFNULL(total_skor, 0) <= 15, 1, 0)) AS tidak_terisi_lengkap')
+        		->join('ref_kecamatan', 'ref_kecamatan.id = view_total_skor_fix.kecamatan_id')
+        		->group_by('view_total_skor_fix.kecamatan_id')
+        		->order_by($column, $order)
+        		->get('view_total_skor_fix')->result_array();
 
         foreach($chart as $value) {
         	$result[] = array(
@@ -260,27 +287,64 @@ class Admin extends CI_Controller
     public function score()
     {
     	$batas_skor = $this->session->userdata('batas_skor');
+    	$total_data = $this->session->userdata('batas_skor');
     	$user_name = $this->session->userdata('user_name');
 
     	if($this->session->userdata('user_level') == 1) {
-			$data['total_survey'] = $this->db->where('desa_id', $user_name)->where('IFNULL(total_skor, 0) >=', $batas_skor)->get('view_total_skor_fix')->num_rows();
-	    	$data['terisi_lengkap'] = $this->db->where('total_skor >=', $batas_skor)->where('desa_id', $user_name)->get('view_total_skor_fix')->num_rows();
-	    	$data['tidak_terisi_lengkap'] = $this->db->query('SELECT * FROM view_total_skor_fix WHERE (IFNULL(total_skor, 0) >= '.$batas_skor.' AND IFNULL(total_skor, 0) BETWEEN 0 AND 15) AND desa_id = '.$user_name)->num_rows();
+			$data['total_survey'] = $this->db
+				->where('desa_id', $user_name)
+				->where('IFNULL(total_skor, 0) >=', $batas_skor)
+				->where('status IS NULL')
+				->get('view_total_skor_fix')->num_rows();
+
+	    	$data['terisi_lengkap'] = $this->db
+	    		->where('total_skor >=', $batas_skor)
+	    		->where('desa_id', $user_name)
+	    		->where('status IS NULL')
+	    		->get('view_total_skor_fix')->num_rows();
+
+	    	$data['tidak_terisi_lengkap'] = $this->db
+	    		->query('SELECT * FROM view_total_skor_fix WHERE status IS NULL AND (IFNULL(total_skor, 0) >= '.$batas_skor.' AND IFNULL(total_skor, 0) BETWEEN 0 AND 15) AND desa_id = '.$user_name)->num_rows();
+
 		} else if($this->session->userdata('user_level') == 2) {
-			$data['total_survey'] = $this->db->where('kecamatan_id', $user_name)->where('IFNULL(total_skor, 0) >=', $batas_skor)->get('view_total_skor_fix')->num_rows();
-	    	$data['terisi_lengkap'] = $this->db->where('total_skor >=', $batas_skor)->where('kecamatan_id', $user_name)->get('view_total_skor_fix')->num_rows();
-	    	$data['tidak_terisi_lengkap'] = $this->db->query('SELECT * FROM view_total_skor_fix WHERE (IFNULL(total_skor, 0) >= '.$batas_skor.' AND IFNULL(total_skor, 0) BETWEEN 0 AND 15) AND kecamatan_id = '.$user_name)->num_rows();
+			$data['total_survey'] = $this->db
+				->where('kecamatan_id', $user_name)
+				->where('IFNULL(total_skor, 0) >=', $batas_skor)
+				->where('status IS NULL')
+				->get('view_total_skor_fix')->num_rows();
+
+	    	$data['terisi_lengkap'] = $this->db
+	    		->where('total_skor >=', $batas_skor)
+	    		->where('kecamatan_id', $user_name)
+	    		->where('status IS NULL')
+	    		->get('view_total_skor_fix')->num_rows();
+
+	    	$data['tidak_terisi_lengkap'] = $this->db
+	    		->query('SELECT * FROM view_total_skor_fix WHERE status IS NULL AND (IFNULL(total_skor, 0) >= '.$batas_skor.' AND IFNULL(total_skor, 0) BETWEEN 0 AND 15) AND kecamatan_id = '.$user_name)->num_rows();
+
 		} else {
-			$data['total_survey'] = $this->db->where('IFNULL(total_skor, 0) >=', $batas_skor)->get('view_total_skor_fix')->num_rows();
-	    	$data['terisi_lengkap'] = $this->db->where('total_skor >=', $batas_skor)->get('view_total_skor_fix')->num_rows();
-	    	$data['tidak_terisi_lengkap'] = $this->db->query('SELECT * FROM view_total_skor_fix WHERE IFNULL(total_skor, 0) >= '.$batas_skor.' AND IFNULL(total_skor, 0) BETWEEN 0 AND 15')->num_rows();
+			$data['total_survey'] = $this->db
+				->where('IFNULL(total_skor, 0) >=', $batas_skor)
+				->where('status IS NULL')
+				->get('view_total_skor_fix')->num_rows();
+
+	    	$data['terisi_lengkap'] = $this->db
+	    		->where('total_skor >=', $batas_skor)
+	    		->where('status IS NULL')
+	    		->get('view_total_skor_fix')->num_rows();
+
+	    	$data['tidak_terisi_lengkap'] = $this->db
+	    		->query('SELECT * FROM view_total_skor_fix WHERE status IS NULL AND IFNULL(total_skor, 0) >= '.$batas_skor.' AND IFNULL(total_skor, 0) BETWEEN 0 AND 15')->num_rows();
 		}
 
 		$data['rekapitulasi_kecamatan'] = $this->db->select('k.kecamatan, COUNT(v.kecamatan_id) AS count_kecamatan')
+				->where('v.status IS NULL')
 				->where('IFNULL(v.total_skor, 0) >=', $batas_skor)
 				->join('view_total_skor_fix v', 'k.id = v.kecamatan_id', 'left')
 				->group_by('v.kecamatan_id')->order_by('count_kecamatan', 'desc')
 				->get('ref_kecamatan k')->result_array();
+
+		$data['total_hasil_skor'] = $this->db->where('status IS NULL')->get('view_total_skor_fix')->num_rows();
 		
     	$this->load->view('templates/header', $data);
         $this->load->view('score/index', $data);

@@ -107,19 +107,34 @@
 		<?php } ?>
 	});
 
+	const categories = [
+      <?php foreach ($grafik_survey as $data) : ?>
+				'<?= $data['kecamatan']; ?>',
+			<?php endforeach; ?>
+  ]
+
 	var options = {
 	  chart: {
 	  	id: 'homeChart',
 	    type: 'bar',
-	    height: 400,
+	    stacked: true,
+	    height: 500,
 	    toolbar: {
-		  	show: true
-		  }
+		  	show: false
+		  },
+		  events: {
+				mounted: (chartContext, config) => {
+					addAnnotations(config);
+				},
+				updated: (chartContext, config) => {
+					addAnnotations(config);
+				}
+			}
 	  },
 	  dataLabels: {
       enabled: true,
       style: {
-        fontSize: "20px",
+        fontSize: "15px",
         fontFamily: "Helvetica, Arial, sans-serif",
         fontWeight: "bold"
       }
@@ -133,22 +148,62 @@
 	    	fontFamily: 'Arial'
 	    }
 	  },
-	  series: [{
-	    name: 'Survey',
-	    data: [
-	    	<?php foreach ($grafik_survey as $data) : ?>
-					<?= $data['total']; ?>,
-				<?php endforeach; ?>
-	    ]
-	  }],
+	  series: [
+		  {
+		    name: 'Terisi Lengkap',
+		    data: [
+		    	<?php foreach ($grafik_survey as $data) : ?>
+						<?= $data['terisi_lengkap']; ?>,
+					<?php endforeach; ?>
+		    ]
+		  },
+		  {
+		    name: 'Tidak Terisi Lengkap',
+		    color: '#f15a5e',
+		    data: [
+		    	<?php foreach ($grafik_survey as $data) : ?>
+						<?= $data['tidak_terisi_lengkap']; ?>,
+					<?php endforeach; ?>
+		    ]
+		  }
+	  ],
+	  plotOptions: {
+      bar: {
+				horizontal: false,
+				dataLabels: {
+					maxItems: 2
+				}
+     	},
+    },
 	  xaxis: {
-	    categories: [
-	    	<?php foreach ($grafik_survey as $data) : ?>
-					'<?= $data['category']; ?>',
-				<?php endforeach; ?>
-	    ]
+	    categories
 	  }
 	}
+
+	const addAnnotations = (config) => {
+		const seriesTotals = config.globals.stackedSeriesTotals;
+		const isHorizontal = options.plotOptions.bar.horizontal;
+		chart.clearAnnotations();
+
+		try {
+			categories.forEach((category, index) => {
+				chart.addPointAnnotation(
+					{
+						y: isHorizontal
+							? calcHorizontalY(config, index)
+							: seriesTotals[index],
+						x: isHorizontal ? 0 : category,
+						label: {
+							text: `${seriesTotals[index]}`
+						}
+					},
+					false
+				)
+			});
+		} catch (error) {
+			console.log(`Add point annotation error: ${error.message}`);
+		}
+	};
 
 	var chart = new ApexCharts(document.querySelector("#chart"), options);
 

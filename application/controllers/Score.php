@@ -16,36 +16,13 @@ class Score extends CI_Controller
     public function setBatasSkor()
     {
     	$batas_skor = $this->input->post('batas_skor');
-
-		if (!empty($errors)) {
-            $data['success'] = false;
-            $data['errors'] = $errors;
-        } else {
-        	$jumlah_hasil_skor = $this->db->get('view_total_skor_fix')->num_rows();
-
-        	$this->session->set_userdata('batas_skor', $batas_skor);
-        	$this->session->set_userdata('jumlah_hasil_skor', $jumlah_hasil_skor);
-
-            $data['success'] = true;
-            $data['message'] = 'Success!';
-        }
-        
-        echo json_encode($data);
-    }
-
-    public function setJumlahData()
-    {
     	$jumlah_hasil_skor = $this->input->post('jumlah_hasil_skor');
 
-		if (!empty($errors)) {
-            $data['success'] = false;
-            $data['errors'] = $errors;
-        } else {
-        	$this->session->set_userdata('jumlah_hasil_skor', $jumlah_hasil_skor);
+        $this->session->set_userdata('batas_skor', $batas_skor);
+        $this->session->set_userdata('jumlah_hasil_skor', $jumlah_hasil_skor);
 
-            $data['success'] = true;
-            $data['message'] = 'Success!';
-        }
+        $data['success'] = true;
+        $data['message'] = 'Success!';
         
         echo json_encode($data);
     }
@@ -62,7 +39,7 @@ class Score extends CI_Controller
 
 		$_table = <<<EOT
 			(
-			   	SELECT k.kecamatan, d.nama_desa, v.no_kk_krt, v.nama_krt, v.total_skor, v.main_id, v.status_lahan, v.luas_lantai, v.kondisi_dinding, v.kondisi_atap, v.jumlah_kamar
+			   	SELECT v.kecamatan_id, k.kecamatan, v.desa_id, d.nama_desa, v.no_kk_krt, v.nama_krt, v.total_skor, v.main_id, v.status_lahan, v.luas_lantai, v.kondisi_dinding, v.kondisi_atap, v.jumlah_kamar, v.status
 			   	FROM view_total_skor_fix v
 			   	JOIN ref_kecamatan k ON v.kecamatan_id = k.id
 				JOIN ref_desa d ON v.desa_id = d.id
@@ -111,18 +88,19 @@ class Score extends CI_Controller
 		];
 		
 		if($this->session->userdata('user_level') == 1) {
-			$_where	= "desa_id = ".$this->session->userdata('user_name')." AND IFNULL(total_skor, 0) >= ".$this->session->userdata('batas_skor');
+			$_where	= "status IS NULL AND desa_id = ".$this->session->userdata('user_name')." AND IFNULL(total_skor, 0) >= ".$this->session->userdata('batas_skor');
 		} else if($this->session->userdata('user_level') == 2) {
-			$_where	= "kecamatan_id = ".$this->session->userdata('user_name')." AND IFNULL(total_skor, 0) >= ".$this->session->userdata('batas_skor');
+			$_where	= "status IS NULL AND kecamatan_id = ".$this->session->userdata('user_name')." AND IFNULL(total_skor, 0) >= ".$this->session->userdata('batas_skor');
 		} else {
-			$_where = "IFNULL(total_skor, 0) >= ".$this->session->userdata('batas_skor');
+			$_where = "status IS NULL AND IFNULL(total_skor, 0) >= ".$this->session->userdata('batas_skor');
 		}
 		
-		$_join	= 'JOIN ref_kecamatan ON view_total_skor_fix.kecamatan_id = ref_kecamatan.id
-				  JOIN ref_desa ON view_total_skor_fix.desa_id = ref_desa.id';
+		// $_join	= 'JOIN ref_kecamatan ON view_total_skor_fix.kecamatan_id = ref_kecamatan.id
+		// 		  JOIN ref_desa ON view_total_skor_fix.desa_id = ref_desa.id';
+		$_join = NULL;
 
 		echo json_encode(
-			Datatables_ssp::complex($_GET, $_conn, $_table, $_key, $_coll, $_where, NULL, NULL)
+			Datatables_ssp::complex($_GET, $_conn, $_table, $_key, $_coll, $_where, NULL, $_join)
 		);
 	}
 
@@ -136,7 +114,7 @@ class Score extends CI_Controller
     	} else if($level == 2) {
     		$where = array('kecamatan_id' => $user_name);
     	} else {
-    		$where = NULL;
+    		$where = array();
     	}
 
     	$this->db->select('no_kk_krt, nama_krt, nama_desa, kecamatan, total_skor');
