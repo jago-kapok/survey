@@ -1,4 +1,5 @@
 <div class="container-fluid">
+	<span><?= var_dump($sess) ?></span>
 <div class="row" data-aos="zoom-in">
 	<?php if($this->session->userdata('user_password') == $pass->default_password) { ?>
 		<div class="col-md-12">
@@ -107,18 +108,18 @@
 		<?php } ?>
 	});
 
-	const categories = [
-      <?php foreach ($grafik_survey as $data) : ?>
-				'<?= $data['kecamatan']; ?>',
-			<?php endforeach; ?>
-  ]
+	var categories = [
+						<?php foreach ($grafik_survey as $data) : ?>
+							'<?= $data['category']; ?>',
+						<?php endforeach; ?>
+					]
 
 	var options = {
 	  chart: {
 	  	id: 'homeChart',
 	    type: 'bar',
 	    stacked: true,
-	    height: 500,
+	    height: 450,
 	    toolbar: {
 		  	show: false
 		  },
@@ -126,9 +127,9 @@
 				mounted: (chartContext, config) => {
 					addAnnotations(config);
 				},
-				updated: (chartContext, config) => {
-					addAnnotations(config);
-				}
+				// updated: (chartContext, config) => {
+				// 	addAnnotations(config);
+				// }
 			}
 	  },
 	  dataLabels: {
@@ -189,10 +190,8 @@
 			categories.forEach((category, index) => {
 				chart.addPointAnnotation(
 					{
-						y: isHorizontal
-							? calcHorizontalY(config, index)
-							: seriesTotals[index],
-						x: isHorizontal ? 0 : category,
+						y: seriesTotals[index],
+						x: category,
 						label: {
 							text: `${seriesTotals[index]}`
 						}
@@ -213,22 +212,33 @@
 		var url = '<?= base_url() ?>admin/getChart/' + value + '/' + order;
 
 		$.getJSON(url, function(response) {
-			var categories = [];
+			const categories = [];
+			var terisi_lengkap = [];
+			var tidak_terisi_lengkap = [];
 
 			$.each(response, function(key, val) {
 				categories.push(val.x);
+				terisi_lengkap.push(val.y);
+				tidak_terisi_lengkap.push(val.z);
 			});
 
-		 	chart.updateOptions({
+			chart.updateOptions({
 		    xaxis: {
-		      categories: categories
+		      categories
 		    }
 		  });
 
-			chart.updateSeries([{
-		    name: 'Survey',
-		    data: response
-		  }]);			
+			chart.updateSeries([
+				{
+			    name: 'Terisi Lengkap',
+			    data: terisi_lengkap
+			  },
+			  {
+			    name: 'Tidak Terisi Lengkap',
+			    color: '#f15a5e',
+			    data: tidak_terisi_lengkap
+			  }
+			]);
 		});
 	}
 </script>

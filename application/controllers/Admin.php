@@ -4,21 +4,21 @@ date_default_timezone_set("Asia/Jakarta");
 
 class Admin extends CI_Controller
 {
-    public function __construct()
+	public function __construct()
     {
         parent::__construct();
-        $this->load->library('key');
 		authentication();
+
+		$this->load->library('key');
+		$this->load->model('DefaultAuth');
     }
 
     public function index()
     {
-        $data['title'] = 'Survey Pemutakhiran DTKS - Kab. Bojonegoro';
+        $user_name		= $this->session->userdata('user_name');
+        $user_manager	= $this->session->userdata('user_manager');
 
-        $user_name = $this->session->userdata('user_name');
-        $user_manager = $this->session->userdata('user_manager');
-
-        $data['pass'] = $this->db->where('id', 1)->get('default_password')->row();
+        $data['pass']	= $this->DefaultAuth->getAuth();
 
         if($this->session->userdata('user_level') == 1) {
         	$survey_hari_ini = $this->db->select('main_id')->where('desa_id', $user_name)->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
@@ -26,10 +26,10 @@ class Admin extends CI_Controller
         	$total_survey = $this->db->select('main_id')->where('status IS NULL')->where('desa_id', $user_name)->get('main_pengenalan_tempat')->result_array();
 
         	$data['grafik_survey'] = $this->db
-        		->select('kecamatan_id, kecamatan, SUM(IF(IFNULL(total_skor, 0) > 15, 1, 0)) AS terisi_lengkap, SUM(IF(IFNULL(total_skor, 0) <= 15, 1, 0)) AS tidak_terisi_lengkap')
+        		->select('kecamatan_id, desa_id, nama_desa as category, SUM(IF(IFNULL(total_skor, 0) > 15, 1, 0)) AS terisi_lengkap, SUM(IF(IFNULL(total_skor, 0) <= 15, 1, 0)) AS tidak_terisi_lengkap')
         		->where('kecamatan_id', $user_manager)
-        		->join('ref_kecamatan', 'ref_kecamatan.id = view_total_skor_fix.kecamatan_id')
-        		->group_by('view_total_skor_fix.kecamatan_id')
+        		->join('ref_desa', 'ref_desa.id = view_total_skor_fix.desa_id')
+        		->group_by('view_total_skor_fix.desa_id')
         		->get('view_total_skor_fix')->result_array();
 
         } else if($this->session->userdata('user_level') == 2) {
@@ -38,10 +38,10 @@ class Admin extends CI_Controller
         	$total_survey = $this->db->select('main_id')->where('status IS NULL')->where('kecamatan_id', $user_name)->get('main_pengenalan_tempat')->result_array();
 
         	$data['grafik_survey'] = $this->db
-        		->select('kecamatan_id, kecamatan, SUM(IF(IFNULL(total_skor, 0) > 15, 1, 0)) AS terisi_lengkap, SUM(IF(IFNULL(total_skor, 0) <= 15, 1, 0)) AS tidak_terisi_lengkap')
-        		->where('kecamatan_id', $user_manager)
-        		->join('ref_kecamatan', 'ref_kecamatan.id = view_total_skor_fix.kecamatan_id')
-        		->group_by('view_total_skor_fix.kecamatan_id')
+        		->select('kecamatan_id, desa_id, nama_desa as category, SUM(IF(IFNULL(total_skor, 0) > 15, 1, 0)) AS terisi_lengkap, SUM(IF(IFNULL(total_skor, 0) <= 15, 1, 0)) AS tidak_terisi_lengkap')
+        		->where('kecamatan_id', $user_name)
+        		->join('ref_desa', 'ref_desa.id = view_total_skor_fix.desa_id')
+        		->group_by('view_total_skor_fix.desa_id')
         		->get('view_total_skor_fix')->result_array();
 
         } else {
@@ -50,7 +50,7 @@ class Admin extends CI_Controller
         	$total_survey = $this->db->select('main_id')->where('status IS NULL')->get('main_pengenalan_tempat')->result_array();
 
         	$data['grafik_survey'] = $this->db
-        		->select('kecamatan_id, kecamatan, SUM(IF(IFNULL(total_skor, 0) > 15, 1, 0)) AS terisi_lengkap, SUM(IF(IFNULL(total_skor, 0) <= 15, 1, 0)) AS tidak_terisi_lengkap')
+        		->select('kecamatan_id, kecamatan as category, COUNT(kecamatan_id) as total, SUM(IF(IFNULL(total_skor, 0) > 15, 1, 0)) AS terisi_lengkap, SUM(IF(IFNULL(total_skor, 0) <= 15, 1, 0)) AS tidak_terisi_lengkap')
         		->join('ref_kecamatan', 'ref_kecamatan.id = view_total_skor_fix.kecamatan_id')
         		->group_by('view_total_skor_fix.kecamatan_id')
         		->get('view_total_skor_fix')->result_array();
@@ -276,7 +276,8 @@ class Admin extends CI_Controller
         foreach($chart as $value) {
         	$result[] = array(
         		'x' => $value['category'],
-        		'y' => $value['total']
+        		'y' => $value['terisi_lengkap'],
+        		'z' => $value['tidak_terisi_lengkap']
         	);
         }
 
