@@ -1,7 +1,6 @@
 <div class="container-fluid">
-	<span><?= var_dump($sess) ?></span>
 <div class="row" data-aos="zoom-in">
-	<?php if($this->session->userdata('user_password') == $pass->default_password) { ?>
+	<?php if($this->session->userdata('user_password') == $default_auth) { ?>
 		<div class="col-md-12">
 			<div class="alert alert-danger mx-1" role="alert">
 				1. Mohon segera melakukan penggantian password.<br>
@@ -22,7 +21,7 @@
 					<i class="bi-file-earmark-check text-primary"></i>
 				</div>
 			</div>
-			<span class="text-muted">Selisih <span style="color: <?php echo $perbandingan_color ?>"><strong><?php echo $perbandingan_sekarang_kemarin ?></strong></span> dari hari sebelumnya</span>
+			<span class="text-muted">Selisih <span style="color: <?php echo $perbandingan_color ?>"><strong><?php echo $perbandingan_survey ?></strong></span> dari hari sebelumnya</span>
 		</div>
 	</div>
 
@@ -97,7 +96,7 @@
 
 <script>
 	$(document).ready(function() {
-		<?php if($this->session->userdata('user_password') == $pass->default_password) { ?>
+		<?php if($this->session->userdata('user_password') == $default_auth) { ?>
 			Swal.fire({
 	      title: 'PENTING !',
 	      text: "Harap segera melakukan penggantian password anda.",
@@ -109,10 +108,10 @@
 	});
 
 	var categories = [
-						<?php foreach ($grafik_survey as $data) : ?>
-							'<?= $data['category']; ?>',
-						<?php endforeach; ?>
-					]
+		<?php foreach ($grafik_survey as $data) : ?>
+			'<?= $data['category']; ?>',
+		<?php endforeach; ?>
+	];
 
 	var options = {
 	  chart: {

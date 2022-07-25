@@ -11,61 +11,77 @@ class Admin extends CI_Controller
 
 		$this->load->library('key');
 		$this->load->model('DefaultAuth');
+		$this->load->model('PengenalanTempat');
+		$this->load->model('Perangkingan');
+
+		$this->user_name	= $this->session->userdata('user_name');
+		$this->user_auth	= $this->session->userdata('user_password');
+        $this->user_manager	= $this->session->userdata('user_manager');
+		$this->user_level	= $this->session->userdata('user_level');
     }
 
     public function index()
     {
-        $user_name		= $this->session->userdata('user_name');
-        $user_manager	= $this->session->userdata('user_manager');
+    	/* Level Desa */
+        if ($this->user_level == 1) {
 
-        $data['pass']	= $this->DefaultAuth->getAuth();
+        	$_where_now			= ['desa_id' => $this->user_name, 'DATE(created_at)' => date('Y-m-d')];
+        	$_where_yesterday	= ['desa_id' => $this->user_name, 'DATE(created_at)' => date("Y-m-d", strtotime("-1 day"))];
+        	$_where_total		= ['desa_id' => $this->user_name, 'status' => NULL];
 
-        if($this->session->userdata('user_level') == 1) {
-        	$survey_hari_ini = $this->db->select('main_id')->where('desa_id', $user_name)->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
-        	$survey_kemarin = $this->db->select('main_id')->where('desa_id', $user_name)->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
-        	$total_survey = $this->db->select('main_id')->where('status IS NULL')->where('desa_id', $user_name)->get('main_pengenalan_tempat')->result_array();
+        	$survey_hari_ini	= $this->PengenalanTempat->getSurvey($_where_now)->num_rows();
+        	$survey_kemarin		= $this->PengenalanTempat->getSurvey($_where_yesterday)->num_rows();
+        	$total_survey 		= $this->PengenalanTempat->getSurvey($_where_total)->num_rows();
 
-        	$data['grafik_survey'] = $this->db
-        		->select('kecamatan_id, desa_id, nama_desa as category, SUM(IF(IFNULL(total_skor, 0) > 15, 1, 0)) AS terisi_lengkap, SUM(IF(IFNULL(total_skor, 0) <= 15, 1, 0)) AS tidak_terisi_lengkap')
-        		->where('kecamatan_id', $user_manager)
-        		->join('ref_desa', 'ref_desa.id = view_total_skor_fix.desa_id')
-        		->group_by('view_total_skor_fix.desa_id')
-        		->get('view_total_skor_fix')->result_array();
+        	$_select			= ['nama_desa as category'];
+        	$_where 			= ['kecamatan_id' => $this->user_manager];
+        	$_group_by			= ['desa_id'];
+        	$grafik_survey		= $this->Perangkingan->getChart($_select, $_where, $_group_by)->result_array();
 
-        } else if($this->session->userdata('user_level') == 2) {
-        	$survey_hari_ini = $this->db->select('main_id')->where('kecamatan_id', $user_name)->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
-        	$survey_kemarin = $this->db->select('main_id')->where('kecamatan_id', $user_name)->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
-        	$total_survey = $this->db->select('main_id')->where('status IS NULL')->where('kecamatan_id', $user_name)->get('main_pengenalan_tempat')->result_array();
+        /* Level Kecamatan */
+        } else if ($this->user_level == 2) {
 
-        	$data['grafik_survey'] = $this->db
-        		->select('kecamatan_id, desa_id, nama_desa as category, SUM(IF(IFNULL(total_skor, 0) > 15, 1, 0)) AS terisi_lengkap, SUM(IF(IFNULL(total_skor, 0) <= 15, 1, 0)) AS tidak_terisi_lengkap')
-        		->where('kecamatan_id', $user_name)
-        		->join('ref_desa', 'ref_desa.id = view_total_skor_fix.desa_id')
-        		->group_by('view_total_skor_fix.desa_id')
-        		->get('view_total_skor_fix')->result_array();
+        	$_where_now			= ['kecamatan_id' => $this->user_name, 'DATE(created_at)' => date('Y-m-d')];
+        	$_where_yesterday	= ['kecamatan_id' => $this->user_name, 'DATE(created_at)' => date("Y-m-d", strtotime("-1 day"))];
+        	$_where_total		= ['kecamatan_id' => $this->user_name, 'status' => NULL];
 
+        	$survey_hari_ini	= $this->PengenalanTempat->getSurvey($_where_now)->num_rows();
+        	$survey_kemarin		= $this->PengenalanTempat->getSurvey($_where_yesterday)->num_rows();
+        	$total_survey 		= $this->PengenalanTempat->getSurvey($_where_total)->num_rows();
+
+        	$_select			= ['nama_desa as category'];
+        	$_where 			= ['kecamatan_id' => $this->user_name];
+        	$_group_by			= ['desa_id'];
+        	$grafik_survey		= $this->Perangkingan->getChart($_select, $_where, $_group_by)->result_array();
+
+        /* Level Kabupaten */
         } else {
-        	$survey_hari_ini = $this->db->select('main_id')->where("DATE(created_at)", date("Y-m-d"))->get('main_pengenalan_tempat')->result_array();
-        	$survey_kemarin = $this->db->select('main_id')->where("DATE(created_at)", date("Y-m-d", strtotime("-1 day")))->get('main_pengenalan_tempat')->result_array();
-        	$total_survey = $this->db->select('main_id')->where('status IS NULL')->get('main_pengenalan_tempat')->result_array();
 
-        	$data['grafik_survey'] = $this->db
-        		->select('kecamatan_id, kecamatan as category, COUNT(kecamatan_id) as total, SUM(IF(IFNULL(total_skor, 0) > 15, 1, 0)) AS terisi_lengkap, SUM(IF(IFNULL(total_skor, 0) <= 15, 1, 0)) AS tidak_terisi_lengkap')
-        		->join('ref_kecamatan', 'ref_kecamatan.id = view_total_skor_fix.kecamatan_id')
-        		->group_by('view_total_skor_fix.kecamatan_id')
-        		->get('view_total_skor_fix')->result_array();
+        	$_where_now			= ['DATE(created_at)' => date('Y-m-d')];
+        	$_where_yesterday	= ['DATE(created_at)' => date("Y-m-d", strtotime("-1 day"))];
+        	$_where_total		= ['status' => NULL];
+
+        	$survey_hari_ini	= $this->PengenalanTempat->getSurvey($_where_now)->num_rows();
+        	$survey_kemarin		= $this->PengenalanTempat->getSurvey($_where_yesterday)->num_rows();
+        	$total_survey 		= $this->PengenalanTempat->getSurvey($_where_total)->num_rows();
+
+        	$_select			= ['kecamatan as category'];
+        	$_where 			= [];
+        	$_group_by			= ['kecamatan_id'];
+        	$grafik_survey		= $this->Perangkingan->getChart($_select, $_where, $_group_by)->result_array();
+
         }
 
-        $data['survey_hari_ini'] = count($survey_hari_ini);
-        $data['perbandingan_sekarang_kemarin'] = count($survey_hari_ini) - count($survey_kemarin);
-        $data['perbandingan_color'] = (count($survey_hari_ini) - count($survey_kemarin)) < 0 ? 'red' : '#22c55e';
-        $data['total_survey'] = count($total_survey);
-
-        if(count($total_survey) > 0) {
-        	$data['total_survey_persen'] = (count($survey_hari_ini) / count($total_survey)) * 100;
-        } else {
-        	$data['total_survey_persen'] = 0;
-        }
+        $data = [
+        	'default_auth'			=> $this->DefaultAuth->getAuth(),
+        	'survey_hari_ini'		=> $survey_hari_ini,
+        	'survey_kemarin'		=> $survey_kemarin,
+        	'total_survey'			=> $total_survey,
+        	'perbandingan_survey'	=> $survey_hari_ini - $survey_kemarin,
+        	'perbandingan_color'	=> ($survey_hari_ini - $survey_kemarin) < 0 ? 'red' : '#22c55e',
+        	'total_survey_persen'	=> $total_survey > 0 ? ($survey_hari_ini / $total_survey) * 100 : 0,
+        	'grafik_survey'			=> $grafik_survey
+        ];
 
         $this->load->view('templates/header', $data);
         $this->load->view('admin/index', $data);
@@ -74,24 +90,35 @@ class Admin extends CI_Controller
 
     public function report()
     {
-        $data['title'] = 'Survey Pemutakhiran DTKS - Kab. Bojonegoro';
-        $user_level = $this->session->userdata('user_level');
+    	/* Level Desa */
+        if ($this->user_level == 1) {
 
-        if($user_level == 1) {
-            $data['data_export'] = $this->db->where('user_name', $this->session->userdata('user_name'))->get('user')->result_array();
-            $data['ref_kecamatan'] = $this->db->where('id', $this->session->userdata('user_manager'))->get('ref_kecamatan')->result_array();
-            $data['ref_desa'] = $this->db->where('id', $this->session->userdata('user_name'))->get('ref_desa')->result_array();
-        } else if($user_level == 2) {
-            $data['data_export'] = $this->db->where('user_manager', $this->session->userdata('user_name'))->get('user')->result_array();
-            $data['ref_kecamatan'] = $this->db->get('ref_kecamatan')->result_array();
-            $data['ref_desa'] = $this->db->get('ref_desa')->result_array();
+            $data_export	= $this->db->where('user_name', $this->user_name)->get('user')->result_array();
+            $ref_kecamatan	= $this->db->where('id', $this->user_manager)->get('ref_kecamatan')->result_array();
+            $ref_desa		= $this->db->where('id', $this->user_name)->get('ref_desa')->result_array();
+
+       /* Level Kecamatan */
+        } else if ($this->user_level == 2) {
+
+            $data_export	= $this->db->where('user_manager', $this->user_name)->get('user')->result_array();
+            $ref_kecamatan	= $this->db->get('ref_kecamatan')->result_array();
+            $ref_desa		= $this->db->get('ref_desa')->result_array();
+
+        /* Level Kabupaten */
         } else {
-            $data['data_export'] = $this->db->order_by('user_manager')->get('user')->result_array();
-            $data['ref_kecamatan'] = $this->db->get('ref_kecamatan')->result_array();
-            $data['ref_desa'] = $this->db->get('ref_desa')->result_array();
+
+            $data_export	= $this->db->order_by('user_manager')->get('user')->result_array();
+            $ref_kecamatan	= $this->db->get('ref_kecamatan')->result_array();
+            $ref_desa		= $this->db->get('ref_desa')->result_array();
+
         }
 
-        $data['total_survey'] = $this->db->where('status IS NULL')->get('view_total_skor_fix')->num_rows();
+        $data = [
+        	'data_export'	=> $data_export,
+        	'ref_kecamatan'	=> $ref_kecamatan,
+        	'ref_desa'		=> $ref_desa,
+        	'total_survey'	=> $this->Perangkingan->getData(['status' => NULL])->num_rows()
+        ];
 
         $this->load->view('templates/header', $data);
         $this->load->view('admin/report', $data);
@@ -103,7 +130,9 @@ class Admin extends CI_Controller
     public function getData()
 	{
 		$this->load->library("datatables_ssp");
+
 		$_table = "main_pengenalan_tempat";
+
 		$_conn 	= [
 			"user" 	=> $this->db->username,
 			"pass" 	=> $this->db->password,
@@ -111,11 +140,13 @@ class Admin extends CI_Controller
 			"host" 	=> $this->db->hostname,
 			"port" 	=> $this->db->port
 		];
+
 		$_key	= "main_id";
+
 		$_coll	= [
 			["db" => "created_at",	"dt" => "created_at",
-				"formatter" => function($d, $row){
-					return date("d-m-Y", strtotime($d));
+				"formatter" => function($data, $row) {
+					return date("d-m-Y", strtotime($data));
 				}
 			],
 			["db" => "kecamatan",	"dt" => "kecamatan"],
@@ -127,14 +158,18 @@ class Admin extends CI_Controller
 				}
 			],
 			["db" => "jumlah_art",	"dt" => "jumlah_art"],
-
 			["db" => "main_id",	    "dt" => "main_id"],
 		];
 		
-		if($this->session->userdata('user_level') == 1) {
-			$_where	= "status IS NULL AND main_pengenalan_tempat.desa_id = ".$this->session->userdata('user_name');
-		} else if($this->session->userdata('user_level') == 2) {
-			$_where	= "status IS NULL AND main_pengenalan_tempat.kecamatan_id = ".$this->session->userdata('user_name');
+		/* Level Desa */
+		if ($this->user_level == 1) {
+			$_where	= "status IS NULL AND main_pengenalan_tempat.desa_id = " . $this->user_name;
+
+		/* Level Kecamatan */
+		} else if ($this->user_level == 2) {
+			$_where	= "status IS NULL AND main_pengenalan_tempat.kecamatan_id = " . $this->user_name;
+
+		/* Level Kabupaten */
 		} else {
 			$_where = "status IS NULL";
 		}
@@ -151,43 +186,43 @@ class Admin extends CI_Controller
 	{
 		$main_id = $this->uri->segment(3);
 
-		$data['title'] = 'Survey Pemutakhiran DTKS - Kab. Bojonegoro';
+        $tahap_satu					= $this->db->where('main_id', $main_id)->get('view_tahap_satu')->row();
+        $tahap_dua					= $this->db->where('main_id', $main_id)->get('view_tahap_dua')->row();
+        $tahap_tiga					= $this->db->where('main_id', $main_id)->get('view_tahap_tiga')->row();
+        $tahap_empat				= $this->db->where('main_id', $main_id)->order_by('no_urut_keluarga')->get('view_tahap_empat')->result_array();
+        $tahap_lima					= $this->db->select('main_aset.*')->where('main_id', $main_id)->get('main_aset')->row();
+        $tahap_lima_detail			= $this->db->where('main_id', $main_id)->get('view_tahap_lima_detail')->result_array();
+        $tahap_lima_detail_bantuan	= $this->db->where('main_id', $main_id)->get('view_tahap_lima_bantuan')->result_array();
+        $tahap_enam					= $this->db->select('main_foto_lokasi.*')->where('main_id', $main_id)->get('main_foto_lokasi')->row();
 
-        $data['tahap_satu'] = $this->db->where('main_id', $main_id)->get('view_tahap_satu')->row();
-        $data['tahap_dua'] = $this->db->where('main_id', $main_id)->get('view_tahap_dua')->row();
-        $data['tahap_tiga'] = $this->db->where('main_id', $main_id)->get('view_tahap_tiga')->row();
-        $data['tahap_empat'] = $this->db->where('main_id', $main_id)->order_by('no_urut_keluarga')->get('view_tahap_empat')->result_array();
-        $data['tahap_lima'] = $this->db->select('main_aset.*')->where('main_id', $main_id)->get('main_aset')->row();
-        $data['tahap_lima_detail'] = $this->db->where('main_id', $main_id)->get('view_tahap_lima_detail')->result_array();
-        $data['tahap_lima_detail_bantuan'] = $this->db->where('main_id', $main_id)->get('view_tahap_lima_bantuan')->result_array();
-        $data['tahap_enam'] = $this->db->select('main_foto_lokasi.*')->where('main_id', $main_id)->get('main_foto_lokasi')->row();
+		$tahap1 = $this->db->select('main_id')->where('main_id', $main_id)->get('main_pengenalan_tempat')->num_rows();
+		$tahap2 = $this->db->select('main_id')->where('main_id', $main_id)->get('main_keterangan_petugas_dan_responden')->num_rows();
+		$tahap3 = $this->db->select('main_id')->where('main_id', $main_id)->get('main_keterangan_perumahan')->num_rows();
+		$tahap4 = $this->db->select('main_id')->where('main_id', $main_id)->get('main_keterangan_sosial_ekonomi')->num_rows();
+		$tahap5 = $this->db->select('main_id')->where('main_id', $main_id)->get('main_aset')->num_rows();
+		$tahap6 = $this->db->select('main_id')->where('main_id', $main_id)->get('main_foto_lokasi')->num_rows();
 
-		$tahap1 = $this->db->select('main_id')->where('main_id', $main_id)->get('main_pengenalan_tempat')->result_array();
-		$tahap2 = $this->db->select('main_id')->where('main_id', $main_id)->get('main_keterangan_petugas_dan_responden')->result_array();
-		$tahap3 = $this->db->select('main_id')->where('main_id', $main_id)->get('main_keterangan_perumahan')->result_array();
-		$tahap4 = $this->db->select('main_id')->where('main_id', $main_id)->get('main_keterangan_sosial_ekonomi')->result_array();
-		$tahap5 = $this->db->select('main_id')->where('main_id', $main_id)->get('main_aset')->result_array();
-		$tahap6 = $this->db->select('main_id')->where('main_id', $main_id)->get('main_foto_lokasi')->result_array();
+		if ($tahap1 < 1) { $button_lanjut = 1;
+		} else if ($tahap2 < 1) { $button_lanjut = 2;
+		} else if ($tahap3 < 1) { $button_lanjut = 3; $tahap_tiga = '';
+		} else if ($tahap4 < 1) { $button_lanjut = 4;
+		} else if ($tahap5 < 1) { $button_lanjut = 5;
+		} else if ($tahap6 < 1) { $button_lanjut = 6;
+		} else { $button_lanjut = 10; }
 
-		if(count($tahap1) < 1) {
-			$data['button_lanjut'] = 1;
-		} else if(count($tahap2) < 1) {
-			$data['button_lanjut'] = 2;
-		} else if(count($tahap3) < 1) {
-			$data['button_lanjut'] = 3;
-			$data['tahap_tiga'] = '';
-		} else if(count($tahap4) < 1) {
-			$data['button_lanjut'] = 4;
-		} else if(count($tahap5) < 1) {
-			$data['button_lanjut'] = 5;
-		} else if(count($tahap6) < 1) {
-			$data['button_lanjut'] = 6;
-		} else {
-			$data['button_lanjut'] = 10;
-		}
-
-		$data["main_id"] = $this->key->crypts($main_id, 'e');
-		$data["main_id_foto"] = $main_id;
+		$data = [
+			'main_id'		=> $this->key->crypts($main_id, 'e'),
+			'main_id_foto'	=> $main_id,
+			'tahap_satu'	=> $tahap_satu,
+			'tahap_dua'		=> $tahap_dua,
+			'tahap_tiga'	=> $tahap_tiga,
+			'tahap_empat'	=> $tahap_empat,
+			'tahap_lima'	=> $tahap_lima,
+			'tahap_lima_detail' => $tahap_lima_detail,
+			'tahap_lima_detail_bantuan' => $tahap_lima_detail_bantuan,
+			'tahap_enam'	=> $tahap_enam,
+			'button_lanjut'	=> $button_lanjut
+		];
 
 	    $this->load->view('templates/header', $data);
 	    $this->load->view('view/index', $data);
@@ -196,28 +231,31 @@ class Admin extends CI_Controller
 
 	public function changePassword()
 	{
-		$errors = [];
-        $data = [];
+		$errors	= [];
+        $data 	= [];
 
-        $user_id = $this->input->post('user_id');
+        $user_id			= $this->input->post('user_id');
+        $new_password		= $this->input->post('new_password');
+        $confirm_password	= $this->input->post('confirm_password');
 
-        if($this->input->post('new_password') != $this->input->post('confirm_password')) {
+        if ($new_password != $confirm_password) {
             $errors['password_error'] = 'Password Baru dan Password Konfirmasi harus sama !';
         }
 
-        if(strlen($this->input->post('new_password')) < 8) {
+        if (strlen($new_password) < 8) {
             $errors['password_error'] = 'Password Baru minimal 8 karakter dengan kombinasi huruf dan angka';
         }
 
-        if(password_verify($this->input->post('new_password'), $this->session->userdata('user_password'))) {
+        if (password_verify($new_password, $this->user_auth)) {
         	$errors['password_error'] = 'Password Baru tidak boleh sama dengan password sebelumnya';
         }
         
         if (!empty($errors)) {
-            $data['success'] = false;
-            $data['errors'] = $errors;
+            $res_success = false;
+            $res_errors	 = $errors;
+            $res_message = false;
         } else {
-        	$password_hash = password_hash($this->input->post('new_password'), PASSWORD_BCRYPT);
+        	$password_hash = password_hash($new_password, PASSWORD_BCRYPT);
 
         	$this->db->set('user_password', $password_hash);
         	$this->db->where('user_id', $user_id);
@@ -225,53 +263,55 @@ class Admin extends CI_Controller
 
         	$this->session->set_userdata('user_password', $password_hash);
 
-            $data['success'] = true;
-            $data['message'] = 'Success!';
+            $res_success = true;
+            $res_errors  = false;
+            $res_message = 'Success!';
         }
+
+        $data = [
+        	'success' => $res_success,
+        	'errors'  => $res_errors,
+        	'message' => $res_message
+        ];
         
         echo json_encode($data);
 	}
 
 	public function delete_data()
     {
-        $id = $this->uri->segment(3);
+        $main_id = $this->uri->segment(3);
 
 		if (!empty($errors)) {
-            $data['success'] = false;
-            $data['errors'] = $errors;
+            $res_success = false;
+            $res_errors	 = $errors;
+            $res_message = false;
         } else {
-        	$this->db->set('status', 1);
-        	$this->db->where('main_id', $id);
-        	$this->db->update("main_pengenalan_tempat");
+        	$this->PengenalanTempat->updateStatus(['main_id' => $main_id]);
+        	$this->Perangkingan->updateStatus(['main_id' => $main_id]);
 
-        	$this->db->set('status', 1);
-        	$this->db->where('main_id', $id);
-        	$this->db->update("view_total_skor_fix");
-
-            $data['success'] = true;
-            $data['message'] = 'Success!';
-            $data['id'] = $id;
+        	$res_success = true;
+            $res_errors  = false;
+            $res_message = 'Success!';
         }
+
+        $data = [
+        	'success' => $res_success,
+        	'errors'  => $res_errors,
+        	'message' => $res_message,
+        	'id'	  => $main_id
+        ];
         
         echo json_encode($data);
     }
 
     public function getChart()
     {
-    	$value = $this->uri->segment(3);
-    	$order = $this->uri->segment(4);
+    	$result 	= [];
+    	$value		= $this->uri->segment(3);
+    	$order 		= $this->uri->segment(4);
+        $column 	= $value == 'kecamatan' ? 'category' : $value;    	
 
-        $column = $value == 'kecamatan' ? 'category' : $value;
-
-    	$result = [];
-
-    	// $chart = $this->db->order_by($column, $order)->get('view_chart_kecamatan')->result_array();
-
-    	$chart = $this->db->select('kecamatan_id, kecamatan as category, COUNT(kecamatan_id) as total, SUM(IF(IFNULL(total_skor, 0) > 15, 1, 0)) AS terisi_lengkap, SUM(IF(IFNULL(total_skor, 0) <= 15, 1, 0)) AS tidak_terisi_lengkap')
-        		->join('ref_kecamatan', 'ref_kecamatan.id = view_total_skor_fix.kecamatan_id')
-        		->group_by('view_total_skor_fix.kecamatan_id')
-        		->order_by($column, $order)
-        		->get('view_total_skor_fix')->result_array();
+    	$chart		= $this->Perangkingan->getChartFilter($column, $order)->result_array();
 
         foreach($chart as $value) {
         	$result[] = array(
