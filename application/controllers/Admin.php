@@ -18,6 +18,7 @@ class Admin extends CI_Controller
 		$this->user_auth	= $this->session->userdata('user_password');
         $this->user_manager	= $this->session->userdata('user_manager');
 		$this->user_level	= $this->session->userdata('user_level');
+		$this->batas_skor 	= $this->session->userdata('batas_skor');
     }
 
     public function index()
@@ -93,6 +94,7 @@ class Admin extends CI_Controller
     	/* Level Desa */
         if ($this->user_level == 1) {
 
+        	$_where 		= ['desa_id' => $this->user_name];
             $data_export	= $this->db->where('user_name', $this->user_name)->get('user')->result_array();
             $ref_kecamatan	= $this->db->where('id', $this->user_manager)->get('ref_kecamatan')->result_array();
             $ref_desa		= $this->db->where('id', $this->user_name)->get('ref_desa')->result_array();
@@ -100,6 +102,7 @@ class Admin extends CI_Controller
        /* Level Kecamatan */
         } else if ($this->user_level == 2) {
 
+        	$_where 		= ['kecamatan_id' => $this->user_name];
             $data_export	= $this->db->where('user_manager', $this->user_name)->get('user')->result_array();
             $ref_kecamatan	= $this->db->get('ref_kecamatan')->result_array();
             $ref_desa		= $this->db->get('ref_desa')->result_array();
@@ -107,6 +110,7 @@ class Admin extends CI_Controller
         /* Level Kabupaten */
         } else {
 
+        	$_where 		= [];
             $data_export	= $this->db->order_by('user_manager')->get('user')->result_array();
             $ref_kecamatan	= $this->db->get('ref_kecamatan')->result_array();
             $ref_desa		= $this->db->get('ref_desa')->result_array();
@@ -117,7 +121,7 @@ class Admin extends CI_Controller
         	'data_export'	=> $data_export,
         	'ref_kecamatan'	=> $ref_kecamatan,
         	'ref_desa'		=> $ref_desa,
-        	'total_survey'	=> $this->Perangkingan->getData(['status' => NULL])->num_rows()
+        	'total_survey'	=> $this->Perangkingan->getTotalSurvey($_where, 0)->num_rows()
         ];
 
         $this->load->view('templates/header', $data);
@@ -327,65 +331,45 @@ class Admin extends CI_Controller
 
     public function score()
     {
-    	$batas_skor = $this->session->userdata('batas_skor');
-    	$total_data = $this->session->userdata('batas_skor');
-    	$user_name = $this->session->userdata('user_name');
+    	$batas_skor_min	= $this->batas_skor >= 15 ? $this->batas_skor : 0;
+    	$batas_skor 	= $this->batas_skor >= 15 ? $this->batas_skor : 15;
 
-    	if($this->session->userdata('user_level') == 1) {
-			$data['total_survey'] = $this->db
-				->where('desa_id', $user_name)
-				->where('IFNULL(total_skor, 0) >=', $batas_skor)
-				->where('status IS NULL')
-				->get('view_total_skor_fix')->num_rows();
+    	/* Level Desa */
+    	if ($this->user_level == 1) {
+			
+			$_where 				= ['desa_id' => $this->user_name];
 
-	    	$data['terisi_lengkap'] = $this->db
-	    		->where('total_skor >=', $batas_skor)
-	    		->where('desa_id', $user_name)
-	    		->where('status IS NULL')
-	    		->get('view_total_skor_fix')->num_rows();
+			$total_survey			= $this->Perangkingan->getTotalSurvey($_where, $batas_skor_min)->num_rows();
+	    	$terisi_lengkap 		= $this->Perangkingan->getTotalSurvey($_where, $batas_skor)->num_rows();
+	    	$tidak_terisi_lengkap	= $this->Perangkingan->getSurveyNotComplete($_where, $batas_skor_min, $batas_skor)->num_rows();
 
-	    	$data['tidak_terisi_lengkap'] = $this->db
-	    		->query('SELECT * FROM view_total_skor_fix WHERE status IS NULL AND (IFNULL(total_skor, 0) >= '.$batas_skor.' AND IFNULL(total_skor, 0) BETWEEN 0 AND 15) AND desa_id = '.$user_name)->num_rows();
+	    /* Level Kecamatan */
+		} else if ($this->user_level == 2) {
 
-		} else if($this->session->userdata('user_level') == 2) {
-			$data['total_survey'] = $this->db
-				->where('kecamatan_id', $user_name)
-				->where('IFNULL(total_skor, 0) >=', $batas_skor)
-				->where('status IS NULL')
-				->get('view_total_skor_fix')->num_rows();
+			$_where 				= ['kecamatan_id' => $this->user_name];
 
-	    	$data['terisi_lengkap'] = $this->db
-	    		->where('total_skor >=', $batas_skor)
-	    		->where('kecamatan_id', $user_name)
-	    		->where('status IS NULL')
-	    		->get('view_total_skor_fix')->num_rows();
+			$total_survey			= $this->Perangkingan->getTotalSurvey($_where, $batas_skor_min)->num_rows();
+	    	$terisi_lengkap 		= $this->Perangkingan->getTotalSurvey($_where, $batas_skor)->num_rows();
+	    	$tidak_terisi_lengkap	= $this->Perangkingan->getSurveyNotComplete($_where, $batas_skor_min, $batas_skor)->num_rows();
 
-	    	$data['tidak_terisi_lengkap'] = $this->db
-	    		->query('SELECT * FROM view_total_skor_fix WHERE status IS NULL AND (IFNULL(total_skor, 0) >= '.$batas_skor.' AND IFNULL(total_skor, 0) BETWEEN 0 AND 15) AND kecamatan_id = '.$user_name)->num_rows();
-
+	    /* Level Kabupaten */
 		} else {
-			$data['total_survey'] = $this->db
-				->where('IFNULL(total_skor, 0) >=', $batas_skor)
-				->where('status IS NULL')
-				->get('view_total_skor_fix')->num_rows();
 
-	    	$data['terisi_lengkap'] = $this->db
-	    		->where('total_skor >=', $batas_skor)
-	    		->where('status IS NULL')
-	    		->get('view_total_skor_fix')->num_rows();
+			$_where 				= [];
 
-	    	$data['tidak_terisi_lengkap'] = $this->db
-	    		->query('SELECT * FROM view_total_skor_fix WHERE status IS NULL AND IFNULL(total_skor, 0) >= '.$batas_skor.' AND IFNULL(total_skor, 0) BETWEEN 0 AND 15')->num_rows();
+			$total_survey			= $this->Perangkingan->getTotalSurvey($_where, $batas_skor_min)->num_rows();
+	    	$terisi_lengkap 		= $this->Perangkingan->getTotalSurvey($_where, $batas_skor)->num_rows();
+	    	$tidak_terisi_lengkap	= $this->Perangkingan->getSurveyNotComplete($_where, $batas_skor_min, $batas_skor)->num_rows();
+
 		}
 
-		$data['rekapitulasi_kecamatan'] = $this->db->select('k.kecamatan, COUNT(v.kecamatan_id) AS count_kecamatan')
-				->where('v.status IS NULL')
-				->where('IFNULL(v.total_skor, 0) >=', $batas_skor)
-				->join('view_total_skor_fix v', 'k.id = v.kecamatan_id', 'left')
-				->group_by('v.kecamatan_id')->order_by('count_kecamatan', 'desc')
-				->get('ref_kecamatan k')->result_array();
-
-		$data['total_hasil_skor'] = $this->db->where('status IS NULL')->get('view_total_skor_fix')->num_rows();
+		$data = [
+			'total_survey'			=> $total_survey,
+			'terisi_lengkap'		=> $terisi_lengkap,
+			'tidak_terisi_lengkap'	=> $tidak_terisi_lengkap,
+			'rekapitulasi_kecamatan'=> $this->Perangkingan->getRecapitulationKec($batas_skor)->result_array(),
+			'total_hasil_skor'		=> $this->Perangkingan->getTotalSurvey($_where, 0)->num_rows()
+		];
 		
     	$this->load->view('templates/header', $data);
         $this->load->view('score/index', $data);

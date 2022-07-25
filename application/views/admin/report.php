@@ -93,7 +93,7 @@
     <div class="modal-content">
       <form id="form_skoring">
       	<input type="hidden" name="batas_skor" value="0">
-      	<input type="hidden" name="jumlah_hasil_skor" value="<?= $total_survey ?>">
+      	<input type="hidden" name="total_hasil_skor" value="<?= $total_survey ?>">
 	      <div class="modal-body">
 	      	<center>
 	      		<br>

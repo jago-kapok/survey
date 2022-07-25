@@ -11,18 +11,25 @@ class Score extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        authentication();
+
+        $this->load->model('Perangkingan');
+    	$this->user_name 		= $this->session->userdata('user_name');
+    	$this->user_manager		= $this->session->userdata('user_manager');
+    	$this->user_level 		= $this->session->userdata('user_level');
+    	$this->batas_skor 		= $this->session->userdata('batas_skor');
+    	$this->total_hasil_skor = $this->session->userdata('total_hasil_skor');
     }
 
     public function setBatasSkor()
     {
-    	$batas_skor = $this->input->post('batas_skor');
-    	$jumlah_hasil_skor = $this->input->post('jumlah_hasil_skor');
+    	$batas_skor 		= $this->input->post('batas_skor');
+    	$total_hasil_skor	= $this->input->post('total_hasil_skor');
 
         $this->session->set_userdata('batas_skor', $batas_skor);
-        $this->session->set_userdata('jumlah_hasil_skor', $jumlah_hasil_skor);
+        $this->session->set_userdata('total_hasil_skor', $total_hasil_skor);
 
         $data['success'] = true;
-        $data['message'] = 'Success!';
         
         echo json_encode($data);
     }
@@ -31,11 +38,30 @@ class Score extends CI_Controller
 	{
 		$this->load->library("datatables_ssp");
 
-		$total_data = $this->db->get('view_total_skor_fix')->num_rows();
+		$total_data = $this->Perangkingan->getTotalSurvey([], 0)->num_rows();
 
-		// $_table = "view_total_skor_fix";
-		$_limit = $this->session->userdata('jumlah_hasil_skor') != "" ? $this->session->userdata('jumlah_hasil_skor') : $total_data;
+		$_limit = $this->total_hasil_skor != "" ? $this->total_hasil_skor : $total_data;
 		$_limit = (int)$_limit;
+
+		/* Level Desa */
+		if ($this->user_level == 1) {
+
+			$_kecamatan = $this->user_manager;
+			$_desa = $this->user_name;
+
+		/* Level Kecamatan */
+		} else if ($this->user_level == 2) {
+
+			$_kecamatan = $this->user_name;
+			$_desa = '%';
+
+		/* Level Kabupaten */
+		} else {
+
+			$_kecamatan = '%';
+			$_desa = '%';
+
+		}
 
 		$_table = <<<EOT
 			(
@@ -43,6 +69,7 @@ class Score extends CI_Controller
 			   	FROM view_total_skor_fix v
 			   	JOIN ref_kecamatan k ON v.kecamatan_id = k.id
 				JOIN ref_desa d ON v.desa_id = d.id
+				WHERE desa_id LIKE "{$_desa}" AND kecamatan_id LIKE "{$_kecamatan}"
 				LIMIT {$_limit}
 			) temp
 		EOT;
@@ -54,7 +81,9 @@ class Score extends CI_Controller
 			"host" 	=> $this->db->hostname,
 			"port" 	=> $this->db->port
 		];
+
 		$_key	= "main_id";
+
 		$_coll	= [
 			["db" => "kecamatan",	"dt" => "kecamatan"],
 			["db" => "nama_desa",	"dt" => "nama_desa"],
@@ -87,16 +116,19 @@ class Score extends CI_Controller
 			["db" => "jumlah_kamar",	"dt" => "jumlah_kamar"],
 		];
 		
-		if($this->session->userdata('user_level') == 1) {
-			$_where	= "status IS NULL AND desa_id = ".$this->session->userdata('user_name')." AND IFNULL(total_skor, 0) >= ".$this->session->userdata('batas_skor');
-		} else if($this->session->userdata('user_level') == 2) {
-			$_where	= "status IS NULL AND kecamatan_id = ".$this->session->userdata('user_name')." AND IFNULL(total_skor, 0) >= ".$this->session->userdata('batas_skor');
+		/* Level Desa */
+		if ($this->session->userdata('user_level') == 1) {
+			$_where	= "status IS NULL AND desa_id = ".$this->user_name." AND IFNULL(total_skor, 0) >= ".$this->batas_skor;
+
+		/* Level Kecamatan */
+		} else if ($this->session->userdata('user_level') == 2) {
+			$_where	= "status IS NULL AND kecamatan_id = ".$this->user_name." AND IFNULL(total_skor, 0) >= ".$this->batas_skor;
+
+		/* Level Kabupaten */
 		} else {
-			$_where = "status IS NULL AND IFNULL(total_skor, 0) >= ".$this->session->userdata('batas_skor');
+			$_where = "status IS NULL AND IFNULL(total_skor, 0) >= ".$this->batas_skor;
 		}
 		
-		// $_join	= 'JOIN ref_kecamatan ON view_total_skor_fix.kecamatan_id = ref_kecamatan.id
-		// 		  JOIN ref_desa ON view_total_skor_fix.desa_id = ref_desa.id';
 		$_join = NULL;
 
 		echo json_encode(

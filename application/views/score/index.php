@@ -57,6 +57,16 @@
 				</div>
 			</div>
 
+			<div class="row" data-aos="fade-in">
+				<?php if ($this->session->userdata('total_hasil_skor') != $total_survey && $this->session->userdata('batas_skor') == 0) { ?>
+					<div class="col-md-12">
+						<div class="alert alert-info mx-1" role="alert">
+							<i class="bi-info-circle"></i>&nbsp;&nbsp;Tabel menampilkan <b><?= $this->session->userdata('total_hasil_skor') ?></b> data dari hasil filter.
+						</div>
+					</div>
+				<?php } ?>
+			</div>
+
 			<div class="card" data-aos="fade-in">
 			  <div class="row mb-1">
 				<div class="col-md-8">
@@ -64,7 +74,7 @@
 				    &nbsp;Export Data
 				  </button>
 				  <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#batas_skor"><i class="bi-filter-square"></i>
-				    &nbsp;Hitung Perangkingan
+				    &nbsp;Perangkingan
 				  </button>
 				</div>
 				<div class="col-md-4 pull-right">
@@ -163,7 +173,7 @@
 
 					  <div class="mb-2">
 					    <label class="form-label"><b>Jumlah Data Perangkingan</b></label>
-					    <input type="number" class="form-control" name="jumlah_hasil_skor" value="<?= $total_hasil_skor ?>" required>
+					    <input type="number" class="form-control" name="total_hasil_skor" value="<?= $total_hasil_skor ?>" required>
 					    <div class="form-text">Isikan angka, tanpa titik atau koma</div>
 					  </div>
 		      </div>
